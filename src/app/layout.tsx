@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { getTheme } from "@teispace/next-themes/server";
 import ThemeProvider from "@/components/theme/ThemeProvider";
 import "./globals.css";
 
@@ -18,15 +19,19 @@ export const metadata: Metadata = {
   description: "Des outils simples, utiles et gratuits pour le quotidien.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const initialTheme = await getTheme();
+
   return (
     <html lang="fr" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider initialTheme={initialTheme ?? undefined}>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

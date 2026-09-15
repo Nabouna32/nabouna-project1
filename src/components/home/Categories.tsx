@@ -11,6 +11,10 @@ const categoryNames: Record<string, string> = {
 };
 
 export default function Categories() {
+  const visibleCategories = categories.filter(
+    (category) => getToolCount(category.id) > 0
+  );
+
   return (
     <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
       <div className="mb-8">
@@ -29,7 +33,7 @@ export default function Categories() {
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {categories.map((category) => (
+        {visibleCategories.map((category) => (
           <CategoryCard
             key={category.id}
             category={category}

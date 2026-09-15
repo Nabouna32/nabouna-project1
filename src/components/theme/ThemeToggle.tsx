@@ -7,6 +7,7 @@ export default function ThemeToggle() {
 
   return (
     <select
+      suppressHydrationWarning
       value={theme ?? "system"}
       onChange={(event) => setTheme(event.target.value)}
       aria-label="Choisir le thème"
