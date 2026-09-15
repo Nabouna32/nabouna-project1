@@ -1,5 +1,5 @@
-import { categories } from "@/lib/tools/categories";
 import CategoryCard from "@/components/home/CategoryCard";
+import { categories, getToolCount } from "@/lib/tools/categories";
 
 const categoryNames: Record<string, string> = {
   calculs: "Calculs",
@@ -35,6 +35,7 @@ export default function Categories() {
             category={category}
             name={categoryNames[category.id]}
             toolLabel="outils"
+            toolCount={getToolCount(category.id)}
           />
         ))}
       </div>

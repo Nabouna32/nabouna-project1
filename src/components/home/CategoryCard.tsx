@@ -4,12 +4,14 @@ type CategoryCardProps = {
   category: ToolCategory;
   name: string;
   toolLabel: string;
+  toolCount: number;
 };
 
 export default function CategoryCard({
   category,
   name,
   toolLabel,
+  toolCount,
 }: CategoryCardProps) {
   return (
     <a
@@ -26,13 +28,13 @@ export default function CategoryCard({
         </span>
       </div>
 
-      <h3 className="mt-5 text-lg font-semibold text-[var(--foreground)]">
-        {name}
-      </h3>
+          <h3 className="mt-5 text-lg font-semibold text-[var(--foreground)]">
+              {name}
+          </h3>
 
-      <p className="mt-1 text-sm text-[var(--muted)]">
-        {category.toolCount} {toolLabel}
-      </p>
-    </a>
+          <p className="mt-1 text-sm text-[var(--muted)]">
+              {toolCount} {toolLabel}
+          </p>
+      </a>
   );
 }
