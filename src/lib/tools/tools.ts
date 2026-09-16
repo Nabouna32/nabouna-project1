@@ -38,8 +38,8 @@ export const tools: Tool[] = [
     icon: "⚖️",
     name: "Règle de trois",
     description: "Résolvez rapidement vos calculs de proportionnalité.",
-    keywords: ["proportion", "proportionnalité", "ratio"],
-    available: false,
+    keywords: ["proportion", "proportionnalité", "ratio", "quantité", "prix"],
+    available: true,
   },
   {
     id: "age",
