@@ -1,9 +1,9 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { usePathname } from "next/navigation";
 import { tools } from "@/lib/tools/tools";
-import { searchTools } from "@/lib/tools/search";
+import { normalizeSearchText, searchTools } from "@/lib/tools/search";
 
 const categoryNames: Record<string, string> = {
   calculs: "Calculs",
@@ -18,6 +18,26 @@ type ToolSearchProps = {
   placeholder?: string;
 };
 
+function HighlightMatch({ text, query }: { text: string; query: string }) {
+  const normalizedQuery = normalizeSearchText(query);
+  if (!normalizedQuery) return <>{text}</>;
+
+  const normalizedText = normalizeSearchText(text);
+  const matchIndex = normalizedText.indexOf(normalizedQuery);
+
+  if (matchIndex < 0) return <>{text}</>;
+
+  return (
+    <>
+      {text.slice(0, matchIndex)}
+      <mark className="rounded bg-[var(--accent-soft)] px-0.5 text-[var(--foreground)]">
+        {text.slice(matchIndex, matchIndex + normalizedQuery.length)}
+      </mark>
+      {text.slice(matchIndex + normalizedQuery.length)}
+    </>
+  );
+}
+
 export default function ToolSearch({
   className = "",
   placeholder = "Que recherchez-vous ?",
@@ -31,11 +51,39 @@ export default function ToolSearch({
   const showResults = isFocused && query.trim().length > 0;
   const locale = pathname.split("/")[1] || "fr";
 
+  useEffect(() => {
+    function handlePointerDown(event: PointerEvent) {
+      const target = event.target;
+      if (!(target instanceof Node)) return;
+      const search = document.getElementById("tool-search-container");
+      if (search && !search.contains(target)) {
+        setIsFocused(false);
+        setActiveIndex(-1);
+      }
+    }
+
+    document.addEventListener("pointerdown", handlePointerDown);
+    return () => document.removeEventListener("pointerdown", handlePointerDown);
+  }, []);
+
   function getToolHref(slug: string, categoryId: string) {
     return `/${locale}/outils/${categoryId}/${slug}`;
   }
 
+  function openResult(index: number) {
+    const result = results[index];
+    if (!result) return;
+
+    window.location.href = getToolHref(result.tool.slug, result.tool.categoryId);
+  }
+
   function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
+    if (event.key === "Escape") {
+      setIsFocused(false);
+      setActiveIndex(-1);
+      return;
+    }
+
     if (!showResults || results.length === 0) return;
 
     if (event.key === "ArrowDown") {
@@ -48,22 +96,14 @@ export default function ToolSearch({
       setActiveIndex((index) => (index <= 0 ? results.length - 1 : index - 1));
     }
 
-    if (event.key === "Enter" && activeIndex >= 0) {
+    if (event.key === "Enter") {
       event.preventDefault();
-      window.location.href = getToolHref(
-        results[activeIndex].tool.slug,
-        results[activeIndex].tool.categoryId,
-      );
-    }
-
-    if (event.key === "Escape") {
-      setIsFocused(false);
-      setActiveIndex(-1);
+      openResult(activeIndex >= 0 ? activeIndex : 0);
     }
   }
 
   return (
-    <div className={`relative ${className}`}>
+    <div id="tool-search-container" className={`relative ${className}`}>
       <label htmlFor="tool-search" className="sr-only">
         Rechercher un outil
       </label>
@@ -97,7 +137,6 @@ export default function ToolSearch({
             setActiveIndex(-1);
           }}
           onFocus={() => setIsFocused(true)}
-          onBlur={() => window.setTimeout(() => setIsFocused(false), 120)}
           onKeyDown={handleKeyDown}
           className="min-w-0 flex-1 bg-transparent px-2 py-3 text-base text-[var(--foreground)] outline-none placeholder:text-[var(--muted)]"
         />
@@ -109,6 +148,7 @@ export default function ToolSearch({
             onClick={() => {
               setQuery("");
               setActiveIndex(-1);
+              setIsFocused(true);
             }}
             className="rounded-lg px-3 py-2 text-lg text-[var(--muted)] transition-colors hover:bg-[var(--background)] hover:text-[var(--foreground)]"
             aria-label="Effacer la recherche"
@@ -120,15 +160,9 @@ export default function ToolSearch({
         <button
           type="button"
           onMouseDown={(event) => event.preventDefault()}
-          onClick={() => {
-            if (results.length > 0) {
-              window.location.href = getToolHref(
-                results[0].tool.slug,
-                results[0].tool.categoryId,
-              );
-            }
-          }}
-          className="hidden rounded-xl bg-[var(--accent)] px-5 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90 sm:block"
+          onClick={() => openResult(0)}
+          disabled={results.length === 0}
+          className="hidden rounded-xl bg-[var(--accent)] px-5 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50 sm:block"
         >
           Rechercher
         </button>
@@ -142,9 +176,14 @@ export default function ToolSearch({
         >
           {results.length > 0 ? (
             <>
-              <p className="px-3 pb-2 pt-1 text-xs font-semibold uppercase tracking-wider text-[var(--muted)]">
-                Suggestions
-              </p>
+              <div className="flex items-center justify-between px-3 pb-2 pt-1">
+                <p className="text-xs font-semibold uppercase tracking-wider text-[var(--muted)]">
+                  Suggestions
+                </p>
+                <p className="text-xs text-[var(--muted)]">
+                  {results.length} résultat{results.length > 1 ? "s" : ""}
+                </p>
+              </div>
               {results.map(({ tool }, index) => (
                 <a
                   key={tool.id}
@@ -164,7 +203,7 @@ export default function ToolSearch({
                   </span>
                   <span className="min-w-0 flex-1">
                     <span className="block truncate text-sm font-semibold text-[var(--foreground)]">
-                      {tool.name}
+                      <HighlightMatch text={tool.name} query={query} />
                     </span>
                     <span className="mt-0.5 block truncate text-xs text-[var(--muted)]">
                       {categoryNames[tool.categoryId] ?? "Outil"} · {tool.description}
@@ -177,7 +216,7 @@ export default function ToolSearch({
           ) : (
             <div className="px-4 py-5 text-center">
               <p className="text-sm font-medium text-[var(--foreground)]">
-                Aucun outil trouvé
+                Aucun outil trouvé pour « {query.trim()} »
               </p>
               <p className="mt-1 text-xs text-[var(--muted)]">
                 Essayez « TVA », « internet », « vidéo » ou « âge ».
