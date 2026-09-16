@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import ToolCard from "@/components/tools/ToolCard";
 import { categories } from "@/lib/tools/categories";
 import { tools } from "@/lib/tools/tools";
+import { locales } from "@/lib/i18n/config";
 
 const categoryNames: Record<string, string> = {
   calculs: "Calculs",
@@ -14,11 +15,13 @@ const categoryNames: Record<string, string> = {
 };
 
 export function generateStaticParams() {
-  return categories
-    .filter((category) =>
-      tools.some((tool) => tool.categoryId === category.id && tool.available),
-    )
-    .map((category) => ({ category: category.id }));
+  return locales.flatMap((locale) =>
+    categories
+      .filter((category) =>
+        tools.some((tool) => tool.categoryId === category.id && tool.available),
+      )
+      .map((category) => ({ locale, category: category.id })),
+  );
 }
 
 export default async function CategoryPage({
