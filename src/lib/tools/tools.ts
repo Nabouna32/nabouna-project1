@@ -19,7 +19,7 @@ export const tools: Tool[] = [
     name: "Calculateur de réduction",
     description: "Calculez le prix après une réduction et le montant économisé.",
     keywords: ["remise", "promotion", "solde", "prix", "économie"],
-    available: false,
+    available: true,
   },
   {
     id: "tva",
