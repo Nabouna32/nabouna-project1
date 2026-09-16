@@ -5,4 +5,5 @@ export type Tool = {
   icon: string;
   name: string;
   description: string;
+  keywords?: string[];
 };
