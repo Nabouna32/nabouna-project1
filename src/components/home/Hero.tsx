@@ -2,7 +2,7 @@ import ToolSearch from "@/components/tools/ToolSearch";
 
 export default function Hero() {
   return (
-    <section className="relative overflow-hidden">
+    <section className="relative">
       <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-80 bg-[radial-gradient(circle_at_50%_0%,var(--accent-soft),transparent_65%)]" />
 
       <div className="mx-auto max-w-5xl px-4 pb-16 pt-20 text-center sm:px-6 sm:pb-20 sm:pt-24 lg:px-8">
@@ -20,7 +20,7 @@ export default function Hero() {
           Des outils gratuits, rapides et faciles à utiliser.
         </p>
 
-        <ToolSearch className="mx-auto mt-10 max-w-2xl" />
+        <ToolSearch className="relative z-40 mx-auto mt-10 max-w-2xl" />
 
         <p className="mt-3 text-xs text-[var(--muted)]">
           Essayez : TVA, remise, internet, vidéo, âge...
