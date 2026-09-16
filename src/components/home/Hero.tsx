@@ -1,3 +1,5 @@
+import ToolSearch from "@/components/tools/ToolSearch";
+
 export default function Hero() {
   return (
     <section className="relative overflow-hidden">
@@ -18,35 +20,11 @@ export default function Hero() {
           Des outils gratuits, rapides et faciles à utiliser.
         </p>
 
-        <div className="mx-auto mt-10 max-w-2xl">
-          <label htmlFor="tool-search" className="sr-only">
-            Rechercher un outil
-          </label>
+        <ToolSearch className="mx-auto mt-10 max-w-2xl" />
 
-          <div className="flex items-center rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-2 shadow-lg shadow-black/5 transition-shadow focus-within:ring-2 focus-within:ring-[var(--accent)]">
-            <span className="px-3 text-xl text-[var(--muted)]" aria-hidden="true">
-              🔍
-            </span>
-
-            <input
-              id="tool-search"
-              type="search"
-              placeholder="Que recherchez-vous ?"
-              className="min-w-0 flex-1 bg-transparent px-2 py-3 text-base text-[var(--foreground)] outline-none placeholder:text-[var(--muted)]"
-            />
-
-            <button
-              type="button"
-              className="hidden rounded-xl bg-[var(--accent)] px-5 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90 sm:block"
-            >
-              Rechercher
-            </button>
-          </div>
-
-          <p className="mt-3 text-xs text-[var(--muted)]">
-            Exemple : TVA, pourcentage, âge, vitesse de téléchargement...
-          </p>
-        </div>
+        <p className="mt-3 text-xs text-[var(--muted)]">
+          Essayez : TVA, remise, internet, vidéo, âge...
+        </p>
       </div>
     </section>
   );
