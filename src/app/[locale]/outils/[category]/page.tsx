@@ -15,7 +15,9 @@ const categoryNames: Record<string, string> = {
 
 export function generateStaticParams() {
   return categories
-    .filter((category) => tools.some((tool) => tool.categoryId === category.id))
+    .filter((category) =>
+      tools.some((tool) => tool.categoryId === category.id && tool.available),
+    )
     .map((category) => ({ category: category.id }));
 }
 
@@ -26,7 +28,9 @@ export default async function CategoryPage({
 }) {
   const { locale, category: categoryId } = await params;
   const category = categories.find((item) => item.id === categoryId);
-  const categoryTools = tools.filter((tool) => tool.categoryId === categoryId);
+  const categoryTools = tools.filter(
+    (tool) => tool.categoryId === categoryId && tool.available,
+  );
 
   if (!category || categoryTools.length === 0) {
     notFound();
