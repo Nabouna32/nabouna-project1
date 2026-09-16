@@ -34,11 +34,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Install Playwright test runner
+        run: npm install --no-save --package-lock=false @playwright/test@1.63.0
+
       - name: Build
         run: npm run build
 
       - name: Install Playwright Chromium
-        run: npx --yes playwright@1.63.0 install --with-deps chromium
+        run: npx playwright install --with-deps chromium
 
       - name: Start Next.js
         run: npm run start > /tmp/utiluna-next.log 2>&1 &
@@ -47,7 +50,7 @@ jobs:
         run: npx --yes wait-on@9.0.1 http://127.0.0.1:3000/fr
 
       - name: Run browser smoke tests
-        run: npx --yes @playwright/test@1.63.0 test e2e/smoke.spec.mjs
+        run: npx playwright test e2e/smoke.spec.mjs
 
       - name: Upload Playwright report on failure
         if: failure()
