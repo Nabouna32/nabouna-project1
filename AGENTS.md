@@ -41,6 +41,28 @@ A successful local build is useful but does not replace checking the resulting V
 
 For UI changes, use browser verification when practical and inspect the deployed preview/production result when relevant.
 
+A pull request is not considered ready to merge while its required validation is failing. Do not merge known-broken work into `main` merely to unblock another change.
+
+Prefer short-lived, coherent pull requests. Merge stable work regularly rather than allowing many long-lived branches to accumulate. When branches overlap or fall behind `main`, update the branch and resolve conflicts before merging so integration problems are handled early.
+
+For larger or risky changes, the preferred path is:
+
+1. implement on a dedicated branch;
+2. validate locally;
+3. validate the GitHub Actions checks;
+4. validate the Vercel preview;
+5. perform browser/functional verification when relevant;
+6. merge into `main` only once the change is coherent and validated;
+7. verify the resulting production deployment when applicable.
+
+## Developer complexity vs user simplicity
+
+- Complexity is acceptable on the development side when it provides useful automation, diagnostics, testing, observability, safety, or maintenance capabilities.
+- Prefer a powerful and well-automated developer cockpit when it materially improves reliability or productivity, even if the internal tooling becomes sophisticated.
+- Do not expose that internal complexity to end users unnecessarily.
+- The final user experience should remain clean, simple, understandable, and focused on the user's task.
+- When choosing between two technically sound solutions, prefer the one that hides implementation complexity behind a simple user-facing experience.
+
 ## Next.js
 
 - This is a Next.js App Router project. Follow the current Next.js guidance installed in `node_modules/next/dist/docs/` rather than relying on outdated conventions.
@@ -49,7 +71,8 @@ For UI changes, use browser verification when practical and inspect the deployed
 
 ## Product and UX decisions
 
-- Prefer simple, maintainable solutions over unnecessary abstraction.
+- Prefer simple, maintainable user-facing solutions over unnecessary product abstraction.
+- Internal developer tooling may be significantly more sophisticated when that complexity remains hidden from users and provides practical value.
 - If an idea is clearly useful and low-risk, validate it in the product rather than leaving it as an untracked suggestion.
 - Every proposed improvement must end in an explicit decision: implement now, modify before implementation, reject with a reason, or deliberately defer with a reason.
 - Do not introduce product behavior solely to satisfy a technical preference; consider the user experience and maintainability together.
