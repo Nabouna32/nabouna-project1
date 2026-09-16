@@ -31,12 +31,16 @@ Avoid accumulating unrelated, untested changes.
 
 ## Validation
 
-The repository uses GitHub Actions as the baseline CI gate. The CI workflow runs on pushes to `main` and pull requests targeting `main` and currently validates:
+The repository uses GitHub Actions as the baseline CI gate. The CI workflow runs on pushes to `main` and pull requests targeting `main` and currently validates, on Node 24.21.0 and Node 26.8.2:
 
 - `npm ci`
+- `npm audit --audit-level=high`
 - `npm run lint`
 - `npm run typecheck`
+- `npm test`
 - `npm run build`
+
+Node 24 is the production/Vercel runtime. Node 26 is a compatibility check only and must not be treated as the deployment runtime until the deployment platform supports it for normal Builds/Functions.
 
 A successful local build is useful but does not replace checking the resulting Vercel deployment when a change affects runtime or UI behavior.
 
@@ -76,6 +80,14 @@ For larger or risky changes, the preferred path is:
 - TypeScript is currently pinned to the 6.0.x line, specifically `6.0.3` via `~6.0.3`.
 - The current `eslint-config-next` dependency resolves `typescript-eslint` 8.70.0, whose documented TypeScript support is `>=4.8.4 <6.1.0`. Keep TypeScript below 6.1 until that tooling chain explicitly supports a newer line.
 - TypeScript 7 is therefore not enabled yet. Do not force it with peer-dependency bypasses or unrelated overrides. Revisit the upgrade when the complete Next.js/ESLint/typescript-eslint chain supports it cleanly, then validate lint, typecheck, build, preview, and production before merging.
+
+## Dependency management
+
+- Dependabot runs weekly for npm and GitHub Actions dependencies.
+- Minor and patch updates are grouped separately for production and development npm dependencies, and GitHub Actions minor/patch updates are grouped together to reduce PR noise.
+- Major dependency updates remain isolated so that compatibility changes can be tested and reviewed independently.
+- Dependabot PRs must pass the same CI validation as normal changes before merging.
+- Security updates are not to be blocked merely because they do not fit the normal version-update grouping.
 
 ## Product and UX decisions
 
