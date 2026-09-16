@@ -15,8 +15,8 @@ test("calculates the discounted price", () => {
 });
 
 test("supports decimal prices and rates", () => {
-  assert.equal(calculateDiscountAmount(99.9, 12.5), 12.4875);
-  assert.equal(calculateDiscountedPrice(99.9, 12.5), 87.4125);
+  assert.ok(Math.abs(calculateDiscountAmount(99.9, 12.5) - 12.4875) < Number.EPSILON);
+  assert.ok(Math.abs(calculateDiscountedPrice(99.9, 12.5) - 87.4125) < Number.EPSILON);
 });
 
 test("validates discount rates between 0 and 100", () => {
