@@ -1,3 +1,4 @@
+import ToolSearch from "@/components/tools/ToolSearch";
 import ToolCard from "@/components/tools/ToolCard";
 import { categories } from "@/lib/tools/categories";
 import { tools } from "@/lib/tools/tools";
@@ -31,6 +32,13 @@ export default function ToolsPage() {
           Retrouvez tous nos outils gratuits pour calculer, convertir et
           simplifier vos tâches du quotidien.
         </p>
+      </div>
+
+      <div className="mt-8 max-w-2xl">
+        <p className="mb-3 text-sm font-semibold text-[var(--foreground)]">
+          Explorer les outils
+        </p>
+        <ToolSearch />
       </div>
 
       <div className="mt-12 space-y-12">
