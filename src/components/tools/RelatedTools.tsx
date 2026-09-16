@@ -19,7 +19,7 @@ export default function RelatedTools({ toolId }: RelatedToolsProps) {
         id="related-tools-title"
         className="text-xl font-bold text-[var(--foreground)] sm:text-2xl"
       >
-        Outils similaires
+        Vous pourriez aussi avoir besoin de
       </h2>
       <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {relatedTools.map((relatedTool) => (
