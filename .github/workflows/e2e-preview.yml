@@ -8,6 +8,7 @@ on:
 permissions:
   contents: read
   deployments: read
+  id-token: write
 
 concurrency:
   group: e2e-preview-${{ github.workflow }}-${{ github.event.pull_request.number }}
@@ -37,6 +38,15 @@ jobs:
 
       - name: Install Playwright Chromium
         run: npx playwright install --with-deps chromium
+
+      - name: Get GitHub Actions OIDC token
+        id: oidc
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const token = await core.getIDToken();
+            core.setSecret(token);
+            core.setOutput("token", token);
 
       - name: Wait for Vercel Preview
         id: preview
@@ -95,6 +105,7 @@ jobs:
       - name: Run browser smoke tests
         env:
           BASE_URL: ${{ steps.preview.outputs.url }}
+          VERCEL_TRUSTED_OIDC_TOKEN: ${{ steps.oidc.outputs.token }}
         run: npx playwright test e2e/smoke.spec.mjs
 
       - name: Upload Playwright report on failure
