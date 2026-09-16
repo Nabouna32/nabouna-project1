@@ -7,14 +7,13 @@ const categoryNames: Record<string, string> = {
   calculs: "Calculs",
   dates: "Dates & temps",
   informatique: "Informatique",
-  images: "Images",
   fichiers: "PDF & fichiers",
   video: "Vidéo",
 };
 
 export default function ToolsPage() {
   const visibleCategories = categories.filter((category) =>
-    tools.some((tool) => tool.categoryId === category.id)
+    tools.some((tool) => tool.categoryId === category.id && tool.available),
   );
 
   return (
@@ -44,7 +43,7 @@ export default function ToolsPage() {
       <div className="mt-12 space-y-12">
         {visibleCategories.map((category) => {
           const categoryTools = tools.filter(
-            (tool) => tool.categoryId === category.id
+            (tool) => tool.categoryId === category.id && tool.available,
           );
 
           return (

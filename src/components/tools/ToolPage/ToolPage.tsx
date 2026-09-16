@@ -5,7 +5,7 @@ type ToolPageProps = {
   icon: string;
   title: string;
   description: string;
-  children: ReactNode;
+  children?: ReactNode;
   content?: ReactNode;
 };
 
@@ -24,7 +24,7 @@ export default function ToolPage({
         description={description}
       />
 
-      <div className="mt-8">{children}</div>
+      {children && <div className="mt-8">{children}</div>}
 
       {content && (
         <div className="mt-16 space-y-12">

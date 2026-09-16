@@ -40,5 +40,7 @@ export const categories: ToolCategory[] = [
 ];
 
 export function getToolCount(categoryId: string): number {
-  return tools.filter((tool) => tool.categoryId === categoryId).length;
+  return tools.filter(
+    (tool) => tool.categoryId === categoryId && tool.available,
+  ).length;
 }
