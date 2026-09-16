@@ -29,6 +29,7 @@ export function searchTools(tools: Tool[], query: string): ToolSearchResult[] {
   const terms = normalizedQuery.split(/\s+/).filter(Boolean);
 
   return tools
+    .filter((tool) => tool.available)
     .map((tool) => {
       const name = normalizeSearchText(tool.name);
       const description = normalizeSearchText(tool.description);
