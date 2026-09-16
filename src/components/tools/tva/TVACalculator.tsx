@@ -28,8 +28,7 @@ export default function TVACalculator() {
     rateValue.trim() !== "" &&
     Number.isFinite(price) &&
     Number.isFinite(rate);
-  const valid =
-    hasValues && price >= 0 && isValidVatRate(rate) && !(mode === "ttc-to-ht" && rate === -100);
+  const valid = hasValues && price >= 0 && isValidVatRate(rate);
 
   const ht = valid ? (mode === "ht-to-ttc" ? price : calculateHt(price, rate)) : null;
   const ttc = valid ? (mode === "ht-to-ttc" ? calculateTtc(price, rate) : price) : null;
