@@ -6,6 +6,7 @@ type ToolPageProps = {
   title: string;
   description: string;
   children: ReactNode;
+  content?: ReactNode;
 };
 
 export default function ToolPage({
@@ -13,16 +14,23 @@ export default function ToolPage({
   title,
   description,
   children,
+  content,
 }: ToolPageProps) {
   return (
-    <main className="mx-auto max-w-5xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
+    <main className="mx-auto max-w-5xl px-4 py-8 sm:px-6 sm:py-10 lg:px-8">
       <ToolPageHeader
         icon={icon}
         title={title}
         description={description}
       />
 
-      <div className="mt-10">{children}</div>
+      <div className="mt-8">{children}</div>
+
+      {content && (
+        <div className="mt-16 space-y-12">
+          {content}
+        </div>
+      )}
     </main>
   );
 }
