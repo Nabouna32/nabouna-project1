@@ -60,6 +60,14 @@ For larger or risky changes, the preferred path is:
 6. merge into `main` only once the change is coherent and validated;
 7. verify the resulting production deployment when applicable.
 
+## Browser and E2E validation
+
+- Playwright is used for browser-level smoke/E2E validation.
+- The smoke suite covers critical availability of the main French, tools, and English routes. Keep this baseline small and reliable.
+- For important user-facing features, add targeted E2E coverage only after the feature and its user flow are sufficiently stable; do not create large test suites for unfinished product areas.
+- Preview E2E tests run against the real Vercel Preview deployment, including protected previews through the configured GitHub Actions OIDC trusted-source mechanism. Do not weaken Deployment Protection just to make tests pass.
+- A passing local/browser test does not replace testing the real Preview when the change affects deployment/runtime behavior.
+
 ## Developer complexity vs user simplicity
 
 - Complexity is acceptable on the development side when it provides useful automation, diagnostics, testing, observability, safety, or maintenance capabilities.
