@@ -20,6 +20,8 @@ export default function ReductionPage() {
         <>
           <ReductionCalculator />
 
+          <RelatedTools toolId="reduction" />
+
           <ToolSection title="🏷️ Comment calculer une réduction ?">
             <p>
               Pour calculer une réduction, on commence par déterminer le montant
@@ -55,8 +57,6 @@ export default function ReductionPage() {
               retirés. Le prix final représente donc 80 % du prix de départ.
             </p>
           </ToolSection>
-
-          <RelatedTools toolId="reduction" />
 
           <div className="mt-8 flex justify-start">
             <Link
