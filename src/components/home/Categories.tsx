@@ -23,7 +23,7 @@ export default function Categories() {
         </p>
 
         <h2 className="mt-2 text-2xl font-bold tracking-tight text-[var(--foreground)] sm:text-3xl">
-          Trouvez l'outil dont vous avez besoin
+          Trouvez l’outil dont vous avez besoin
         </h2>
 
         <p className="mt-3 max-w-2xl text-[var(--muted)]">

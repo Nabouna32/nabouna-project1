@@ -9,7 +9,7 @@ export default function Hero() {
         </div>
 
         <h1 className="text-4xl font-bold tracking-tight text-[var(--foreground)] sm:text-5xl lg:text-6xl">
-          Trouvez l'outil qu'il vous faut.
+          Trouvez l’outil qu’il vous faut.
         </h1>
 
         <p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-[var(--muted)] sm:text-lg sm:leading-8">
