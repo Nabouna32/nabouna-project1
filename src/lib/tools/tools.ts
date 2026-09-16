@@ -8,6 +8,7 @@ export const tools: Tool[] = [
     icon: "📊",
     name: "Calculateur de pourcentage",
     description: "Calculez facilement un pourcentage, une évolution ou une différence.",
+    keywords: ["%", "évolution", "différence", "variation", "taux"],
   },
   {
     id: "reduction",
@@ -16,6 +17,7 @@ export const tools: Tool[] = [
     icon: "🏷️",
     name: "Calculateur de réduction",
     description: "Calculez le prix après une réduction et le montant économisé.",
+    keywords: ["remise", "promotion", "solde", "prix", "économie"],
   },
   {
     id: "tva",
@@ -24,6 +26,7 @@ export const tools: Tool[] = [
     icon: "💶",
     name: "Calculateur TVA HT / TTC",
     description: "Convertissez facilement un prix HT en TTC et inversement.",
+    keywords: ["taxe", "hors taxe", "toutes taxes", "prix"],
   },
   {
     id: "regle-de-trois",
@@ -32,6 +35,7 @@ export const tools: Tool[] = [
     icon: "⚖️",
     name: "Règle de trois",
     description: "Résolvez rapidement vos calculs de proportionnalité.",
+    keywords: ["proportion", "proportionnalité", "ratio"],
   },
   {
     id: "age",
@@ -40,6 +44,7 @@ export const tools: Tool[] = [
     icon: "🎂",
     name: "Calculateur d'âge",
     description: "Calculez précisément votre âge à partir d'une date de naissance.",
+    keywords: ["anniversaire", "naissance", "date"],
   },
   {
     id: "duree",
@@ -48,6 +53,7 @@ export const tools: Tool[] = [
     icon: "⏱️",
     name: "Calculateur de durée",
     description: "Calculez la durée entre deux dates ou deux horaires.",
+    keywords: ["temps", "date", "heures", "jours", "intervalle"],
   },
   {
     id: "vitesse-telechargement",
@@ -56,6 +62,7 @@ export const tools: Tool[] = [
     icon: "🚀",
     name: "Mbps ↔ Mo/s",
     description: "Convertissez une vitesse Internet entre Mbps et Mo/s.",
+    keywords: ["internet", "débit", "connexion", "megabit", "mégaoctet"],
   },
   {
     id: "temps-telechargement",
@@ -64,6 +71,7 @@ export const tools: Tool[] = [
     icon: "⏳",
     name: "Temps de téléchargement",
     description: "Estimez le temps nécessaire pour télécharger un fichier.",
+    keywords: ["download", "internet", "débit", "fichier", "durée"],
   },
   {
     id: "taille-fichier",
@@ -72,6 +80,7 @@ export const tools: Tool[] = [
     icon: "💾",
     name: "Calculateur de taille de fichier",
     description: "Estimez la taille d'un fichier selon sa durée et son débit.",
+    keywords: ["poids", "taille", "stockage", "vidéo", "audio"],
   },
   {
     id: "convertisseur-taille",
@@ -80,6 +89,7 @@ export const tools: Tool[] = [
     icon: "🔄",
     name: "Convertisseur de taille",
     description: "Convertissez facilement Ko, Mo, Go, To et autres unités.",
+    keywords: ["ko", "mo", "go", "to", "octets", "stockage"],
   },
   {
     id: "mots-caracteres",
@@ -88,6 +98,7 @@ export const tools: Tool[] = [
     icon: "🔤",
     name: "Compteur de mots et caractères",
     description: "Comptez les mots, caractères, espaces et lignes d'un texte.",
+    keywords: ["texte", "lettres", "compter", "ligne", "paragraphes"],
   },
   {
     id: "bitrate-video",
@@ -96,5 +107,6 @@ export const tools: Tool[] = [
     icon: "🎬",
     name: "Calculateur bitrate vidéo",
     description: "Calculez le bitrate ou la taille approximative d'une vidéo.",
+    keywords: ["vidéo", "qualité", "débit", "encodage", "compression"],
   },
 ];
