@@ -1,6 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import {
+  calculateDifference,
+  calculateEvolution,
+  calculatePercentage,
+} from "@/lib/percentage";
 
 type Mode = "percentage" | "evolution" | "difference";
 
@@ -29,24 +34,22 @@ export default function PercentageCalculator() {
 
   if (hasValues) {
     if (mode === "percentage") {
-      result = (first / 100) * second;
+      result = calculatePercentage(first, second);
     }
 
     if (mode === "evolution") {
-      if (second === 0) {
+      result = calculateEvolution(first, second);
+
+      if (result === null) {
         error = "La valeur de départ ne peut pas être égale à 0.";
-      } else {
-        result = ((first - second) / second) * 100;
       }
     }
 
     if (mode === "difference") {
-      const average = (Math.abs(first) + Math.abs(second)) / 2;
+      result = calculateDifference(first, second);
 
-      if (average === 0) {
+      if (result === null) {
         error = "Les deux valeurs ne peuvent pas être égales à 0.";
-      } else {
-        result = (Math.abs(first - second) / average) * 100;
       }
     }
   }
