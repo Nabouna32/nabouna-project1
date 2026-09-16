@@ -20,6 +20,8 @@ export default function PercentagePage() {
         <>
           <PercentageCalculator />
 
+          <RelatedTools toolId="pourcentage" />
+
           <ToolSection title="🧮 Comment calculer un pourcentage ?">
             <p>
               Un pourcentage permet d'exprimer une proportion par rapport à
@@ -124,8 +126,6 @@ export default function PercentagePage() {
               </div>
             </div>
           </details>
-
-          <RelatedTools toolId="pourcentage" />
 
           <div className="mt-8 flex justify-start">
             <Link
