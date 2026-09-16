@@ -35,6 +35,7 @@ The repository uses GitHub Actions as the baseline CI gate. The CI workflow runs
 
 - `npm ci`
 - `npm run lint`
+- `npm run typecheck`
 - `npm run build`
 
 A successful local build is useful but does not replace checking the resulting Vercel deployment when a change affects runtime or UI behavior.
@@ -68,6 +69,12 @@ For larger or risky changes, the preferred path is:
 - This is a Next.js App Router project. Follow the current Next.js guidance installed in `node_modules/next/dist/docs/` rather than relying on outdated conventions.
 - Preserve the generated Next.js agent-rules block at the top of this file.
 - Keep the existing TypeScript path alias `@/*` aligned with `src/*` unless there is a deliberate architectural reason to change it.
+
+## TypeScript toolchain
+
+- Runtime Node.js is pinned to the Node 24 LTS line; do not jump to a Current release merely because a newer major exists.
+- TypeScript 7 is not enabled yet. The current blocker is ecosystem tooling, not Utiluna application source code: the installed `eslint-config-next` dependency resolves `typescript-eslint` 8.70.0, whose documented TypeScript support currently stops below 6.1.
+- Do not force TypeScript 7 with peer-dependency bypasses or unrelated overrides. Revisit the upgrade when the complete Next.js/ESLint/typescript-eslint chain supports it cleanly, then validate lint, typecheck, build, preview, and production before merging.
 
 ## Product and UX decisions
 
