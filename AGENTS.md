@@ -73,8 +73,9 @@ For larger or risky changes, the preferred path is:
 ## TypeScript toolchain
 
 - Runtime Node.js is pinned to the Node 24 LTS line; do not jump to a Current release merely because a newer major exists.
-- TypeScript 7 is not enabled yet. The current blocker is ecosystem tooling, not Utiluna application source code: the installed `eslint-config-next` dependency resolves `typescript-eslint` 8.70.0, whose documented TypeScript support currently stops below 6.1.
-- Do not force TypeScript 7 with peer-dependency bypasses or unrelated overrides. Revisit the upgrade when the complete Next.js/ESLint/typescript-eslint chain supports it cleanly, then validate lint, typecheck, build, preview, and production before merging.
+- TypeScript is currently pinned to the 6.0.x line, specifically `6.0.3` via `~6.0.3`.
+- The current `eslint-config-next` dependency resolves `typescript-eslint` 8.70.0, whose documented TypeScript support is `>=4.8.4 <6.1.0`. Keep TypeScript below 6.1 until that tooling chain explicitly supports a newer line.
+- TypeScript 7 is therefore not enabled yet. Do not force it with peer-dependency bypasses or unrelated overrides. Revisit the upgrade when the complete Next.js/ESLint/typescript-eslint chain supports it cleanly, then validate lint, typecheck, build, preview, and production before merging.
 
 ## Product and UX decisions
 
