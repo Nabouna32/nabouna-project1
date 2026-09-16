@@ -31,3 +31,5 @@ jobs:
             git commit -m "chore: regenerate package lockfile for TypeScript 6"
             git push origin chore/upgrade-typescript-6
           fi
+
+# trigger lockfile generation
