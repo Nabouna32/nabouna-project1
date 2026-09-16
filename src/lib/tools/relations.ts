@@ -1,5 +1,5 @@
-import type { Tool } from "@/lib/tools/types";
-import { normalizeSearchText } from "@/lib/tools/search";
+import type { Tool } from "./types";
+import { normalizeSearchText } from "./search";
 
 function getTerms(tool: Tool): string[] {
   return [tool.name, ...(tool.keywords ?? [])]
