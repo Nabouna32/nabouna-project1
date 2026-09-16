@@ -1,3 +1,4 @@
+import Link from "next/link";
 import ToolPage from "@/components/tools/ToolPage/ToolPage";
 import ToolSection from "@/components/tools/ToolPage/ToolSection";
 import PercentageCalculator from "@/components/tools/percentage/PercentageCalculator";
@@ -17,7 +18,7 @@ export default function PercentagePage() {
       content={
         <><ToolSection title="Vous pourriez aussi avoir besoin de">
   <div className="grid gap-4 sm:grid-cols-2">
-    <a
+    <Link
       href="/fr/outils/calculs/reduction"
       className="group rounded-2xl border border-[var(--border)] bg-[var(--background)] p-5 transition hover:-translate-y-0.5 hover:border-[var(--accent)]/40 hover:shadow-sm"
     >
@@ -36,9 +37,9 @@ export default function PercentagePage() {
           </p>
         </div>
       </div>
-    </a>
+    </Link>
 
-    <a
+    <Link
       href="/fr/outils/calculs/tva"
       className="group rounded-2xl border border-[var(--border)] bg-[var(--background)] p-5 transition hover:-translate-y-0.5 hover:border-[var(--accent)]/40 hover:shadow-sm"
     >
@@ -57,7 +58,7 @@ export default function PercentagePage() {
           </p>
         </div>
       </div>
-    </a>
+    </Link>
   </div>
 </ToolSection>
           <ToolSection title="🧮 Comment calculer un pourcentage ?">
