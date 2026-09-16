@@ -1,6 +1,7 @@
 import Link from "next/link";
 import ToolPage from "@/components/tools/ToolPage/ToolPage";
 import ToolSection from "@/components/tools/ToolPage/ToolSection";
+import RelatedTools from "@/components/tools/RelatedTools";
 import PercentageCalculator from "@/components/tools/percentage/PercentageCalculator";
 
 export const metadata = {
@@ -122,6 +123,9 @@ export default function PercentagePage() {
             </div>
           </details>
 
+          <PercentageCalculator />
+          <RelatedTools toolId="pourcentage" />
+
           <div className="mt-8 flex justify-start">
             <Link
               href="/fr/outils"
@@ -130,8 +134,6 @@ export default function PercentagePage() {
               ← Retour aux outils
             </Link>
           </div>
-
-          <PercentageCalculator />
         </>
       }
     />
