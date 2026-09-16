@@ -2,6 +2,19 @@ import { test, expect } from "@playwright/test";
 
 const baseUrl = process.env.BASE_URL ?? "http://127.0.0.1:3000";
 
+// Protected Vercel previews can be accessed by CI through a short-lived
+// GitHub Actions OIDC token when the project authorizes GitHub Actions as a
+// Trusted Source. Local browser tests remain unchanged when no token exists.
+test.beforeEach(async ({ page }) => {
+  const token = process.env.VERCEL_TRUSTED_OIDC_TOKEN;
+
+  if (token) {
+    await page.setExtraHTTPHeaders({
+      "x-vercel-trusted-oidc-idp-token": token,
+    });
+  }
+});
+
 test("French homepage renders", async ({ page }) => {
   await page.goto(`${baseUrl}/fr`, { waitUntil: "networkidle" });
 
