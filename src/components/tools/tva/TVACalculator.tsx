@@ -45,6 +45,7 @@ export default function TVACalculator() {
         <div className="inline-flex rounded-xl border border-[var(--border)] bg-[var(--background)] p-1">
           <button
             type="button"
+            aria-pressed={mode === "ht-to-ttc"}
             onClick={() => setMode("ht-to-ttc")}
             className={`rounded-lg px-3 py-2 text-sm font-medium transition ${
               mode === "ht-to-ttc"
@@ -56,6 +57,7 @@ export default function TVACalculator() {
           </button>
           <button
             type="button"
+            aria-pressed={mode === "ttc-to-ht"}
             onClick={() => setMode("ttc-to-ht")}
             className={`rounded-lg px-3 py-2 text-sm font-medium transition ${
               mode === "ttc-to-ht"
@@ -143,7 +145,7 @@ export default function TVACalculator() {
 
       {hasValues && !valid && (
         <p className="mt-4 text-sm font-medium text-[var(--foreground)]">
-          Saisissez un prix positif et un taux de TVA compris entre 0 et 100 %.
+          Saisissez un prix supérieur ou égal à 0 et un taux de TVA compris entre 0 et 100 %.
         </p>
       )}
 
