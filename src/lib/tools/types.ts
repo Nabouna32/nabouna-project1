@@ -6,5 +6,5 @@ export type Tool = {
   name: string;
   description: string;
   keywords?: string[];
-  available?: boolean;
+  available: boolean;
 };
