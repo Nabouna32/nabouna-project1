@@ -12,6 +12,7 @@ const tools = [
     name: "Calculateur de durée",
     description: "Calculez la durée entre deux dates.",
     keywords: ["temps", "intervalle"],
+    available: true,
   },
   {
     id: "tva",
@@ -21,6 +22,7 @@ const tools = [
     name: "Calculateur TVA HT / TTC",
     description: "Convertissez un prix HT en TTC.",
     keywords: ["taxe", "prix"],
+    available: true,
   },
   {
     id: "internet",
@@ -30,6 +32,7 @@ const tools = [
     name: "Mbps ↔ Mo/s",
     description: "Convertissez une vitesse Internet.",
     keywords: ["débit", "connexion"],
+    available: true,
   },
 ];
 
