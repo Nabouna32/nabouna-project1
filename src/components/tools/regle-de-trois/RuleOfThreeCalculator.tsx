@@ -1,6 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import { CalculatorActions } from "@/components/tools/calculator/CalculatorActions";
+import { CalculatorField } from "@/components/tools/calculator/CalculatorField";
+import { CalculatorResult } from "@/components/tools/calculator/CalculatorResult";
+import { CalculatorShell } from "@/components/tools/calculator/CalculatorShell";
 import {
   calculateRuleOfThree,
   isValidRuleOfThreeInput,
@@ -37,84 +41,42 @@ export default function RuleOfThreeCalculator() {
   }
 
   return (
-    <section className="rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm sm:p-8">
-      <div className="flex items-center justify-end">
-        {(firstValue !== "" || firstResult !== "" || secondValue !== "") && (
-          <button
-            type="button"
-            onClick={clearValues}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 py-1.5 text-sm font-medium text-[var(--muted)] transition hover:border-[var(--accent)]/40 hover:text-[var(--foreground)]"
-          >
-            <span aria-hidden="true">↺</span>
-            Effacer
-          </button>
-        )}
-      </div>
+    <CalculatorShell>
+      <CalculatorActions
+        showClear={firstValue !== "" || firstResult !== "" || secondValue !== ""}
+        onClear={clearValues}
+      />
 
       <div className="mt-2 grid gap-5 sm:grid-cols-2">
-        <div>
-          <label
-            htmlFor="rule-first-value"
-            className="mb-2 block text-sm font-medium text-[var(--foreground)]"
-          >
-            Première valeur
-          </label>
-          <input
-            id="rule-first-value"
-            type="number"
-            inputMode="decimal"
-            step="any"
-            value={firstValue}
-            onChange={(event) => setFirstValue(event.target.value)}
-            placeholder="Ex. 4"
-            className="w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3 text-[var(--foreground)] outline-none transition focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/20"
-          />
-        </div>
+        <CalculatorField
+          label="Première valeur"
+          inputId="rule-first-value"
+          value={firstValue}
+          onChange={(event) => setFirstValue(event.target.value)}
+          placeholder="Ex. 4"
+        />
 
-        <div>
-          <label
-            htmlFor="rule-first-result"
-            className="mb-2 block text-sm font-medium text-[var(--foreground)]"
-          >
-            Valeur correspondante
-          </label>
-          <input
-            id="rule-first-result"
-            type="number"
-            inputMode="decimal"
-            step="any"
-            value={firstResult}
-            onChange={(event) => setFirstResult(event.target.value)}
-            placeholder="Ex. 10"
-            className="w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3 text-[var(--foreground)] outline-none transition focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/20"
-          />
-        </div>
+        <CalculatorField
+          label="Valeur correspondante"
+          inputId="rule-first-result"
+          value={firstResult}
+          onChange={(event) => setFirstResult(event.target.value)}
+          placeholder="Ex. 10"
+        />
 
-        <div>
-          <label
-            htmlFor="rule-second-value"
-            className="mb-2 block text-sm font-medium text-[var(--foreground)]"
-          >
-            Deuxième valeur
-          </label>
-          <input
-            id="rule-second-value"
-            type="number"
-            inputMode="decimal"
-            step="any"
-            value={secondValue}
-            onChange={(event) => setSecondValue(event.target.value)}
-            placeholder="Ex. 6"
-            className="w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3 text-[var(--foreground)] outline-none transition focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/20"
-          />
-        </div>
+        <CalculatorField
+          label="Deuxième valeur"
+          inputId="rule-second-value"
+          value={secondValue}
+          onChange={(event) => setSecondValue(event.target.value)}
+          placeholder="Ex. 6"
+        />
 
-        <div className="rounded-2xl border border-[var(--accent)]/20 bg-[var(--accent-soft)] p-5">
-          <p className="text-sm font-medium text-[var(--muted)]">Résultat</p>
-          <p className="mt-2 text-4xl font-bold tracking-tight text-[var(--foreground)] sm:text-5xl">
-            {calculatedValue === null ? "—" : formatNumber(calculatedValue)}
-          </p>
-        </div>
+        <CalculatorResult
+          label="Résultat"
+          tone="accent"
+          value={calculatedValue === null ? "—" : formatNumber(calculatedValue)}
+        />
       </div>
 
       {hasValues && !valid && (
@@ -147,6 +109,6 @@ export default function RuleOfThreeCalculator() {
           </div>
         </details>
       )}
-    </section>
+    </CalculatorShell>
   );
 }

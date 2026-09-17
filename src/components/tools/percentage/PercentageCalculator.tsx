@@ -1,6 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import { CalculatorActions } from "@/components/tools/calculator/CalculatorActions";
+import { CalculatorField } from "@/components/tools/calculator/CalculatorField";
+import { CalculatorResult } from "@/components/tools/calculator/CalculatorResult";
+import { CalculatorShell } from "@/components/tools/calculator/CalculatorShell";
 import {
   calculateDifference,
   calculateEvolution,
@@ -182,25 +186,12 @@ export default function PercentageCalculator() {
     setSecondValue("");
   }
 
-  const resultTone =
-    mode === "evolution" && result !== null
-      ? "border-[var(--border)] bg-[var(--surface)]"
-      : "border-[var(--accent)]/20 bg-[var(--accent-soft)]";
-
   return (
-    <section className="rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm sm:p-8">
-      <div className="flex items-center justify-end">
-        {(firstValue !== "" || secondValue !== "") && (
-          <button
-            type="button"
-            onClick={clearValues}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 py-1.5 text-sm font-medium text-[var(--muted)] transition hover:border-[var(--accent)]/40 hover:text-[var(--foreground)]"
-          >
-            <span aria-hidden="true">↺</span>
-            Effacer
-          </button>
-        )}
-      </div>
+    <CalculatorShell>
+      <CalculatorActions
+        showClear={firstValue !== "" || secondValue !== ""}
+        onClear={clearValues}
+      />
 
       <div className="mt-2">
         <div
@@ -233,7 +224,6 @@ export default function PercentageCalculator() {
                 >
                   {item.title}
                 </p>
-
                 <p className="mt-0.5 text-xs text-[var(--muted)]">
                   {item.description}
                 </p>
@@ -249,7 +239,6 @@ export default function PercentageCalculator() {
           >
             Type de calcul
           </label>
-
           <select
             id="percentage-mode"
             value={mode}
@@ -266,69 +255,38 @@ export default function PercentageCalculator() {
       </div>
 
       <div className="mt-8 grid gap-5 sm:grid-cols-2">
-        <div>
-          <label
-            htmlFor="first-value"
-            className="mb-2 block text-sm font-medium text-[var(--foreground)]"
-          >
-            {getFirstLabel()}
-          </label>
-
-          <input
-            id="first-value"
-            type="number"
-            inputMode="decimal"
-            step="any"
-            value={firstValue}
-            onChange={(event) => setFirstValue(event.target.value)}
-            placeholder={getFirstPlaceholder()}
-            className="w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3 text-[var(--foreground)] outline-none transition focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/20"
-          />
-        </div>
-
-        <div>
-          <label
-            htmlFor="second-value"
-            className="mb-2 block text-sm font-medium text-[var(--foreground)]"
-          >
-            {getSecondLabel()}
-          </label>
-
-          <input
-            id="second-value"
-            type="number"
-            inputMode="decimal"
-            step="any"
-            value={secondValue}
-            onChange={(event) => setSecondValue(event.target.value)}
-            placeholder={getSecondPlaceholder()}
-            className="w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3 text-[var(--foreground)] outline-none transition focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/20"
-          />
-        </div>
+        <CalculatorField
+          label={getFirstLabel()}
+          inputId="first-value"
+          value={firstValue}
+          onChange={(event) => setFirstValue(event.target.value)}
+          placeholder={getFirstPlaceholder()}
+        />
+        <CalculatorField
+          label={getSecondLabel()}
+          inputId="second-value"
+          value={secondValue}
+          onChange={(event) => setSecondValue(event.target.value)}
+          placeholder={getSecondPlaceholder()}
+        />
       </div>
 
-      <div
-        className={`mt-6 rounded-2xl border p-5 transition-colors ${resultTone}`}
-      >
-        <p className="text-sm font-medium text-[var(--muted)]">Résultat</p>
-
-        {error ? (
-          <p className="mt-2 text-sm font-medium text-[var(--foreground)]">
-            {error}
+      <div className="mt-6">
+        <CalculatorResult
+          label="Résultat"
+          tone={mode === "evolution" && result !== null ? "neutral" : "accent"}
+          value={
+            error
+              ? error
+              : result === null
+                ? "—"
+                : `${formatNumber(result)}${mode !== "percentage" ? " %" : ""}`
+          }
+        />
+        {result !== null && !error && (
+          <p className="mt-3 text-sm leading-6 text-[var(--muted)]">
+            {getResultExplanation()}
           </p>
-        ) : result !== null ? (
-          <>
-            <p className="mt-2 text-4xl font-bold tracking-tight text-[var(--foreground)] sm:text-5xl">
-              {formatNumber(result)}
-              {mode !== "percentage" ? " %" : ""}
-            </p>
-
-            <p className="mt-3 text-sm leading-6 text-[var(--muted)]">
-              {getResultExplanation()}
-            </p>
-          </>
-        ) : (
-          <p className="mt-2 text-3xl font-bold text-[var(--muted)]">—</p>
         )}
       </div>
 
@@ -336,18 +294,14 @@ export default function PercentageCalculator() {
         <details className="group mt-4 rounded-2xl border border-[var(--border)] bg-[var(--background)]">
           <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-4 text-sm font-semibold text-[var(--foreground)]">
             <span>💡 Comment avons-nous trouvé ce résultat ?</span>
-
             <span className="text-lg text-[var(--muted)] transition-transform group-open:rotate-45">
               +
             </span>
           </summary>
-
           <div className="border-t border-[var(--border)] px-4 pb-4 pt-4">
             <p className="text-sm leading-6 text-[var(--muted)]">
-              Voici le calcul réalisé à partir des valeurs que vous avez
-              saisies :
+              Voici le calcul réalisé à partir des valeurs que vous avez saisies :
             </p>
-
             <div className="mt-3 rounded-xl bg-[var(--surface-soft)] p-4">
               <p className="font-mono text-sm leading-6 text-[var(--foreground)]">
                 {getFormula()}
@@ -366,6 +320,6 @@ export default function PercentageCalculator() {
           </p>
         </div>
       )}
-    </section>
+    </CalculatorShell>
   );
 }
