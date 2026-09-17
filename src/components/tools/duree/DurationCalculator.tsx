@@ -23,10 +23,10 @@ function formatDurationPart(value: number, singular: string, plural: string): st
 }
 
 export default function DurationCalculator() {
-  const now = toInputDateTime(new Date());
+  const [initialEndDateTime] = useState(() => toInputDateTime(new Date()));
   const [mode, setMode] = useState<Mode>("dates");
   const [startDateTime, setStartDateTime] = useState("");
-  const [endDateTime, setEndDateTime] = useState(now);
+  const [endDateTime, setEndDateTime] = useState(initialEndDateTime);
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
 
@@ -38,28 +38,28 @@ export default function DurationCalculator() {
   const duration = mode === "dates" ? dateDuration : timeDuration;
   const hasValues =
     mode === "dates"
-      ? startDateTime !== "" || endDateTime !== now
+      ? startDateTime !== "" || endDateTime !== initialEndDateTime
       : startTime !== "" || endTime !== "";
   const invalidRange =
     mode === "dates" && startDateTime !== "" && endDateTime !== "" && dateDuration === null;
 
   function clearValues() {
     setStartDateTime("");
-    setEndDateTime(toInputDateTime(new Date()));
+    setEndDateTime(initialEndDateTime);
     setStartTime("");
     setEndTime("");
   }
 
   function switchMode(nextMode: Mode) {
+    if (nextMode === mode) return;
+
     setMode(nextMode);
     clearValues();
   }
 
   return (
     <CalculatorShell>
-      <CalculatorActions showClear={hasValues} onClear={clearValues} />
-
-      <div className="mb-6 grid grid-cols-2 gap-2 rounded-2xl border border-[var(--border)] bg-[var(--background)] p-1">
+      <div className="mb-4 grid grid-cols-2 gap-2 rounded-2xl border border-[var(--border)] bg-[var(--background)] p-1">
         <button
           type="button"
           aria-pressed={mode === "dates"}
@@ -85,6 +85,8 @@ export default function DurationCalculator() {
           🕐 Entre deux horaires
         </button>
       </div>
+
+      <CalculatorActions showClear={hasValues} onClear={clearValues} />
 
       <div className="grid gap-5 sm:grid-cols-2">
         {mode === "dates" ? (
