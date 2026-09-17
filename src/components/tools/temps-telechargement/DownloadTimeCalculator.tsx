@@ -58,6 +58,8 @@ export default function DownloadTimeCalculator() {
 
   return (
     <CalculatorShell>
+      <CalculatorActions showClear={hasValues} onClear={() => { setSize(""); setSpeed(""); }} />
+
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
           <CalculatorField
@@ -116,8 +118,6 @@ export default function DownloadTimeCalculator() {
           </p>
         </div>
       )}
-
-      <CalculatorActions showClear={hasValues} onClear={() => { setSize(""); setSpeed(""); }} />
     </CalculatorShell>
   );
 }
