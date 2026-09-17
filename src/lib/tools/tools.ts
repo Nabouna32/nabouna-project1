@@ -59,7 +59,7 @@ export const tools: Tool[] = [
     name: "Calculateur de durée",
     description: "Calculez la durée entre deux dates ou deux horaires.",
     keywords: ["temps", "date", "heures", "jours", "intervalle"],
-    available: false,
+    available: true,
   },
   {
     id: "vitesse-telechargement",
