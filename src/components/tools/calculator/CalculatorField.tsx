@@ -1,0 +1,41 @@
+import type { InputHTMLAttributes } from "react";
+
+type CalculatorFieldProps = InputHTMLAttributes<HTMLInputElement> & {
+  label: string;
+  inputId: string;
+  unit?: string;
+};
+
+export function CalculatorField({
+  label,
+  inputId,
+  unit,
+  className = "",
+  ...inputProps
+}: CalculatorFieldProps) {
+  return (
+    <div>
+      <label
+        htmlFor={inputId}
+        className="mb-2 block text-sm font-medium text-[var(--foreground)]"
+      >
+        {label}
+      </label>
+      <div className="relative">
+        <input
+          id={inputId}
+          type="number"
+          inputMode="decimal"
+          step="any"
+          {...inputProps}
+          className={`w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3 text-[var(--foreground)] outline-none transition focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/20 ${unit ? "pr-12" : ""} ${className}`}
+        />
+        {unit && (
+          <span className="pointer-events-none absolute inset-y-0 right-4 flex items-center text-sm text-[var(--muted)]">
+            {unit}
+          </span>
+        )}
+      </div>
+    </div>
+  );
+}
