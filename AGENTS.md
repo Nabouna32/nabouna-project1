@@ -68,6 +68,13 @@ For larger or risky changes, the preferred path is:
 - Preview E2E tests run against the real Vercel Preview deployment, including protected previews through the configured GitHub Actions OIDC trusted-source mechanism. Do not weaken Deployment Protection just to make tests pass.
 - A passing local/browser test does not replace testing the real Preview when the change affects deployment/runtime behavior.
 
+## Vercel deployment noise
+
+- Vercel previews are normally generated for commits pushed to pull requests.
+- When a commit is intentionally an intermediate/non-deploy commit, append `[skip vercel]` to its commit message. `vercel.json` skips that Preview build while never skipping production deployments.
+- The Preview E2E workflow detects the same marker and skips its Vercel-dependent steps for that commit, avoiding a false failure while still running the normal CI workflow.
+- The final commit intended for Preview validation must not contain `[skip vercel]` so that a real Preview is generated and tested before merge.
+
 ## Developer complexity vs user simplicity
 
 - Complexity is acceptable on the development side when it provides useful automation, diagnostics, testing, observability, safety, or maintenance capabilities.
