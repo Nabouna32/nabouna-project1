@@ -45,6 +45,8 @@ export default function DownloadSpeedConverter() {
 
   return (
     <CalculatorShell>
+      <CalculatorActions showClear={value !== ""} onClear={() => setValue("")} />
+
       <div className="grid gap-5 sm:grid-cols-2">
         <CalculatorField
           label="Vitesse à convertir"
@@ -88,8 +90,6 @@ export default function DownloadSpeedConverter() {
           value={result === null ? "—" : `${formatNumber(result)} ${UNIT_SHORT_LABELS[to]}`}
         />
       </div>
-
-      <CalculatorActions showClear={value !== ""} onClear={() => setValue("")} />
     </CalculatorShell>
   );
 }
