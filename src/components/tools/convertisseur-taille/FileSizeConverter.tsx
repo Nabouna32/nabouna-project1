@@ -51,6 +51,8 @@ export default function FileSizeConverter() {
 
   return (
     <CalculatorShell>
+      <CalculatorActions showClear={value !== ""} onClear={clear} />
+
       <div className="grid gap-5 sm:grid-cols-2">
         <CalculatorField
           label="Valeur à convertir"
@@ -112,8 +114,6 @@ export default function FileSizeConverter() {
           }
         />
       </div>
-
-      <CalculatorActions showClear={value !== ""} onClear={clear} />
     </CalculatorShell>
   );
 }
