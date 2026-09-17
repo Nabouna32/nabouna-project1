@@ -13,8 +13,7 @@ import CalculatorShell from "@/components/tools/calculator/CalculatorShell";
 
 const UNIT_LABELS: Record<SizeUnit, string> = {
   o: "Octets (o)",
-  ko: "Kilo-octets (Ko)
-",
+  ko: "Kilo-octets (Ko)",
   mo: "Méga-octets (Mo)",
   go: "Giga-octets (Go)",
   to: "Téra-octets (To)",
