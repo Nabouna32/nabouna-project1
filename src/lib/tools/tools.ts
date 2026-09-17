@@ -99,7 +99,7 @@ export const tools: Tool[] = [
     name: "Convertisseur de taille",
     description: "Convertissez facilement Ko, Mo, Go, To et autres unités.",
     keywords: ["ko", "mo", "go", "to", "octets", "stockage"],
-    available: false,
+    available: true,
   },
   {
     id: "mots-caracteres",
