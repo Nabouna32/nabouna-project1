@@ -38,7 +38,8 @@ export function calculateDownloadTime(
     return null;
   }
 
-  const totalSeconds = (size * BYTES_PER_SIZE_UNIT[sizeUnit] * 8) / BITS_PER_SPEED_UNIT[speedUnit];
+  const totalSeconds =
+    (size * BYTES_PER_SIZE_UNIT[sizeUnit] * 8) / (speed * BITS_PER_SPEED_UNIT[speedUnit]);
   const roundedSeconds = Math.ceil(totalSeconds);
   const days = Math.floor(roundedSeconds / 86_400);
   const hours = Math.floor((roundedSeconds % 86_400) / 3_600);
