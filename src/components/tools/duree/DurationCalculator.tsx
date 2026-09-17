@@ -9,11 +9,13 @@ import { calculateDateDuration, calculateTimeDuration } from "@/lib/duree";
 
 type Mode = "dates" | "horaires";
 
-function toInputDate(date: Date): string {
+function toInputDateTime(date: Date): string {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, "0");
   const day = String(date.getDate()).padStart(2, "0");
-  return `${year}-${month}-${day}`;
+  const hours = String(date.getHours()).padStart(2, "0");
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+  return `${year}-${month}-${day}T${hours}:${minutes}`;
 }
 
 function formatDurationPart(value: number, singular: string, plural: string): string {
@@ -21,39 +23,36 @@ function formatDurationPart(value: number, singular: string, plural: string): st
 }
 
 export default function DurationCalculator() {
-  const today = toInputDate(new Date());
+  const now = toInputDateTime(new Date());
   const [mode, setMode] = useState<Mode>("dates");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState(today);
+  const [startDateTime, setStartDateTime] = useState("");
+  const [endDateTime, setEndDateTime] = useState(now);
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
 
   const dateDuration =
-    mode === "dates" && startDate && endDate
-      ? calculateDateDuration(
-          new Date(`${startDate}T12:00:00`),
-          new Date(`${endDate}T12:00:00`),
-        )
+    mode === "dates" && startDateTime && endDateTime
+      ? calculateDateDuration(new Date(startDateTime), new Date(endDateTime))
       : null;
   const timeDuration = mode === "horaires" ? calculateTimeDuration(startTime, endTime) : null;
   const duration = mode === "dates" ? dateDuration : timeDuration;
-  const hasValues = mode === "dates" ? startDate !== "" || endDate !== today : startTime !== "" || endTime !== "";
+  const hasValues =
+    mode === "dates"
+      ? startDateTime !== "" || endDateTime !== now
+      : startTime !== "" || endTime !== "";
   const invalidRange =
-    mode === "dates" && startDate !== "" && endDate !== "" && dateDuration === null;
+    mode === "dates" && startDateTime !== "" && endDateTime !== "" && dateDuration === null;
 
   function clearValues() {
-    setStartDate("");
-    setEndDate(toInputDate(new Date()));
+    setStartDateTime("");
+    setEndDateTime(toInputDateTime(new Date()));
     setStartTime("");
     setEndTime("");
   }
 
   function switchMode(nextMode: Mode) {
     setMode(nextMode);
-    setStartDate("");
-    setEndDate(toInputDate(new Date()));
-    setStartTime("");
-    setEndTime("");
+    clearValues();
   }
 
   return (
@@ -91,18 +90,18 @@ export default function DurationCalculator() {
         {mode === "dates" ? (
           <>
             <CalculatorField
-              label="Date de début"
+              label="Date et heure de début"
               inputId="duration-start-date"
-              type="date"
-              value={startDate}
-              onChange={(event) => setStartDate(event.target.value)}
+              type="datetime-local"
+              value={startDateTime}
+              onChange={(event) => setStartDateTime(event.target.value)}
             />
             <CalculatorField
-              label="Date de fin"
+              label="Date et heure de fin"
               inputId="duration-end-date"
-              type="date"
-              value={endDate}
-              onChange={(event) => setEndDate(event.target.value)}
+              type="datetime-local"
+              value={endDateTime}
+              onChange={(event) => setEndDateTime(event.target.value)}
             />
           </>
         ) : (
@@ -125,14 +124,17 @@ export default function DurationCalculator() {
         )}
       </div>
 
-      <div className="mt-6 grid gap-4 sm:grid-cols-3">
-        <CalculatorResult
-          label="Jours"
-          tone="accent"
-          value={duration === null ? "—" : String(duration.days)}
-        />
+      <div className={`mt-6 grid gap-4 ${mode === "dates" ? "sm:grid-cols-3" : "sm:grid-cols-2"}`}>
+        {mode === "dates" && (
+          <CalculatorResult
+            label="Jours"
+            tone="accent"
+            value={duration === null ? "—" : String(duration.days)}
+          />
+        )}
         <CalculatorResult
           label="Heures"
+          tone={mode === "horaires" ? "accent" : undefined}
           value={duration === null ? "—" : String(duration.hours)}
         />
         <CalculatorResult
@@ -143,14 +145,16 @@ export default function DurationCalculator() {
 
       {invalidRange && (
         <p className="mt-4 text-sm font-medium text-[var(--foreground)]">
-          La date de début doit être antérieure ou égale à la date de fin.
+          La date et l'heure de début doivent être antérieures ou égales à la date et l'heure de fin.
         </p>
       )}
 
       {duration && (
         <div className="mt-6 rounded-2xl border border-[var(--border)] bg-[var(--background)] p-4">
           <p className="text-sm leading-6 text-[var(--muted)]">
-            La durée est de {formatDurationPart(duration.days, "jour", "jours")}, {formatDurationPart(duration.hours, "heure", "heures")} et {formatDurationPart(duration.minutes, "minute", "minutes")}.
+            {mode === "dates"
+              ? `La durée est de ${formatDurationPart(duration.days, "jour", "jours")}, ${formatDurationPart(duration.hours, "heure", "heures")} et ${formatDurationPart(duration.minutes, "minute", "minutes")}.`
+              : `La durée est de ${formatDurationPart(duration.hours, "heure", "heures")} et ${formatDurationPart(duration.minutes, "minute", "minutes")}.`}
           </p>
           {mode === "horaires" && endTime < startTime && (
             <p className="mt-2 text-xs text-[var(--muted)]">

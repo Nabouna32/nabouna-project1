@@ -6,26 +6,23 @@ export type Duration = {
 
 const MINUTES_PER_DAY = 24 * 60;
 
-function isFiniteNumber(value: number): boolean {
-  return Number.isFinite(value);
+function isValidDate(date: Date): boolean {
+  return Number.isFinite(date.getTime());
 }
 
 export function calculateDateDuration(startDate: Date, endDate: Date): Duration | null {
-  const startTime = Date.UTC(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
-  const endTime = Date.UTC(endDate.getFullYear(), endDate.getMonth(), endDate.getDate());
-
-  if (!isFiniteNumber(startTime) || !isFiniteNumber(endTime) || startTime > endTime) {
+  if (!isValidDate(startDate) || !isValidDate(endDate) || startDate > endDate) {
     return null;
   }
 
-  const totalMinutes = Math.floor((endTime - startTime) / 60000);
+  const totalMinutes = Math.floor((endDate.getTime() - startDate.getTime()) / 60000);
   const days = Math.floor(totalMinutes / MINUTES_PER_DAY);
-  const minutes = totalMinutes % MINUTES_PER_DAY;
+  const remainingMinutes = totalMinutes % MINUTES_PER_DAY;
 
   return {
     days,
-    hours: Math.floor(minutes / 60),
-    minutes: minutes % 60,
+    hours: Math.floor(remainingMinutes / 60),
+    minutes: remainingMinutes % 60,
   };
 }
 
