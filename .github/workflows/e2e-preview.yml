@@ -1,9 +1,7 @@
 name: Browser Preview E2E
 
 on:
-  pull_request:
-    branches:
-      - main
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -11,7 +9,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: e2e-preview-${{ github.workflow }}-${{ github.event.pull_request.number }}
+  group: e2e-preview-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -24,38 +22,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
 
-      - name: Check Vercel skip marker
-        id: vercel_skip
-        shell: bash
-        run: |
-          if git log -1 --format=%B | grep -Fqi '[skip vercel]'; then
-            echo 'skip=true' >> "$GITHUB_OUTPUT"
-            echo 'Vercel Preview validation skipped for this commit.'
-          else
-            echo 'skip=false' >> "$GITHUB_OUTPUT"
-          fi
-
       - name: Setup Node.js
-        if: steps.vercel_skip.outputs.skip != 'true'
         uses: actions/setup-node@v7
         with:
           node-version: 24.21.0
           cache: npm
 
       - name: Install dependencies
-        if: steps.vercel_skip.outputs.skip != 'true'
         run: npm ci
 
       - name: Install Playwright test runner
-        if: steps.vercel_skip.outputs.skip != 'true'
         run: npm install --no-save --package-lock=false @playwright/test@1.63.0
 
       - name: Install Playwright Chromium
-        if: steps.vercel_skip.outputs.skip != 'true'
         run: npx playwright install --with-deps chromium
 
       - name: Get GitHub Actions OIDC token
-        if: steps.vercel_skip.outputs.skip != 'true'
         id: oidc
         uses: actions/github-script@v8
         with:
@@ -65,11 +47,10 @@ jobs:
             core.setOutput("token", token);
 
       - name: Wait for Vercel Preview
-        if: steps.vercel_skip.outputs.skip != 'true'
         id: preview
         uses: actions/github-script@v8
         env:
-          SHA: ${{ github.event.pull_request.head.sha }}
+          SHA: ${{ github.sha }}
         with:
           script: |
             const deadline = Date.now() + 10 * 60 * 1000;
@@ -120,14 +101,13 @@ jobs:
             core.setFailed(`Timed out waiting for Vercel Preview (${lastState}).`);
 
       - name: Run browser smoke tests
-        if: steps.vercel_skip.outputs.skip != 'true'
         env:
           BASE_URL: ${{ steps.preview.outputs.url }}
           VERCEL_TRUSTED_OIDC_TOKEN: ${{ steps.oidc.outputs.token }}
         run: npx playwright test e2e/smoke.spec.mjs
 
       - name: Upload Playwright report on failure
-        if: failure() && steps.vercel_skip.outputs.skip != 'true'
+        if: failure()
         uses: actions/upload-artifact@v7
         with:
           name: playwright-preview-report
