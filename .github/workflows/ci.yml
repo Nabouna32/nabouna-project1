@@ -7,6 +7,9 @@ on:
   pull_request:
     branches:
       - main
+  schedule:
+    - cron: "30 3 * * 1"
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -18,6 +21,7 @@ concurrency:
 jobs:
   audit:
     name: Dependency audit
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
 
     steps:
@@ -45,28 +49,37 @@ jobs:
         node-version:
           - 24.21.0
           - 26.8.2
+        include:
+          - node-version: 26.8.2
+            scheduled-only: true
 
     steps:
       - name: Checkout
         uses: actions/checkout@v7
 
       - name: Setup Node.js
+        if: matrix.node-version == '24.21.0' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         uses: actions/setup-node@v7
         with:
           node-version: ${{ matrix.node-version }}
           cache: npm
 
       - name: Install dependencies
+        if: matrix.node-version == '24.21.0' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         run: npm ci
 
       - name: Lint
+        if: matrix.node-version == '24.21.0' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         run: npm run lint
 
       - name: Typecheck
+        if: matrix.node-version == '24.21.0' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         run: npm run typecheck
 
       - name: Test
+        if: matrix.node-version == '24.21.0' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         run: npm test
 
       - name: Build
+        if: matrix.node-version == '24.21.0' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         run: npm run build
