@@ -28,8 +28,8 @@ export const tools: Tool[] = [
     icon: "💶",
     name: "Calculateur TVA HT / TTC",
     description: "Convertissez facilement un prix HT en TTC et inversement.",
-    keywords: ["taxe", "hors taxe", "toutes taxes", "prix"],
-    available: false,
+    keywords: ["taxe", "hors taxe", "toutes taxes", "prix", "tva", "ht", "ttc"],
+    available: true,
   },
   {
     id: "regle-de-trois",
