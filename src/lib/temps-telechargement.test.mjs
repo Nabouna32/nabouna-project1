@@ -12,6 +12,15 @@ test("calculates download time from decimal file size and internet speed", () =>
   });
 });
 
+test("changes proportionally when the download speed changes", () => {
+  const slow = calculateDownloadTime(1, "go", 200, "kbps");
+  const fast = calculateDownloadTime(1, "go", 200_000, "kbps");
+
+  assert.equal(slow?.totalSeconds, 40_000);
+  assert.equal(fast?.totalSeconds, 40);
+  assert.notEqual(slow?.totalSeconds, fast?.totalSeconds);
+});
+
 test("supports byte-per-second speed units", () => {
   assert.deepEqual(calculateDownloadTime(500, "mo", 10, "mo-s"), {
     totalSeconds: 50,
