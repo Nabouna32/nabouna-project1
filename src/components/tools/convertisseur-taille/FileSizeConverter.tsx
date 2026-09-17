@@ -6,10 +6,10 @@ import {
   SIZE_UNITS,
   type SizeUnit,
 } from "@/lib/convertisseur-taille";
-import CalculatorActions from "@/components/tools/calculator/CalculatorActions";
-import CalculatorField from "@/components/tools/calculator/CalculatorField";
-import CalculatorResult from "@/components/tools/calculator/CalculatorResult";
-import CalculatorShell from "@/components/tools/calculator/CalculatorShell";
+import { CalculatorActions } from "@/components/tools/calculator/CalculatorActions";
+import { CalculatorField } from "@/components/tools/calculator/CalculatorField";
+import { CalculatorResult } from "@/components/tools/calculator/CalculatorResult";
+import { CalculatorShell } from "@/components/tools/calculator/CalculatorShell";
 
 const UNIT_LABELS: Record<SizeUnit, string> = {
   o: "Octets (o)",
