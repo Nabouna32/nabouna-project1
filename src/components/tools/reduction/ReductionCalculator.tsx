@@ -28,7 +28,7 @@ export default function ReductionCalculator() {
     discountValue.trim() !== "" &&
     Number.isFinite(price) &&
     Number.isFinite(discountRate);
-  const valid = hasValues && price >= 0 && isValidDiscountRate(discountRate);
+  const valid = hasValues && price > 0 && isValidDiscountRate(discountRate);
   const discountAmount = valid
     ? calculateDiscountAmount(price, discountRate)
     : null;
