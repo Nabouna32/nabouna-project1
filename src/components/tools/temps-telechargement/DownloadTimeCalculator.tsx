@@ -3,7 +3,6 @@
 import { useMemo, useState } from "react";
 import { CalculatorActions } from "@/components/tools/calculator/CalculatorActions";
 import { CalculatorField } from "@/components/tools/calculator/CalculatorField";
-import { CalculatorResult } from "@/components/tools/calculator/CalculatorResult";
 import { CalculatorShell } from "@/components/tools/calculator/CalculatorShell";
 import {
   calculateDownloadTime,
@@ -31,6 +30,15 @@ const SPEED_LABELS: Record<DownloadSpeedUnit, string> = {
 
 function formatNumber(value: number): string {
   return new Intl.NumberFormat("fr-FR", { maximumFractionDigits: 2 }).format(value);
+}
+
+function formatDuration(days: number, hours: number, minutes: number, seconds: number): string {
+  const parts: string[] = [];
+  if (days > 0) parts.push(`${days} j`);
+  if (hours > 0 || days > 0) parts.push(`${hours} h`);
+  if (minutes > 0 || hours > 0 || days > 0) parts.push(`${minutes} min`);
+  parts.push(`${seconds} s`);
+  return parts.join(" ");
 }
 
 export default function DownloadTimeCalculator() {
@@ -94,19 +102,16 @@ export default function DownloadTimeCalculator() {
         </div>
       </div>
 
-      <div className="mt-6 grid gap-4 sm:grid-cols-4">
-        <CalculatorResult label="Jours" value={result === null ? "—" : String(result.days)} />
-        <CalculatorResult label="Heures" value={result === null ? "—" : String(result.hours)} />
-        <CalculatorResult label="Minutes" tone="accent" value={result === null ? "—" : String(result.minutes)} />
-        <CalculatorResult label="Secondes" value={result === null ? "—" : String(result.seconds)} />
-      </div>
-
       {result && (
         <div className="mt-6 rounded-2xl border border-[var(--border)] bg-[var(--background)] p-4">
-          <p className="text-sm leading-6 text-[var(--muted)]">
-            Temps estimé : {formatNumber(result.totalSeconds)} secondes, soit environ {result.days > 0 ? `${result.days} j ` : ""}{String(result.hours).padStart(2, "0")} h {String(result.minutes).padStart(2, "0")} min {String(result.seconds).padStart(2, "0")} s.
+          <p className="text-sm leading-6 text-[var(--muted)]">Temps estimé</p>
+          <p className="mt-1 text-xl font-semibold text-[var(--foreground)]">
+            {formatDuration(result.days, result.hours, result.minutes, result.seconds)}
           </p>
-          <p className="mt-2 text-xs text-[var(--muted)]">
+          <p className="mt-2 text-sm text-[var(--muted)]">
+            Soit environ {formatNumber(result.totalSeconds)} secondes.
+          </p>
+          <p className="mt-2 text-xs leading-5 text-[var(--muted)]">
             Estimation théorique à débit constant. Les unités de taille et de débit sont décimales.
           </p>
         </div>
