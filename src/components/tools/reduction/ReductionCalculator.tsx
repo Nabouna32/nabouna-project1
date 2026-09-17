@@ -84,7 +84,7 @@ export default function ReductionCalculator() {
 
       {hasValues && !valid && (
         <p className="mt-4 text-sm font-medium text-[var(--foreground)]">
-          Saisissez un prix positif et une réduction comprise entre 0 et 100 %.
+          Saisissez un prix positif ou nul et une réduction comprise entre 0 et 100 %.
         </p>
       )}
 
