@@ -49,7 +49,7 @@ export const tools: Tool[] = [
     name: "Calculateur d'âge",
     description: "Calculez précisément votre âge à partir d'une date de naissance.",
     keywords: ["anniversaire", "naissance", "date"],
-    available: false,
+    available: true,
   },
   {
     id: "duree",

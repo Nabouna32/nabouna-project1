@@ -11,8 +11,12 @@ export function CalculatorField({
   inputId,
   unit,
   className = "",
+  type = "number",
+  inputMode,
   ...inputProps
 }: CalculatorFieldProps) {
+  const resolvedInputMode = inputMode ?? (type === "number" ? "decimal" : undefined);
+
   return (
     <div>
       <label
@@ -24,9 +28,9 @@ export function CalculatorField({
       <div className="relative">
         <input
           id={inputId}
-          type="number"
-          inputMode="decimal"
-          step="any"
+          type={type}
+          inputMode={resolvedInputMode}
+          step={type === "number" ? "any" : undefined}
           {...inputProps}
           className={`w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3 text-[var(--foreground)] outline-none transition focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/20 ${unit ? "pr-12" : ""} ${className}`}
         />
