@@ -1,6 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import { CalculatorActions } from "@/components/tools/calculator/CalculatorActions";
+import { CalculatorField } from "@/components/tools/calculator/CalculatorField";
+import { CalculatorResult } from "@/components/tools/calculator/CalculatorResult";
+import { CalculatorShell } from "@/components/tools/calculator/CalculatorShell";
 import {
   calculateHt,
   calculateTtc,
@@ -27,7 +31,7 @@ export default function TVACalculator() {
     priceValue.trim() !== "" &&
     rateValue.trim() !== "" &&
     Number.isFinite(price) &&
-    Number.isFinite(rate);
+    Number.isFinite(rateValue === "" ? NaN : rate);
   const valid = hasValues && price >= 0 && isValidVatRate(rate);
 
   const ht = valid ? (mode === "ht-to-ttc" ? price : calculateHt(price, rate)) : null;
@@ -40,7 +44,7 @@ export default function TVACalculator() {
   }
 
   return (
-    <section className="rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm sm:p-8">
+    <CalculatorShell>
       <div className="flex items-center justify-between gap-4">
         <div className="inline-flex rounded-xl border border-[var(--border)] bg-[var(--background)] p-1">
           <button
@@ -69,78 +73,38 @@ export default function TVACalculator() {
           </button>
         </div>
 
-        {(priceValue !== "" || rateValue !== "20") && (
-          <button
-            type="button"
-            onClick={clearValues}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 py-1.5 text-sm font-medium text-[var(--muted)] transition hover:border-[var(--accent)]/40 hover:text-[var(--foreground)]"
-          >
-            <span aria-hidden="true">↺</span>
-            Effacer
-          </button>
-        )}
+        <CalculatorActions
+          showClear={priceValue !== "" || rateValue !== "20"}
+          onClear={clearValues}
+        />
       </div>
 
       <div className="mt-5 grid gap-5 sm:grid-cols-2">
-        <div>
-          <label htmlFor="tva-price" className="mb-2 block text-sm font-medium text-[var(--foreground)]">
-            {mode === "ht-to-ttc" ? "Prix HT" : "Prix TTC"}
-          </label>
-          <div className="relative">
-            <input
-              id="tva-price"
-              type="number"
-              inputMode="decimal"
-              min="0"
-              step="any"
-              value={priceValue}
-              onChange={(event) => setPriceValue(event.target.value)}
-              placeholder={mode === "ht-to-ttc" ? "Ex. 100" : "Ex. 120"}
-              className="w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3 pr-12 text-[var(--foreground)] outline-none transition focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/20"
-            />
-            <span className="pointer-events-none absolute inset-y-0 right-4 flex items-center text-sm text-[var(--muted)]">€</span>
-          </div>
-        </div>
-
-        <div>
-          <label htmlFor="tva-rate" className="mb-2 block text-sm font-medium text-[var(--foreground)]">Taux de TVA</label>
-          <div className="relative">
-            <input
-              id="tva-rate"
-              type="number"
-              inputMode="decimal"
-              min="0"
-              max="100"
-              step="any"
-              value={rateValue}
-              onChange={(event) => setRateValue(event.target.value)}
-              placeholder="Ex. 20"
-              className="w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3 pr-12 text-[var(--foreground)] outline-none transition focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/20"
-            />
-            <span className="pointer-events-none absolute inset-y-0 right-4 flex items-center text-sm text-[var(--muted)]">%</span>
-          </div>
-        </div>
+        <CalculatorField
+          label={mode === "ht-to-ttc" ? "Prix HT" : "Prix TTC"}
+          inputId="tva-price"
+          min="0"
+          value={priceValue}
+          onChange={(event) => setPriceValue(event.target.value)}
+          placeholder={mode === "ht-to-ttc" ? "Ex. 100" : "Ex. 120"}
+          unit="€"
+        />
+        <CalculatorField
+          label="Taux de TVA"
+          inputId="tva-rate"
+          min="0"
+          max="100"
+          value={rateValue}
+          onChange={(event) => setRateValue(event.target.value)}
+          placeholder="Ex. 20"
+          unit="%"
+        />
       </div>
 
       <div className="mt-6 grid gap-4 sm:grid-cols-3">
-        <div className="rounded-2xl border border-[var(--accent)]/20 bg-[var(--accent-soft)] p-5">
-          <p className="text-sm font-medium text-[var(--muted)]">Prix HT</p>
-          <p className="mt-2 text-3xl font-bold tracking-tight text-[var(--foreground)] sm:text-4xl">
-            {ht === null ? "—" : `${formatNumber(ht)} €`}
-          </p>
-        </div>
-        <div className="rounded-2xl border border-[var(--border)] bg-[var(--background)] p-5">
-          <p className="text-sm font-medium text-[var(--muted)]">TVA</p>
-          <p className="mt-2 text-3xl font-bold tracking-tight text-[var(--foreground)] sm:text-4xl">
-            {vat === null ? "—" : `${formatNumber(vat)} €`}
-          </p>
-        </div>
-        <div className="rounded-2xl border border-[var(--border)] bg-[var(--background)] p-5">
-          <p className="text-sm font-medium text-[var(--muted)]">Prix TTC</p>
-          <p className="mt-2 text-3xl font-bold tracking-tight text-[var(--foreground)] sm:text-4xl">
-            {ttc === null ? "—" : `${formatNumber(ttc)} €`}
-          </p>
-        </div>
+        <CalculatorResult label="Prix HT" tone="accent" value={ht === null ? "—" : `${formatNumber(ht)} €`} />
+        <CalculatorResult label="TVA" value={vat === null ? "—" : `${formatNumber(vat)} €`} />
+        <CalculatorResult label="Prix TTC" value={ttc === null ? "—" : `${formatNumber(ttc)} €`} />
       </div>
 
       {hasValues && !valid && (
@@ -169,6 +133,6 @@ export default function TVACalculator() {
           </div>
         </details>
       )}
-    </section>
+    </CalculatorShell>
   );
 }
