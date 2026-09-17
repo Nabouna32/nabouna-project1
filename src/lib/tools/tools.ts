@@ -79,7 +79,7 @@ export const tools: Tool[] = [
     name: "Temps de téléchargement",
     description: "Estimez le temps nécessaire pour télécharger un fichier.",
     keywords: ["download", "internet", "débit", "fichier", "durée"],
-    available: false,
+    available: true,
   },
   {
     id: "taille-fichier",
