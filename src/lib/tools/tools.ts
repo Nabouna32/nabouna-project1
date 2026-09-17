@@ -69,7 +69,7 @@ export const tools: Tool[] = [
     name: "Mbps ↔ Mo/s",
     description: "Convertissez une vitesse Internet entre Mbps et Mo/s.",
     keywords: ["internet", "débit", "connexion", "megabit", "mégaoctet"],
-    available: false,
+    available: true,
   },
   {
     id: "temps-telechargement",
