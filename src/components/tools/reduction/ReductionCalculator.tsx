@@ -55,7 +55,7 @@ export default function ReductionCalculator() {
 
       <div className="mt-2 grid gap-5 sm:grid-cols-2">
         <CalculatorField
-          label=calculatorText("Prix initial", locale)
+          label={calculatorText("Prix initial", locale)}
           inputId="reduction-price"
           min="0.01"
           value={priceValue}
@@ -64,7 +64,7 @@ export default function ReductionCalculator() {
           unit="€"
         />
         <CalculatorField
-          label=calculatorText("Réduction", locale)
+          label={calculatorText("Réduction", locale)}
           inputId="reduction-rate"
           min="0"
           max="100"
@@ -77,12 +77,12 @@ export default function ReductionCalculator() {
 
       <div className="mt-6 grid gap-4 sm:grid-cols-2">
         <CalculatorResult
-          label=calculatorText("Prix après réduction", locale)
+          label={calculatorText("Prix après réduction", locale)}
           tone="accent"
           value={discountedPrice === null ? "—" : `${formatNumber(discountedPrice)} €`}
         />
         <CalculatorResult
-          label=calculatorText("Montant économisé", locale)
+          label={calculatorText("Montant économisé", locale)}
           value={discountAmount === null ? "—" : `${formatNumber(discountAmount)} €`}
         />
       </div>
