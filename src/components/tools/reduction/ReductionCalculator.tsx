@@ -14,8 +14,8 @@ import {
   isValidReductionPrice,
 } from "@/lib/reduction";
 
-function formatNumber(value: number): string {
-  return new Intl.NumberFormat("fr-FR", {
+function formatNumber(value: number, locale = "fr"): string {
+  return new Intl.NumberFormat(locale === "en" ? "en-US" : "fr-FR", {
     maximumFractionDigits: 2,
   }).format(value);
 }
@@ -79,11 +79,11 @@ export default function ReductionCalculator() {
         <CalculatorResult
           label={calculatorText("Prix après réduction", locale)}
           tone="accent"
-          value={discountedPrice === null ? "—" : `${formatNumber(discountedPrice)} €`}
+          value={discountedPrice === null ? "—" : `${formatNumber(discountedPrice, locale)} €`}
         />
         <CalculatorResult
           label={calculatorText("Montant économisé", locale)}
-          value={discountAmount === null ? "—" : `${formatNumber(discountAmount)} €`}
+          value={discountAmount === null ? "—" : `${formatNumber(discountAmount, locale)} €`}
         />
       </div>
 
@@ -105,7 +105,7 @@ export default function ReductionCalculator() {
             </p>
             <div className="mt-3 rounded-xl bg-[var(--surface-soft)] p-4">
               <p className="font-mono text-sm leading-6 text-[var(--foreground)]">
-                {formatNumber(price)} × {formatNumber(discountRate)} ÷ 100 = {formatNumber(discountAmount)} €
+                {formatNumber(price, locale)} × {formatNumber(discountRate, locale)} ÷ 100 = {formatNumber(discountAmount)} €
               </p>
               <p className="mt-2 font-mono text-sm leading-6 text-[var(--foreground)]">
                 {formatNumber(price)} − {formatNumber(discountAmount)} = {formatNumber(discountedPrice)} €
