@@ -49,7 +49,7 @@ export default function PercentageCalculator() {
       result = calculateEvolution(first, second);
 
       if (result === null) {
-        error = "La valeur de départ ne peut pas être égale à 0.";
+        error = calculatorText("La valeur de départ ne peut pas être égale à 0.", locale);
       }
     }
 
@@ -57,7 +57,7 @@ export default function PercentageCalculator() {
       result = calculateDifference(first, second);
 
       if (result === null) {
-        error = "Les deux valeurs ne peuvent pas être égales à 0.";
+        error = calculatorText("Les deux valeurs ne peuvent pas être égales à 0.", locale);
       }
     }
   }
@@ -69,18 +69,18 @@ export default function PercentageCalculator() {
   }[] = [
     {
       id: "percentage",
-      title: "X % de Y",
-      description: "{locale === "en" ? "Calculate a percentage" : "Calculer une part"}",
+      title: calculatorText("X % de Y", locale),
+      description: calculatorText("Calculer une part", locale),
     },
     {
       id: "evolution",
-      title: "Évolution",
-      description: "{locale === "en" ? "Increase or decrease" : "Augmentation ou diminution"",
+      title: calculatorText("Évolution", locale),
+      description: calculatorText("Augmentation ou diminution", locale),
     },
     {
       id: "difference",
-      title: "Différence",
-      description: "{locale === "en" ? "Compare two values" : "Comparer deux valeurs"",
+      title: calculatorText("Différence", locale),
+      description: calculatorText("Comparer deux valeurs", locale),
     },
   ];
 
@@ -201,7 +201,7 @@ export default function PercentageCalculator() {
         <div
           className="hidden gap-2 rounded-2xl bg-[var(--surface-soft)] p-2 sm:grid sm:grid-cols-3"
           role="tablist"
-          aria-label="Type de calcul"
+          aria-label={calculatorText("Type de calcul", locale)}
         >
           {modes.map((item) => {
             const active = mode === item.id;
@@ -277,7 +277,7 @@ export default function PercentageCalculator() {
 
       <div className="mt-6">
         <CalculatorResult
-          label=calculatorText("Résultat", locale)
+          label={calculatorText("Résultat", locale)}
           tone={mode === "evolution" && result !== null ? "neutral" : "accent"}
           value={
             error
