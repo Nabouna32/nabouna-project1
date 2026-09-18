@@ -49,5 +49,8 @@ test("Language settings are available", async ({ page }) => {
   await page.goto(`${baseUrl}/fr/parametres`, { waitUntil: "networkidle" });
 
   await expect(page.getByRole("heading", { name: "Paramètres" })).toBeVisible();
-  await expect(page.getByRole("button", { name: "English" })).toBeVisible();
+  const englishButton = page.getByRole("button", { name: "English" });
+  await expect(englishButton).toBeVisible();
+  await englishButton.click();
+  await expect(page).toHaveURL(/\/en\/parametres$/);
 });
