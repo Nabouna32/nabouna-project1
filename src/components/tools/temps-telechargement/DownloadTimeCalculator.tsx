@@ -67,7 +67,7 @@ export default function DownloadTimeCalculator() {
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
           <CalculatorField
-            label=calculatorText("Taille du fichier", locale)
+            label={calculatorText("Taille du fichier", locale)}
             inputId="download-time-size"
             type="number"
             min="0"
@@ -77,7 +77,7 @@ export default function DownloadTimeCalculator() {
             placeholder="Ex. 10"
           />
           <select
-            aria-label=calculatorText("Unité de taille du fichier", locale)
+            aria-label={calculatorText("Unité de taille du fichier", locale)}
             value={sizeUnit}
             onChange={(event) => setSizeUnit(event.target.value as DownloadSizeUnit)}
             className="mt-2 block w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] px-4 py-3 text-base text-[var(--foreground)] outline-none transition focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/20"
@@ -88,7 +88,7 @@ export default function DownloadTimeCalculator() {
 
         <div>
           <CalculatorField
-            label=calculatorText("Vitesse de téléchargement", locale)
+            label={calculatorText("Vitesse de téléchargement", locale)}
             inputId="download-time-speed"
             type="number"
             min="0"
@@ -98,7 +98,7 @@ export default function DownloadTimeCalculator() {
             placeholder="Ex. 100"
           />
           <select
-            aria-label=calculatorText("Unité de vitesse de téléchargement", locale)
+            aria-label={calculatorText("Unité de vitesse de téléchargement", locale)}
             value={speedUnit}
             onChange={(event) => setSpeedUnit(event.target.value as DownloadSpeedUnit)}
             className="mt-2 block w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] px-4 py-3 text-base text-[var(--foreground)] outline-none transition focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/20"
