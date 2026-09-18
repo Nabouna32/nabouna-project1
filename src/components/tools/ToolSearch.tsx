@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { tools } from "@/lib/tools/tools";
 import { normalizeSearchText, searchTools } from "@/lib/tools/search";
 import { getCategoryName, getMessages, isLocale } from "@/lib/i18n/config";
+import { getToolDescription, getToolName } from "@/lib/tools/i18n";
 
 type ToolSearchProps = {
   className?: string;
@@ -45,7 +46,7 @@ export default function ToolSearch({
   const [isFocused, setIsFocused] = useState(false);
   const [activeIndex, setActiveIndex] = useState(-1);
 
-  const results = useMemo(() => searchTools(tools, query).slice(0, 6), [query]);
+  const results = useMemo(() => searchTools(tools, query, locale).slice(0, 6), [query, locale]);
   const showResults = isFocused && query.trim().length > 0;
 
   useEffect(() => {
@@ -132,8 +133,8 @@ export default function ToolSearch({
                 <a key={tool.id} id={`tool-result-${index}`} href={getToolHref(tool.slug, tool.categoryId)} role="option" aria-selected={activeIndex === index} onMouseEnter={() => setActiveIndex(index)} className={`flex items-center gap-3 rounded-xl px-3 py-3 text-left transition-colors ${activeIndex === index ? "bg-[var(--accent-soft)]" : "hover:bg-[var(--accent-soft)]"}`}>
                   <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--accent-soft)] text-xl">{tool.icon}</span>
                   <span className="min-w-0 flex-1">
-                    <span className="block truncate text-sm font-semibold text-[var(--foreground)]"><HighlightMatch text={tool.name} query={query} /></span>
-                    <span className="mt-0.5 block truncate text-xs text-[var(--muted)]">{getCategoryName(locale, tool.categoryId)} · {tool.description}</span>
+                    <span className="block truncate text-sm font-semibold text-[var(--foreground)]"><HighlightMatch text={getToolName(tool, locale)} query={query} /></span>
+                    <span className="mt-0.5 block truncate text-xs text-[var(--muted)]">{getCategoryName(locale, tool.categoryId)} · {getToolDescription(tool, locale)}</span>
                   </span>
                   <span className="text-[var(--muted)]">→</span>
                 </a>
