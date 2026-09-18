@@ -285,7 +285,7 @@ export default function PercentageCalculator() {
               ? error
               : result === null
                 ? "—"
-                : `${formatNumber(result)}${mode !== "percentage" ? " %" : ""}`
+                : `${formatNumber(result, locale)}${mode !== "percentage" ? " %" : ""}`
           }
         />
         {result !== null && !error && (
