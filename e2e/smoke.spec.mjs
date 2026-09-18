@@ -35,3 +35,19 @@ test("English locale renders", async ({ page }) => {
 
   await expect(page.locator("main")).toBeVisible();
 });
+
+
+test("English tools are localized", async ({ page }) => {
+  await page.goto(`${baseUrl}/en/outils`, { waitUntil: "networkidle" });
+
+  await expect(page.getByRole("heading", { name: "All tools" })).toBeVisible();
+  await expect(page.getByText("Percentage Calculator")).toBeVisible();
+  await expect(page.getByText("Easily calculate a percentage, change, or difference.")).toBeVisible();
+});
+
+test("Language settings are available", async ({ page }) => {
+  await page.goto(`${baseUrl}/fr/parametres`, { waitUntil: "networkidle" });
+
+  await expect(page.getByRole("heading", { name: "Paramètres" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "English" })).toBeVisible();
+});
