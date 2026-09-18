@@ -1,19 +1,27 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { getMessages, isLocale, type Locale } from "@/lib/i18n/config";
 
 
 export default function SettingsPage() {
   const pathname = usePathname();
+  const router = useRouter();
   const segment = pathname.split("/")[1];
   const locale = isLocale(segment) ? segment : "fr";
   const t = getMessages(locale);
+  const [selectedLocale, setSelectedLocale] = useState<Locale | null>(null);
+
+  useEffect(() => {
+    if (!selectedLocale) return;
+    document.cookie = `utiluna-locale=${selectedLocale}; path=/; max-age=31536000; samesite=lax`;
+    router.push(`/${selectedLocale}/parametres`);
+  }, [router, selectedLocale]);
 
   function selectLocale(nextLocale: Locale) {
-    document.cookie = `utiluna-locale=${nextLocale}; path=/; max-age=31536000; samesite=lax`;
-    window.location.assign(`/${nextLocale}/parametres`);
+    setSelectedLocale(nextLocale);
   }
 
   return (
