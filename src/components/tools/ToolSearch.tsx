@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { tools } from "@/lib/tools/tools";
 import { normalizeSearchText, searchTools } from "@/lib/tools/search";
 import { getCategoryName, getMessages, isLocale } from "@/lib/i18n/config";
@@ -38,6 +38,7 @@ export default function ToolSearch({
   locale: localeProp,
 }: ToolSearchProps) {
   const pathname = usePathname();
+  const router = useRouter();
   const segment = pathname.split("/")[1];
   const locale = localeProp ?? (isLocale(segment) ? segment : "fr");
   const t = getMessages(locale);
