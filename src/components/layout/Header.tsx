@@ -11,6 +11,12 @@ export default function Header() {
   const locale = isLocale(segment) ? segment : "fr";
   const t = getMessages(locale);
 
+  function switchLocale(nextLocale: "fr" | "en") {
+    document.cookie = `utiluna-locale=${nextLocale}; path=/; max-age=31536000; samesite=lax`;
+    const nextPath = pathname.replace(/^\\/[^/]+/, `/${nextLocale}`);
+    window.location.assign(nextPath);
+  }
+
   return (
     <header className="sticky top-0 z-50 border-b border-[var(--border)] bg-[var(--background)]/90 backdrop-blur-xl">
       <div className="mx-auto flex h-18 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
