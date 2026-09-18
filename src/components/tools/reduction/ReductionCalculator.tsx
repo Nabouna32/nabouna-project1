@@ -9,6 +9,7 @@ import {
   calculateDiscountAmount,
   calculateDiscountedPrice,
   isValidDiscountRate,
+  isValidReductionPrice,
 } from "@/lib/reduction";
 
 function formatNumber(value: number): string {
@@ -28,7 +29,7 @@ export default function ReductionCalculator() {
     discountValue.trim() !== "" &&
     Number.isFinite(price) &&
     Number.isFinite(discountRate);
-  const valid = hasValues && price >= 0 && isValidDiscountRate(discountRate);
+  const valid = hasValues && isValidReductionPrice(price) && isValidDiscountRate(discountRate);
   const discountAmount = valid
     ? calculateDiscountAmount(price, discountRate)
     : null;
@@ -52,7 +53,7 @@ export default function ReductionCalculator() {
         <CalculatorField
           label="Prix initial"
           inputId="reduction-price"
-          min="0"
+          min="0.01"
           value={priceValue}
           onChange={(event) => setPriceValue(event.target.value)}
           placeholder="Ex. 150"

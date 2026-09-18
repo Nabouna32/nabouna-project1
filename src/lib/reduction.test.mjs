@@ -4,6 +4,7 @@ import {
   calculateDiscountAmount,
   calculateDiscountedPrice,
   isValidDiscountRate,
+  isValidReductionPrice,
 } from "./reduction.ts";
 
 test("calculates the discount amount", () => {
@@ -17,6 +18,13 @@ test("calculates the discounted price", () => {
 test("supports decimal prices and rates", () => {
   assert.ok(Math.abs(calculateDiscountAmount(99.9, 12.5) - 12.4875) < 1e-12);
   assert.ok(Math.abs(calculateDiscountedPrice(99.9, 12.5) - 87.4125) < 1e-12);
+});
+
+test("validates positive reduction prices", () => {
+  assert.equal(isValidReductionPrice(0.01), true);
+  assert.equal(isValidReductionPrice(150), true);
+  assert.equal(isValidReductionPrice(0), false);
+  assert.equal(isValidReductionPrice(-1), false);
 });
 
 test("validates discount rates between 0 and 100", () => {
