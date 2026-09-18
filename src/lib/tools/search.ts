@@ -1,5 +1,5 @@
-import type { Tool } from "./types";
-import { getToolDescription, getToolKeywords, getToolName } from "./i18n";
+import type { Tool } from "./types.ts";
+import { getToolDescription, getToolKeywords, getToolName } from "./i18n.ts";
 
 export type ToolSearchResult = {
   tool: Tool;
