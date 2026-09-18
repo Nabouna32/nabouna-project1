@@ -74,7 +74,7 @@ export default function DurationCalculator() {
               : "text-[var(--muted)] hover:text-[var(--foreground)]"
           }`}
         >
-          📅 {locale === "en" ? "Between two dates" : "Entre deux dates"}
+          📅 {calculatorText("Entre deux dates", locale)}
         </button>
         <button
           type="button"
@@ -86,7 +86,7 @@ export default function DurationCalculator() {
               : "text-[var(--muted)] hover:text-[var(--foreground)]"
           }`}
         >
-          🕐 {locale === "en" ? "Between two times" : "Entre deux horaires"}
+          🕐 {calculatorText("Entre deux horaires", locale)}
         </button>
       </div>
 
@@ -151,7 +151,7 @@ export default function DurationCalculator() {
 
       {invalidRange && (
         <p className="mt-4 text-sm font-medium text-[var(--foreground)]">
-          La date et l'heure de début doivent être antérieures ou égales à la date et l'heure de fin.
+          {calculatorText("The start date and time must be before or equal to the end date and time.", locale)}
         </p>
       )}
 
@@ -159,12 +159,12 @@ export default function DurationCalculator() {
         <div className="mt-6 rounded-2xl border border-[var(--border)] bg-[var(--background)] p-4">
           <p className="text-sm leading-6 text-[var(--muted)]">
             {mode === "dates"
-              ? `La durée est de ${formatDurationPart(duration.days, "jour", "jours")}, ${formatDurationPart(duration.hours, "heure", "heures")} et ${formatDurationPart(duration.minutes, "minute", "minutes")}.`
+              ? `La durée est de ${formatDurationPart(duration.days, calculatorText("jour", locale), calculatorText("jours", locale))}, ${formatDurationPart(duration.hours, calculatorText("heure", locale), calculatorText("heures", locale))} et ${formatDurationPart(duration.minutes, calculatorText("minute", locale), calculatorText("minutes", locale))}.`
               : `La durée est de ${formatDurationPart(duration.hours, "heure", "heures")} et ${formatDurationPart(duration.minutes, "minute", "minutes")}.`}
           </p>
           {mode === "horaires" && endTime < startTime && (
             <p className="mt-2 text-xs text-[var(--muted)]">
-              Le calcul considère que l'heure de fin est le lendemain.
+              {calculatorText("Le calcul considère que l'heure de fin est le lendemain.", locale)}
             </p>
           )}
         </div>
