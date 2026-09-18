@@ -67,6 +67,18 @@ const translations: Record<string, { fr: string; en: string }> = {
   "représente": { fr: "représente", en: "represents" },
   "de leur moyenne.": { fr: "de leur moyenne.", en: "of their average." },
   "Une différence en pourcentage peut dépasser 100 % lorsque les deux valeurs sont très éloignées. Ce résultat est normal : le calcul compare l'écart à la moyenne des deux valeurs.": { fr: "Une différence en pourcentage peut dépasser 100 % lorsque les deux valeurs sont très éloignées. Ce résultat est normal : le calcul compare l'écart à la moyenne des deux valeurs.", en: "A percentage difference can exceed 100% when the two values are far apart. This is normal: the calculation compares the difference with the average of the two values." },
+  "You are": { fr: "Vous avez", en: "You are" },
+  "year": { fr: "an", en: "year" },
+  "years": { fr: "ans", en: "years" },
+  "month": { fr: "mois", en: "month" },
+  "months": { fr: "mois", en: "months" },
+  "day": { fr: "jour", en: "day" },
+  "days": { fr: "jours", en: "days" },
+  "and": { fr: "et", en: "and" },
+  "et": { fr: "et", en: "and" },
+  "de": { fr: "de", en: "of" },
+  "sur le prix initial.": { fr: "sur le prix initial.", en: "of the initial price." },
+  "The start date and time must be before or equal to the end date and time.": { fr: "La date et l'heure de début doivent être antérieures ou égales à la date et l'heure de fin.", en: "The start date and time must be before or equal to the end date and time." },
 };
 
 export function calculatorText(value: string, locale: string): string {
