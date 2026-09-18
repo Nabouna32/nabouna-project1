@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname } from "next/navigation";
+import { calculatorText } from "@/lib/i18n/calculators";
 import { CalculatorActions } from "@/components/tools/calculator/CalculatorActions";
 import { CalculatorField } from "@/components/tools/calculator/CalculatorField";
 import { CalculatorResult } from "@/components/tools/calculator/CalculatorResult";
@@ -19,6 +21,8 @@ function formatNumber(value: number): string {
 }
 
 export default function ReductionCalculator() {
+  const pathname = usePathname();
+  const locale = pathname.split("/")[1] || "fr";
   const [priceValue, setPriceValue] = useState("");
   const [discountValue, setDiscountValue] = useState("");
 
@@ -51,7 +55,7 @@ export default function ReductionCalculator() {
 
       <div className="mt-2 grid gap-5 sm:grid-cols-2">
         <CalculatorField
-          label="Prix initial"
+          label=calculatorText("Prix initial", locale)
           inputId="reduction-price"
           min="0.01"
           value={priceValue}
@@ -60,7 +64,7 @@ export default function ReductionCalculator() {
           unit="€"
         />
         <CalculatorField
-          label="Réduction"
+          label=calculatorText("Réduction", locale)
           inputId="reduction-rate"
           min="0"
           max="100"
@@ -73,12 +77,12 @@ export default function ReductionCalculator() {
 
       <div className="mt-6 grid gap-4 sm:grid-cols-2">
         <CalculatorResult
-          label="Prix après réduction"
+          label=calculatorText("Prix après réduction", locale)
           tone="accent"
           value={discountedPrice === null ? "—" : `${formatNumber(discountedPrice)} €`}
         />
         <CalculatorResult
-          label="Montant économisé"
+          label=calculatorText("Montant économisé", locale)
           value={discountAmount === null ? "—" : `${formatNumber(discountAmount)} €`}
         />
       </div>
