@@ -70,17 +70,17 @@ export default function PercentageCalculator() {
     {
       id: "percentage",
       title: "X % de Y",
-      description: "Calculer une part",
+      description: "{locale === "en" ? "Calculate a percentage" : "Calculer une part"}",
     },
     {
       id: "evolution",
       title: "Évolution",
-      description: "Augmentation ou diminution",
+      description: "{locale === "en" ? "Increase or decrease" : "Augmentation ou diminution"",
     },
     {
       id: "difference",
       title: "Différence",
-      description: "Comparer deux valeurs",
+      description: "{locale === "en" ? "Compare two values" : "Comparer deux valeurs"",
     },
   ];
 
