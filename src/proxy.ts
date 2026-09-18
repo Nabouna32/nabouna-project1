@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { defaultLocale, locales } from "./lib/i18n/config";
+import { defaultLocale, isLocale, locales } from "./lib/i18n/config";
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -14,7 +14,14 @@ export function proxy(request: NextRequest) {
   }
 
   const url = request.nextUrl.clone();
-  url.pathname = `/${defaultLocale}${pathname}`;
+  const cookieLocale = request.cookies.get("utiluna-locale")?.value;
+  const browserLocale = request.headers.get("accept-language")?.split(",")[0]?.split("-")[0];
+  const locale = isLocale(cookieLocale ?? "")
+    ? cookieLocale
+    : isLocale(browserLocale ?? "")
+      ? browserLocale
+      : defaultLocale;
+  url.pathname = `/${locale}${pathname}`;
 
   return NextResponse.redirect(url);
 }
