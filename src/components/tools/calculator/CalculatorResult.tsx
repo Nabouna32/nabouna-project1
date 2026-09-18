@@ -1,3 +1,6 @@
+import { usePathname } from "next/navigation";
+import { calculatorText } from "@/lib/i18n/calculators";
+
 import type { ReactNode } from "react";
 
 type CalculatorResultProps = {
@@ -10,7 +13,7 @@ export function CalculatorResult({
   label,
   value,
   tone = "neutral",
-}: CalculatorResultProps) {
+}: CalculatorResultProps) {\n  const pathname = usePathname();\n  const locale = pathname.split("/")[1] || "fr";
   const toneClass =
     tone === "accent"
       ? "border-[var(--accent)]/20 bg-[var(--accent-soft)]"
@@ -18,7 +21,7 @@ export function CalculatorResult({
 
   return (
     <div className={`rounded-2xl border p-5 ${toneClass}`}>
-      <p className="text-sm font-medium text-[var(--muted)]">{label}</p>
+      <p className="text-sm font-medium text-[var(--muted)]">{calculatorText(label, locale)}</p>
       <p className="mt-2 text-4xl font-bold tracking-tight text-[var(--foreground)] sm:text-5xl">
         {value}
       </p>
