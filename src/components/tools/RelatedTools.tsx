@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { tools } from "@/lib/tools/tools";
 import { getRelatedTools } from "@/lib/tools/relations";
 
@@ -7,6 +10,8 @@ type RelatedToolsProps = {
 };
 
 export default function RelatedTools({ toolId }: RelatedToolsProps) {
+  const pathname = usePathname();
+  const locale = pathname.split("/")[1] || "fr";
   const tool = tools.find((item) => item.id === toolId);
   if (!tool) return null;
 
@@ -28,7 +33,7 @@ export default function RelatedTools({ toolId }: RelatedToolsProps) {
         {relatedTools.map((relatedTool) => (
           <Link
             key={relatedTool.id}
-            href={`/fr/outils/${relatedTool.categoryId}/${relatedTool.slug}`}
+            href={`/${locale}/outils/${relatedTool.categoryId}/${relatedTool.slug}`}
             className="group rounded-2xl border border-[var(--border)] bg-[var(--background)] p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-[var(--accent)] hover:shadow-lg hover:shadow-black/5"
           >
             <span className="text-2xl" aria-hidden="true">
