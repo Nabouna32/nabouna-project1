@@ -29,6 +29,23 @@ const translations: Record<string, { fr: string; en: string }> = {
   "Valeur à convertir": { fr: "Valeur à convertir", en: "Value to convert" },
   "Entre deux dates": { fr: "Entre deux dates", en: "Between two dates" },
   "Entre deux horaires": { fr: "Entre deux horaires", en: "Between two times" },
+  "Type de calcul": { fr: "Type de calcul", en: "Calculation type" },
+  "Pourcentage": { fr: "Pourcentage", en: "Percentage" },
+  "Valeur": { fr: "Valeur", en: "Value" },
+  "Valeur finale": { fr: "Valeur finale", en: "Final value" },
+  "Valeur de départ": { fr: "Valeur de départ", en: "Starting value" },
+  "Première valeur": { fr: "Première valeur", en: "First value" },
+  "Deuxième valeur": { fr: "Deuxième valeur", en: "Second value" },
+  "X % de Y": { fr: "X % de Y", en: "X % of Y" },
+  "Évolution": { fr: "Évolution", en: "Change" },
+  "Différence": { fr: "Différence", en: "Difference" },
+  "Calculer une part": { fr: "Calculer une part", en: "Calculate a percentage" },
+  "Augmentation ou diminution": { fr: "Augmentation ou diminution", en: "Increase or decrease" },
+  "Comparer deux valeurs": { fr: "Comparer deux valeurs", en: "Compare two values" },
+  "Comment avons-nous trouvé ce résultat ?": { fr: "Comment avons-nous trouvé ce résultat ?", en: "How did we get this result?" },
+  "Voici le calcul réalisé à partir des valeurs que vous avez saisies :": { fr: "Voici le calcul réalisé à partir des valeurs que vous avez saisies :", en: "Here is the calculation based on the values you entered:" },
+  "La valeur de départ ne peut pas être égale à 0.": { fr: "La valeur de départ ne peut pas être égale à 0.", en: "The starting value cannot be 0." },
+  "Les deux valeurs ne peuvent pas être égales à 0.": { fr: "Les deux valeurs ne peuvent pas être égales à 0.", en: "Both values cannot be 0." },
 };
 
 export function calculatorText(value: string, locale: string): string {
