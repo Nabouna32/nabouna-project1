@@ -28,7 +28,7 @@ export function CalculatorField({
         htmlFor={inputId}
         className="mb-2 block text-sm font-medium text-[var(--foreground)]"
       >
-        {calculatorText(label, locale)}}
+        {calculatorText(label, locale)}
       </label>
       <div className="relative">
         <input
