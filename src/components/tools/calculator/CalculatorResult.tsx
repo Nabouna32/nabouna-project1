@@ -23,7 +23,7 @@ export function CalculatorResult({
 
   return (
     <div className={`rounded-2xl border p-5 ${toneClass}`}>
-      <p className="text-sm font-medium text-[var(--muted)]">{calculatorText(label, locale)}}</p>
+      <p className="text-sm font-medium text-[var(--muted)]">{calculatorText(label, locale)}</p>
       <p className="mt-2 text-4xl font-bold tracking-tight text-[var(--foreground)] sm:text-5xl">
         {value}
       </p>
