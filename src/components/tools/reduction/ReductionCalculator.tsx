@@ -52,7 +52,7 @@ export default function ReductionCalculator() {
         <CalculatorField
           label="Prix initial"
           inputId="reduction-price"
-          min="0"
+          min="0.01"
           value={priceValue}
           onChange={(event) => setPriceValue(event.target.value)}
           placeholder="Ex. 150"
