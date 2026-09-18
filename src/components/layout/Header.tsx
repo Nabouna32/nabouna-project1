@@ -14,9 +14,10 @@ export default function Header() {
   const t = getMessages(locale);
 
   function switchLocale(nextLocale: "fr" | "en") {
+    if (nextLocale === locale) return;
     document.cookie = `utiluna-locale=${nextLocale}; path=/; max-age=31536000; samesite=lax`;
     const nextPath = pathname.replace(/^\/[^/]+/, `/${nextLocale}`);
-    window.location.assign(nextPath);
+    router.push(nextPath);
   }
 
   return (
@@ -42,7 +43,9 @@ export default function Header() {
           >
             {t.nav.tools}
           </Link>
-          <div className="flex items-center rounded-xl border border-[var(--border)] bg-[var(--surface)] p-1" aria-label={t.nav.language}>\n            <button type="button" onClick={() => switchLocale("fr")} aria-pressed={locale === "fr"} className={`rounded-lg px-2.5 py-1.5 text-xs font-semibold transition-colors ${locale === "fr" ? "bg-[var(--accent-soft)] text-[var(--foreground)]" : "text-[var(--muted)] hover:text-[var(--foreground)]"}`}>FR</button>\n            <button type="button" onClick={() => switchLocale("en")} aria-pressed={locale === "en"} className={`rounded-lg px-2.5 py-1.5 text-xs font-semibold transition-colors ${locale === "en" ? "bg-[var(--accent-soft)] text-[var(--foreground)]" : "text-[var(--muted)] hover:text-[var(--foreground)]"}`}>EN</button>\n          </div>\n          <Link href={`/${locale}/parametres`} aria-label={t.nav.settings} title={t.nav.settings} className="rounded-xl px-3 py-2.5 text-[var(--muted)] transition-colors hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)]">⚙️</Link>\n          <ThemeToggle />
+          <div className="flex items-center rounded-xl border border-[var(--border)] bg-[var(--surface)] p-1" aria-label={t.nav.language}>\n            <button type="button" onClick={() => switchLocale("fr")} aria-pressed={locale === "fr"} className={`rounded-lg px-2.5 py-1.5 text-xs font-semibold transition-colors ${locale === "fr" ? "bg-[var(--accent-soft)] text-[var(--foreground)]" : "text-[var(--muted)] hover:text-[var(--foreground)]"}`}>FR</button>
+            <button type="button" onClick={() => switchLocale("en")} aria-pressed={locale === "en"} className={`rounded-lg px-2.5 py-1.5 text-xs font-semibold transition-colors ${locale === "en" ? "bg-[var(--accent-soft)] text-[var(--foreground)]" : "text-[var(--muted)] hover:text-[var(--foreground)]"}`}>EN</button>
+          </div>\n          <Link href={`/${locale}/parametres`} aria-label={t.nav.settings} title={t.nav.settings} className="rounded-xl px-3 py-2.5 text-[var(--muted)] transition-colors hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)]">⚙️</Link>\n          <ThemeToggle />
         </nav>
       </div>
     </header>
