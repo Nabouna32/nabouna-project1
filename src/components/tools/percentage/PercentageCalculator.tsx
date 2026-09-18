@@ -114,7 +114,7 @@ export default function PercentageCalculator() {
     if (mode === "percentage") {
       return (
         <>
-          {formatNumber(first)} % de {formatNumber(second)} ={" "}
+          {formatNumber(first)} % {calculatorText("de", locale)} {formatNumber(second)} ={" "}
           <strong>{formatNumber(result)}</strong>
         </>
       );
@@ -124,8 +124,8 @@ export default function PercentageCalculator() {
       if (result > 0) {
         return (
           <>
-            La valeur est passée de {formatNumber(second)} à{" "}
-            {formatNumber(first)}, soit une augmentation de{" "}
+            {calculatorText("La valeur est passée de", locale)} {formatNumber(second)}{" "}
+            {calculatorText("à", locale)} {formatNumber(first)}, {calculatorText("soit une augmentation de", locale)}{" "}
             <strong>{formatNumber(result)} %</strong>.
           </>
         );
@@ -134,20 +134,21 @@ export default function PercentageCalculator() {
       if (result < 0) {
         return (
           <>
-            La valeur est passée de {formatNumber(second)} à{" "}
-            {formatNumber(first)}, soit une diminution de{" "}
+            {calculatorText("La valeur est passée de", locale)} {formatNumber(second)}{" "}
+            {calculatorText("à", locale)} {formatNumber(first)}, {calculatorText("soit une diminution de", locale)}{" "}
             <strong>{formatNumber(Math.abs(result))} %</strong>.
           </>
         );
       }
 
-      return <>{calculatorText("La valeur n\'a pas changé.", locale)}</>;
+      return <>{calculatorText("La valeur n\\'a pas changé.", locale)}</>;
     }
 
     return (
       <>
-        L'écart entre {formatNumber(first)} et {formatNumber(second)} représente{" "}
-        <strong>{formatNumber(result)} %</strong> de leur moyenne.
+        {calculatorText("L\\'écart entre", locale)} {formatNumber(first)} {calculatorText("et", locale)} {formatNumber(second)}{" "}
+        {calculatorText("représente", locale)} <strong>{formatNumber(result)} %</strong>{" "}
+        {calculatorText("de leur moyenne.", locale)}
       </>
     );
   }
