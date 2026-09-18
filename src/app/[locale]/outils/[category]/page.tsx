@@ -36,7 +36,7 @@ export default async function CategoryPage({
         <p className="mt-8 text-3xl" aria-hidden="true">{category.icon}</p>
         <h1 className="mt-3 text-3xl font-bold tracking-tight text-[var(--foreground)] sm:text-4xl">{categoryName}</h1>
         <p className="mt-4 text-base leading-7 text-[var(--muted)]">
-          {t.tools.categoryDescription} {locale === "en" ? categoryName.toLowerCase() : categoryName.toLowerCase()}.
+          {t.tools.categoryDescription} {categoryName.toLowerCase()}.
         </p>
       </div>
       <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
