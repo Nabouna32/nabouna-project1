@@ -1,5 +1,5 @@
-import { defaultLocale, isLocale, type Locale } from "@/lib/i18n/config";
-import type { Tool } from "@/lib/tools/types";
+import { defaultLocale, isLocale, type Locale } from "../i18n/config";
+import type { Tool } from "./types";
 
 export function getToolName(tool: Tool, locale: string): string {
   const selectedLocale: Locale = isLocale(locale) ? locale : defaultLocale;
