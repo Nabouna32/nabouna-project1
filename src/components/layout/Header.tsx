@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 import ThemeToggle from "@/components/theme/ThemeToggle";
 import { getMessages, isLocale } from "@/lib/i18n/config";
 
