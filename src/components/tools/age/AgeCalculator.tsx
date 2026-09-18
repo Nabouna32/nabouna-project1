@@ -47,14 +47,14 @@ export default function AgeCalculator() {
 
       <div className="grid gap-5 sm:grid-cols-2">
         <CalculatorField
-          label=calculatorText("Date de naissance", locale)
+          label={calculatorText("Date de naissance", locale)}
           inputId="age-birth-date"
           type="date"
           value={birthDate}
           onChange={(event) => setBirthDate(event.target.value)}
         />
         <CalculatorField
-          label=calculatorText("Calculer au", locale)
+          label={calculatorText("Calculer au", locale)}
           inputId="age-reference-date"
           type="date"
           value={referenceDate}
@@ -64,12 +64,12 @@ export default function AgeCalculator() {
 
       <div className="mt-6 grid gap-4 sm:grid-cols-3">
         <CalculatorResult
-          label=calculatorText("Années", locale)
+          label={calculatorText("Années", locale)}
           tone="accent"
           value={age === null ? "—" : String(age.years)}
         />
-        <CalculatorResult label=calculatorText("Mois", locale) value={age === null ? "—" : String(age.months)} />
-        <CalculatorResult label=calculatorText("Jours", locale) value={age === null ? "—" : String(age.days)} />
+        <CalculatorResult label={calculatorText("Mois", locale)} value={age === null ? "—" : String(age.months)} />
+        <CalculatorResult label={calculatorText("Jours", locale)} value={age === null ? "—" : String(age.days)} />
       </div>
 
       {invalidRange && (
