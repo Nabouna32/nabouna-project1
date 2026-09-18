@@ -1,6 +1,8 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { usePathname } from "next/navigation";
+import { calculatorText } from "@/lib/i18n/calculators";
 import { CalculatorActions } from "@/components/tools/calculator/CalculatorActions";
 import { CalculatorField } from "@/components/tools/calculator/CalculatorField";
 import { CalculatorShell } from "@/components/tools/calculator/CalculatorShell";
@@ -42,6 +44,8 @@ function formatDuration(days: number, hours: number, minutes: number, seconds: n
 }
 
 export default function DownloadTimeCalculator() {
+  const pathname = usePathname();
+  const locale = pathname.split("/")[1] || "fr";
   const [size, setSize] = useState("");
   const [sizeUnit, setSizeUnit] = useState<DownloadSizeUnit>("go");
   const [speed, setSpeed] = useState("");
@@ -63,7 +67,7 @@ export default function DownloadTimeCalculator() {
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
           <CalculatorField
-            label="Taille du fichier"
+            label=calculatorText("Taille du fichier", locale)
             inputId="download-time-size"
             type="number"
             min="0"
@@ -73,7 +77,7 @@ export default function DownloadTimeCalculator() {
             placeholder="Ex. 10"
           />
           <select
-            aria-label="Unité de taille du fichier"
+            aria-label=calculatorText("Unité de taille du fichier", locale)
             value={sizeUnit}
             onChange={(event) => setSizeUnit(event.target.value as DownloadSizeUnit)}
             className="mt-2 block w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] px-4 py-3 text-base text-[var(--foreground)] outline-none transition focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/20"
@@ -84,7 +88,7 @@ export default function DownloadTimeCalculator() {
 
         <div>
           <CalculatorField
-            label="Vitesse de téléchargement"
+            label=calculatorText("Vitesse de téléchargement", locale)
             inputId="download-time-speed"
             type="number"
             min="0"
@@ -94,7 +98,7 @@ export default function DownloadTimeCalculator() {
             placeholder="Ex. 100"
           />
           <select
-            aria-label="Unité de vitesse de téléchargement"
+            aria-label=calculatorText("Unité de vitesse de téléchargement", locale)
             value={speedUnit}
             onChange={(event) => setSpeedUnit(event.target.value as DownloadSpeedUnit)}
             className="mt-2 block w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] px-4 py-3 text-base text-[var(--foreground)] outline-none transition focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/20"
