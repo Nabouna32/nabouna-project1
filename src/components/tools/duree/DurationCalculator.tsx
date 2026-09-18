@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname } from "next/navigation";
+import { calculatorText } from "@/lib/i18n/calculators";
 import { CalculatorActions } from "@/components/tools/calculator/CalculatorActions";
 import { CalculatorField } from "@/components/tools/calculator/CalculatorField";
 import { CalculatorResult } from "@/components/tools/calculator/CalculatorResult";
@@ -23,6 +25,8 @@ function formatDurationPart(value: number, singular: string, plural: string): st
 }
 
 export default function DurationCalculator() {
+  const pathname = usePathname();
+  const locale = pathname.split("/")[1] || "fr";
   const [initialEndDateTime] = useState(() => toInputDateTime(new Date()));
   const [mode, setMode] = useState<Mode>("dates");
   const [startDateTime, setStartDateTime] = useState("");
@@ -92,14 +96,14 @@ export default function DurationCalculator() {
         {mode === "dates" ? (
           <>
             <CalculatorField
-              label="Date et heure de début"
+              label=calculatorText("Date et heure de début", locale)
               inputId="duration-start-date"
               type="datetime-local"
               value={startDateTime}
               onChange={(event) => setStartDateTime(event.target.value)}
             />
             <CalculatorField
-              label="Date et heure de fin"
+              label=calculatorText("Date et heure de fin", locale)
               inputId="duration-end-date"
               type="datetime-local"
               value={endDateTime}
@@ -109,14 +113,14 @@ export default function DurationCalculator() {
         ) : (
           <>
             <CalculatorField
-              label="Heure de début"
+              label=calculatorText("Heure de début", locale)
               inputId="duration-start-time"
               type="time"
               value={startTime}
               onChange={(event) => setStartTime(event.target.value)}
             />
             <CalculatorField
-              label="Heure de fin"
+              label=calculatorText("Heure de fin", locale)
               inputId="duration-end-time"
               type="time"
               value={endTime}
@@ -129,18 +133,18 @@ export default function DurationCalculator() {
       <div className={`mt-6 grid gap-4 ${mode === "dates" ? "sm:grid-cols-3" : "sm:grid-cols-2"}`}>
         {mode === "dates" && (
           <CalculatorResult
-            label="Jours"
+            label=calculatorText("Jours", locale)
             tone="accent"
             value={duration === null ? "—" : String(duration.days)}
           />
         )}
         <CalculatorResult
-          label="Heures"
+          label=calculatorText("Heures", locale)
           tone={mode === "horaires" ? "accent" : undefined}
           value={duration === null ? "—" : String(duration.hours)}
         />
         <CalculatorResult
-          label="Minutes"
+          label=calculatorText("Minutes", locale)
           value={duration === null ? "—" : String(duration.minutes)}
         />
       </div>
