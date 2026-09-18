@@ -76,7 +76,14 @@ const messages = {
       categoryDescription: "Find the tools available in the",
       searchPlaceholder: "What are you looking for?",
     },
-    settings: {\n      title: "Settings",\n      description: "Customize your Utiluna experience.",\n      languageTitle: "Language",\n      languageDescription: "Choose the interface language.",\n      french: "Français",\n      english: "English",\n      current: "Current",\n    },\n    search: {
+    settings: {
+      title: "Settings",
+      description: "Customize your Utiluna experience.",
+      languageTitle: "Language",
+      languageDescription: "Choose the interface language.",
+      french: "Français",
+      english: "English",
+      current: "Current",\n    },\n    search: {
       label: "Search for a tool",
       clear: "Clear search",
       button: "Search",
