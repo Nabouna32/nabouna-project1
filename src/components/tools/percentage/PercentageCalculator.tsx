@@ -141,7 +141,7 @@ export default function PercentageCalculator() {
         );
       }
 
-      return <>La valeur n'a pas changé.</>;
+      return <>{calculatorText("La valeur n\'a pas changé.", locale)}</>;
     }
 
     return (
@@ -297,14 +297,14 @@ export default function PercentageCalculator() {
       {result !== null && !error && (
         <details className="group mt-4 rounded-2xl border border-[var(--border)] bg-[var(--background)]">
           <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-4 text-sm font-semibold text-[var(--foreground)]">
-            <span>💡 Comment avons-nous trouvé ce résultat ?</span>
+            <span>💡 {calculatorText("Comment avons-nous trouvé ce résultat ?", locale)}</span>
             <span className="text-lg text-[var(--muted)] transition-transform group-open:rotate-45">
               +
             </span>
           </summary>
           <div className="border-t border-[var(--border)] px-4 pb-4 pt-4">
             <p className="text-sm leading-6 text-[var(--muted)]">
-              Voici le calcul réalisé à partir des valeurs que vous avez saisies :
+              {calculatorText("Voici le calcul réalisé à partir des valeurs que vous avez saisies :", locale)}
             </p>
             <div className="mt-3 rounded-xl bg-[var(--surface-soft)] p-4">
               <p className="font-mono text-sm leading-6 text-[var(--foreground)]">
