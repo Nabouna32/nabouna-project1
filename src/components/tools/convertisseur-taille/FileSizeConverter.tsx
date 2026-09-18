@@ -59,7 +59,7 @@ export default function FileSizeConverter() {
 
       <div className="grid gap-5 sm:grid-cols-2">
         <CalculatorField
-          label=calculatorText("Valeur à convertir", locale)
+          label={calculatorText("Valeur à convertir", locale)}
           inputId="file-size-value"
           type="number"
           min="0"
@@ -110,7 +110,7 @@ export default function FileSizeConverter() {
 
       <div className="mt-6">
         <CalculatorResult
-          label=calculatorText("Résultat", locale)
+          label={calculatorText("Résultat", locale)}
           value={
             result === null
               ? "—"
