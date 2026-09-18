@@ -74,14 +74,14 @@ export default function AgeCalculator() {
 
       {invalidRange && (
         <p className="mt-4 text-sm font-medium text-[var(--foreground)]">
-          La date de naissance doit être antérieure ou égale à la date de référence.
+          {calculatorText("La date de naissance doit être antérieure ou égale à la date de référence.", locale)}
         </p>
       )}
 
       {age && (
         <div className="mt-6 rounded-2xl border border-[var(--border)] bg-[var(--background)] p-4">
           <p className="text-sm leading-6 text-[var(--muted)]">
-            Vous avez {formatAgePart(age.years, "an", "ans")}, {formatAgePart(age.months, "mois", "mois")} et {formatAgePart(age.days, "jour", "jours")}.
+            {calculatorText("You are", locale)} {formatAgePart(age.years, calculatorText("year", locale), calculatorText("years", locale))}, {formatAgePart(age.months, calculatorText("month", locale), calculatorText("months", locale))} {calculatorText("and", locale)} {formatAgePart(age.days, calculatorText("day", locale), calculatorText("days", locale))}.
           </p>
         </div>
       )}
