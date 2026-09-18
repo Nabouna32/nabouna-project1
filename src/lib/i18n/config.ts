@@ -83,7 +83,9 @@ const messages = {
       languageDescription: "Choose the interface language.",
       french: "Français",
       english: "English",
-      current: "Current",\n    },\n    search: {
+      current: "Current",
+    },
+    search: {
       label: "Search for a tool",
       clear: "Clear search",
       button: "Search",
