@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { tools } from "@/lib/tools/tools";
 import { getRelatedTools } from "@/lib/tools/relations";
+import { getToolDescription, getToolName } from "@/lib/tools/i18n";
 
 type RelatedToolsProps = {
   toolId: string;
@@ -27,7 +28,7 @@ export default function RelatedTools({ toolId }: RelatedToolsProps) {
         id="related-tools-title"
         className="text-xl font-bold text-[var(--foreground)] sm:text-2xl"
       >
-        Vous pourriez aussi avoir besoin de
+        {locale === "en" ? "You might also need" : "Vous pourriez aussi avoir besoin de"}
       </h2>
       <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {relatedTools.map((relatedTool) => (
@@ -40,10 +41,10 @@ export default function RelatedTools({ toolId }: RelatedToolsProps) {
               {relatedTool.icon}
             </span>
             <h3 className="mt-4 font-semibold text-[var(--foreground)]">
-              {relatedTool.name}
+              {getToolName(relatedTool, locale)}
             </h3>
             <p className="mt-2 text-sm leading-6 text-[var(--muted)]">
-              {relatedTool.description}
+              {getToolDescription(relatedTool, locale)}
             </p>
           </Link>
         ))}
