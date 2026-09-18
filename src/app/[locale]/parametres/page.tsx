@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { getMessages, isLocale, locales, type Locale } from "@/lib/i18n/config";
-c
+
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
