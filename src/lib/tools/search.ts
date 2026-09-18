@@ -1,5 +1,5 @@
-import type { Tool } from "@/lib/tools/types";
-import { getToolDescription, getToolKeywords, getToolName } from "@/lib/tools/i18n";
+import type { Tool } from "./types";
+import { getToolDescription, getToolKeywords, getToolName } from "./i18n";
 
 export type ToolSearchResult = {
   tool: Tool;
