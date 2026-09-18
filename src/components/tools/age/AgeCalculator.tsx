@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname } from "next/navigation";
+import { calculatorText } from "@/lib/i18n/calculators";
 import { CalculatorActions } from "@/components/tools/calculator/CalculatorActions";
 import { CalculatorField } from "@/components/tools/calculator/CalculatorField";
 import { CalculatorResult } from "@/components/tools/calculator/CalculatorResult";
@@ -19,6 +21,8 @@ function formatAgePart(value: number, singular: string, plural: string): string 
 }
 
 export default function AgeCalculator() {
+  const pathname = usePathname();
+  const locale = pathname.split("/")[1] || "fr";
   const today = toInputDate(new Date());
   const [birthDate, setBirthDate] = useState("");
   const [referenceDate, setReferenceDate] = useState(today);
@@ -43,14 +47,14 @@ export default function AgeCalculator() {
 
       <div className="grid gap-5 sm:grid-cols-2">
         <CalculatorField
-          label="Date de naissance"
+          label=calculatorText("Date de naissance", locale)
           inputId="age-birth-date"
           type="date"
           value={birthDate}
           onChange={(event) => setBirthDate(event.target.value)}
         />
         <CalculatorField
-          label="Calculer au"
+          label=calculatorText("Calculer au", locale)
           inputId="age-reference-date"
           type="date"
           value={referenceDate}
@@ -60,12 +64,12 @@ export default function AgeCalculator() {
 
       <div className="mt-6 grid gap-4 sm:grid-cols-3">
         <CalculatorResult
-          label="Années"
+          label=calculatorText("Années", locale)
           tone="accent"
           value={age === null ? "—" : String(age.years)}
         />
-        <CalculatorResult label="Mois" value={age === null ? "—" : String(age.months)} />
-        <CalculatorResult label="Jours" value={age === null ? "—" : String(age.days)} />
+        <CalculatorResult label=calculatorText("Mois", locale) value={age === null ? "—" : String(age.months)} />
+        <CalculatorResult label=calculatorText("Jours", locale) value={age === null ? "—" : String(age.days)} />
       </div>
 
       {invalidRange && (
