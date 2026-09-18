@@ -124,9 +124,9 @@ export default function PercentageCalculator() {
       if (result > 0) {
         return (
           <>
-            {calculatorText("La valeur est passée de", locale)} {formatNumber(second)}{" "}
-            {calculatorText("à", locale)} {formatNumber(first)}, {calculatorText("soit une augmentation de", locale)}{" "}
-            <strong>{formatNumber(result)} %</strong>.
+            {calculatorText("La valeur est passée de", locale)} {formatNumber(second, locale)}{" "}
+            {calculatorText("à", locale)} {formatNumber(first, locale)}, {calculatorText("soit une augmentation de", locale)}{" "}
+            <strong>{formatNumber(result, locale)} %</strong>.
           </>
         );
       }
@@ -141,12 +141,12 @@ export default function PercentageCalculator() {
         );
       }
 
-      return <>{calculatorText("La valeur n\\'a pas changé.", locale)}</>;
+      return <>{calculatorText("La valeur n'a pas changé.", locale)}</>;
     }
 
     return (
       <>
-        {calculatorText("L\\'écart entre", locale)} {formatNumber(first)} {calculatorText("et", locale)} {formatNumber(second)}{" "}
+        {calculatorText("L'écart entre", locale)} {formatNumber(first)} {calculatorText("et", locale)} {formatNumber(second)}{" "}
         {calculatorText("représente", locale)} <strong>{formatNumber(result)} %</strong>{" "}
         {calculatorText("de leur moyenne.", locale)}
       </>
