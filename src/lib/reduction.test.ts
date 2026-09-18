@@ -1,10 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { isValidDiscountRate } from "./reduction";
-
-function isValidReductionPrice(price: number): boolean {
-  return Number.isFinite(price) && price > 0;
-}
+import { isValidDiscountRate, isValidReductionPrice } from "./reduction";
 
 test("reduction accepts positive prices", () => {
   assert.equal(isValidReductionPrice(0.01), true);
