@@ -129,7 +129,7 @@ export default function PercentagePage() {
 
           <div className="mt-8 flex justify-start">
             <Link
-              href="/fr/outils"
+              href="../.."
               className="text-sm font-medium text-[var(--accent)] hover:underline"
             >
               ← Retour aux outils
