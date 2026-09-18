@@ -89,19 +89,19 @@ export default function ReductionCalculator() {
 
       {hasValues && !valid && (
         <p className="mt-4 text-sm font-medium text-[var(--foreground)]">
-          Saisissez un prix positif et une réduction comprise entre 0 et 100 %.
+          {calculatorText("Saisissez un prix positif et une réduction comprise entre 0 et 100 %.", locale)}
         </p>
       )}
 
       {valid && discountedPrice !== null && discountAmount !== null && (
         <details className="group mt-4 rounded-2xl border border-[var(--border)] bg-[var(--background)]">
           <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-4 text-sm font-semibold text-[var(--foreground)]">
-            <span>💡 Comment avons-nous trouvé ce résultat ?</span>
+            <span>💡 {calculatorText("Comment avons-nous trouvé ce résultat ?", locale)}</span>
             <span className="text-lg text-[var(--muted)] transition-transform group-open:rotate-45">+</span>
           </summary>
           <div className="border-t border-[var(--border)] px-4 pb-4 pt-4">
             <p className="text-sm leading-6 text-[var(--muted)]">
-              La réduction représente {formatNumber(discountAmount)} € sur le prix initial.
+              {calculatorText("La réduction représente", locale)} {formatNumber(discountAmount)} € {calculatorText("sur le prix initial.", locale)}
             </p>
             <div className="mt-3 rounded-xl bg-[var(--surface-soft)] p-4">
               <p className="font-mono text-sm leading-6 text-[var(--foreground)]">
