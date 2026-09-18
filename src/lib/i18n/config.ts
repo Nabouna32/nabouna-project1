@@ -10,7 +10,7 @@ export function isLocale(value: string): value is Locale {
 
 const messages = {
   fr: {
-    nav: { home: "Accueil", tools: "Outils" },
+    nav: { home: "Accueil", tools: "Outils", settings: "Paramètres", language: "Langue" },
     home: {
       badge: "Des outils simples pour le quotidien",
       title: "Trouvez l’outil qu’il vous faut.",
@@ -31,6 +31,13 @@ const messages = {
       back: "← Tous les outils",
       categoryDescription: "Retrouvez les outils disponibles dans la catégorie",
       searchPlaceholder: "Que recherchez-vous ?",
+      settingsTitle: "Paramètres",
+      settingsDescription: "Personnalisez votre expérience Utiluna.",
+      languageTitle: "Langue",
+      languageDescription: "Choisissez la langue de l’interface.",
+      french: "Français",
+      english: "English",
+      current: "Actuelle",
     },
     search: {
       label: "Rechercher un outil",
@@ -45,7 +52,7 @@ const messages = {
     },
   },
   en: {
-    nav: { home: "Home", tools: "Tools" },
+    nav: { home: "Home", tools: "Tools", settings: "Settings", language: "Language" },
     home: {
       badge: "Simple tools for everyday life",
       title: "Find the tool you need.",
@@ -66,6 +73,13 @@ const messages = {
       back: "← All tools",
       categoryDescription: "Find the tools available in the",
       searchPlaceholder: "What are you looking for?",
+      settingsTitle: "Settings",
+      settingsDescription: "Customize your Utiluna experience.",
+      languageTitle: "Language",
+      languageDescription: "Choose the interface language.",
+      french: "Français",
+      english: "English",
+      current: "Current",
     },
     search: {
       label: "Search for a tool",
