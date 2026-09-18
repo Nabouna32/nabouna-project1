@@ -86,7 +86,7 @@ export default function DurationCalculator() {
               : "text-[var(--muted)] hover:text-[var(--foreground)]"
           }`}
         >
-          🕐 {locale === "en" ? "Between two times" : "Entre deux horaires"
+          🕐 {locale === "en" ? "Between two times" : "Entre deux horaires"}
         </button>
       </div>
 
