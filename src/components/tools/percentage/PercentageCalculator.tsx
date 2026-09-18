@@ -15,8 +15,8 @@ import {
 
 type Mode = "percentage" | "evolution" | "difference";
 
-function formatNumber(value: number): string {
-  return new Intl.NumberFormat("fr-FR", {
+function formatNumber(value: number, locale = "fr"): string {
+  return new Intl.NumberFormat(locale === "en" ? "en-US" : "fr-FR", {
     maximumFractionDigits: 2,
   }).format(value);
 }
@@ -114,8 +114,8 @@ export default function PercentageCalculator() {
     if (mode === "percentage") {
       return (
         <>
-          {formatNumber(first)} % {calculatorText("de", locale)} {formatNumber(second)} ={" "}
-          <strong>{formatNumber(result)}</strong>
+          {formatNumber(first, locale)} % {calculatorText("de", locale)} {formatNumber(second, locale)} ={" "}
+          <strong>{formatNumber(result, locale)}</strong>
         </>
       );
     }
@@ -136,7 +136,7 @@ export default function PercentageCalculator() {
           <>
             {calculatorText("La valeur est passée de", locale)} {formatNumber(second)}{" "}
             {calculatorText("à", locale)} {formatNumber(first)}, {calculatorText("soit une diminution de", locale)}{" "}
-            <strong>{formatNumber(Math.abs(result))} %</strong>.
+            <strong>{formatNumber(Math.abs(result), locale)} %</strong>.
           </>
         );
       }
