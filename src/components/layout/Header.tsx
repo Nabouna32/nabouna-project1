@@ -1,12 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import ThemeToggle from "@/components/theme/ThemeToggle";
 import { getMessages, isLocale } from "@/lib/i18n/config";
 
 export default function Header() {
   const pathname = usePathname();
+  const router = useRouter();
   const segment = pathname.split("/")[1];
   const locale = isLocale(segment) ? segment : "fr";
   const t = getMessages(locale);
