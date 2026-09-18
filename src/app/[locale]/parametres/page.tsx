@@ -2,7 +2,12 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { getMessages, isLocale, type Locale } from "@/lib/i18n/config";
+import { getMessages, isLocale, locales, type Locale } from "@/lib/i18n/config";
+c
+export function generateStaticParams() {
+  return locales.map((locale) => ({ locale }));
+}
+
 
 export default function SettingsPage() {
   const pathname = usePathname();
