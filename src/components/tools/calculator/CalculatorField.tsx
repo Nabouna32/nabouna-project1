@@ -17,7 +17,9 @@ export function CalculatorField({
   type = "number",
   inputMode,
   ...inputProps
-}: CalculatorFieldProps) {\n  const pathname = usePathname();\n  const locale = pathname.split("/")[1] || "fr";
+}: CalculatorFieldProps) {
+  const pathname = usePathname();
+  const locale = pathname.split("/")[1] || "fr";
   const resolvedInputMode = inputMode ?? (type === "number" ? "decimal" : undefined);
 
   return (
@@ -26,7 +28,7 @@ export function CalculatorField({
         htmlFor={inputId}
         className="mb-2 block text-sm font-medium text-[var(--foreground)]"
       >
-        {calculatorText(label, locale)}
+        {calculatorText(label, locale)}}
       </label>
       <div className="relative">
         <input
