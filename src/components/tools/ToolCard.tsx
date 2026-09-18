@@ -1,3 +1,6 @@
+"use client";
+
+import { usePathname } from "next/navigation";
 import type { Tool } from "@/lib/tools/types";
 
 type ToolCardProps = {
@@ -9,9 +12,12 @@ export default function ToolCard({
   tool,
   categoryName,
 }: ToolCardProps) {
+  const pathname = usePathname();
+  const locale = pathname.split("/")[1] || "fr";
+
   return (
     <a
-      href={`/fr/outils/${tool.categoryId}/${tool.slug}`}
+      href={`/${locale}/outils/${tool.categoryId}/${tool.slug}`}
       className="group rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-[var(--accent)] hover:shadow-lg hover:shadow-black/5"
     >
       <div className="flex items-start justify-between gap-4">
