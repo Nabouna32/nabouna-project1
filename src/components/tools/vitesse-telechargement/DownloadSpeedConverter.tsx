@@ -53,7 +53,7 @@ export default function DownloadSpeedConverter() {
 
       <div className="grid gap-5 sm:grid-cols-2">
         <CalculatorField
-          label=calculatorText("Vitesse à convertir", locale)
+          label={calculatorText("Vitesse à convertir", locale)}
           inputId="download-speed-value"
           type="number"
           min="0"
@@ -90,7 +90,7 @@ export default function DownloadSpeedConverter() {
 
       <div className="mt-6">
         <CalculatorResult
-          label=calculatorText("Résultat", locale)
+          label={calculatorText("Résultat", locale)}
           value={result === null ? "—" : `${formatNumber(result)} ${UNIT_SHORT_LABELS[to]}`}
         />
       </div>
