@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname } from "next/navigation";
+import { calculatorText } from "@/lib/i18n/calculators";
 import { CalculatorActions } from "@/components/tools/calculator/CalculatorActions";
 import { CalculatorField } from "@/components/tools/calculator/CalculatorField";
 import { CalculatorResult } from "@/components/tools/calculator/CalculatorResult";
@@ -20,6 +22,8 @@ function formatNumber(value: number): string {
 }
 
 export default function PercentageCalculator() {
+  const pathname = usePathname();
+  const locale = pathname.split("/")[1] || "fr";
   const [mode, setMode] = useState<Mode>("percentage");
   const [firstValue, setFirstValue] = useState("");
   const [secondValue, setSecondValue] = useState("");
@@ -273,7 +277,7 @@ export default function PercentageCalculator() {
 
       <div className="mt-6">
         <CalculatorResult
-          label="Résultat"
+          label=calculatorText("Résultat", locale)
           tone={mode === "evolution" && result !== null ? "neutral" : "accent"}
           value={
             error
