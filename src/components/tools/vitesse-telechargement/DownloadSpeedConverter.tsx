@@ -1,6 +1,8 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { usePathname } from "next/navigation";
+import { calculatorText } from "@/lib/i18n/calculators";
 import { CalculatorActions } from "@/components/tools/calculator/CalculatorActions";
 import { CalculatorField } from "@/components/tools/calculator/CalculatorField";
 import { CalculatorResult } from "@/components/tools/calculator/CalculatorResult";
@@ -32,6 +34,8 @@ function formatNumber(value: number): string {
 }
 
 export default function DownloadSpeedConverter() {
+  const pathname = usePathname();
+  const locale = pathname.split("/")[1] || "fr";
   const [value, setValue] = useState("");
   const [from, setFrom] = useState<SpeedUnit>("mbps");
   const [to, setTo] = useState<SpeedUnit>("mo-s");
@@ -49,7 +53,7 @@ export default function DownloadSpeedConverter() {
 
       <div className="grid gap-5 sm:grid-cols-2">
         <CalculatorField
-          label="Vitesse à convertir"
+          label=calculatorText("Vitesse à convertir", locale)
           inputId="download-speed-value"
           type="number"
           min="0"
@@ -86,7 +90,7 @@ export default function DownloadSpeedConverter() {
 
       <div className="mt-6">
         <CalculatorResult
-          label="Résultat"
+          label=calculatorText("Résultat", locale)
           value={result === null ? "—" : `${formatNumber(result)} ${UNIT_SHORT_LABELS[to]}`}
         />
       </div>
