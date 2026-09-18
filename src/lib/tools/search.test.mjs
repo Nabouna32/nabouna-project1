@@ -59,7 +59,7 @@ test("search uses the selected locale", () => {
   assert.equal(searchTools(tools, "duration", "en")[0].tool.id, "duree");
   assert.equal(searchTools(tools, "VAT", "en")[0].tool.id, "tva");
   assert.equal(searchTools(tools, "speed", "en")[0].tool.id, "internet");
-  assert.equal(searchTools(tools, "durée", "en"), []);
+  assert.equal(searchTools(tools, "durée", "en").length, 0);
 });
 
 test("empty search returns no suggestions", () => {
