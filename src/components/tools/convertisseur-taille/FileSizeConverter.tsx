@@ -1,6 +1,8 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { usePathname } from "next/navigation";
+import { calculatorText } from "@/lib/i18n/calculators";
 import {
   convertFileSize,
   SIZE_UNITS,
@@ -34,6 +36,8 @@ function formatNumber(value: number): string {
 }
 
 export default function FileSizeConverter() {
+  const pathname = usePathname();
+  const locale = pathname.split("/")[1] || "fr";
   const [value, setValue] = useState("");
   const [from, setFrom] = useState<SizeUnit>("mo");
   const [to, setTo] = useState<SizeUnit>("go");
@@ -55,7 +59,7 @@ export default function FileSizeConverter() {
 
       <div className="grid gap-5 sm:grid-cols-2">
         <CalculatorField
-          label="Valeur à convertir"
+          label=calculatorText("Valeur à convertir", locale)
           inputId="file-size-value"
           type="number"
           min="0"
@@ -106,7 +110,7 @@ export default function FileSizeConverter() {
 
       <div className="mt-6">
         <CalculatorResult
-          label="Résultat"
+          label=calculatorText("Résultat", locale)
           value={
             result === null
               ? "—"
