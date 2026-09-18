@@ -1,5 +1,5 @@
 import type { Tool } from "./types.ts";
-import { getToolDescription, getToolKeywords, getToolName } from "./i18n.ts";
+import { isLocale } from "../i18n/config.ts";\nimport { getToolDescription, getToolKeywords, getToolName } from "./i18n.ts";
 
 export type ToolSearchResult = {
   tool: Tool;
@@ -50,5 +50,5 @@ export function searchTools(tools: Tool[], query: string, locale = "fr"): ToolSe
       return { tool, score };
     })
     .filter(({ score }) => score > 0)
-    .sort((a, b) => b.score - a.score || a.tool.name.localeCompare(b.tool.name, "fr"));
+    .sort((a, b) => {\n      const localeCode = isLocale(locale) ? locale : "fr";\n      return b.score - a.score || getToolName(a.tool, locale).localeCompare(getToolName(b.tool, locale), localeCode);\n    });
 }
