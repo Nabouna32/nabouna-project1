@@ -319,9 +319,7 @@ export default function PercentageCalculator() {
       {mode === "difference" && result !== null && !error && (
         <div className="mt-4 rounded-2xl border border-[var(--border)] bg-[var(--background)] p-4">
           <p className="text-sm leading-6 text-[var(--muted)]">
-            💡 Une différence en pourcentage peut dépasser 100 % lorsque les
-            deux valeurs sont très éloignées. Ce résultat est normal : le
-            calcul compare l'écart à la moyenne des deux valeurs.
+            💡 {calculatorText("Une différence en pourcentage peut dépasser 100 % lorsque les deux valeurs sont très éloignées. Ce résultat est normal : le calcul compare l'écart à la moyenne des deux valeurs.", locale)}
           </p>
         </div>
       )}
