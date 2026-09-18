@@ -1,9 +1,12 @@
+import { usePathname } from "next/navigation";
+import { calculatorText } from "@/lib/i18n/calculators";
+
 type CalculatorActionsProps = {
   showClear: boolean;
   onClear: () => void;
 };
 
-export function CalculatorActions({ showClear, onClear }: CalculatorActionsProps) {
+export function CalculatorActions({ showClear, onClear }: CalculatorActionsProps) {\n  const pathname = usePathname();\n  const locale = pathname.split("/")[1] || "fr";
   if (!showClear) return null;
 
   return (
@@ -14,7 +17,7 @@ export function CalculatorActions({ showClear, onClear }: CalculatorActionsProps
         className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 py-1.5 text-sm font-medium text-[var(--muted)] transition hover:border-[var(--accent)]/40 hover:text-[var(--foreground)]"
       >
         <span aria-hidden="true">↺</span>
-        Effacer
+        {calculatorText("Effacer", locale)}
       </button>
     </div>
   );
