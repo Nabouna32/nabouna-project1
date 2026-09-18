@@ -1,4 +1,5 @@
 import type { Tool } from "@/lib/tools/types";
+import { getToolDescription, getToolKeywords, getToolName } from "@/lib/tools/i18n";
 
 export type ToolSearchResult = {
   tool: Tool;
@@ -13,13 +14,13 @@ export function normalizeSearchText(value: string): string {
     .trim();
 }
 
-function getSearchText(tool: Tool): string {
+function getSearchText(tool: Tool, locale: string): string {
   return normalizeSearchText(
-    [tool.name, tool.description, ...(tool.keywords ?? [])].join(" "),
+    [getToolName(tool, locale), getToolDescription(tool, locale), ...getToolKeywords(tool, locale)].join(" "),
   );
 }
 
-export function searchTools(tools: Tool[], query: string): ToolSearchResult[] {
+export function searchTools(tools: Tool[], query: string, locale = "fr"): ToolSearchResult[] {
   const normalizedQuery = normalizeSearchText(query);
 
   if (!normalizedQuery) {
@@ -31,10 +32,10 @@ export function searchTools(tools: Tool[], query: string): ToolSearchResult[] {
   return tools
     .filter((tool) => tool.available)
     .map((tool) => {
-      const name = normalizeSearchText(tool.name);
-      const description = normalizeSearchText(tool.description);
-      const keywords = (tool.keywords ?? []).map(normalizeSearchText);
-      const haystack = getSearchText(tool);
+      const name = normalizeSearchText(getToolName(tool, locale));
+      const description = normalizeSearchText(getToolDescription(tool, locale));
+      const keywords = getToolKeywords(tool, locale).map(normalizeSearchText);
+      const haystack = getSearchText(tool, locale);
 
       let score = 0;
 
