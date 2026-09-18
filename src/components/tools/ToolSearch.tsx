@@ -70,7 +70,7 @@ export default function ToolSearch({
   function openResult(index: number) {
     const result = results[index];
     if (!result) return;
-    window.location.href = getToolHref(result.tool.slug, result.tool.categoryId);
+    router.push(getToolHref(result.tool.slug, result.tool.categoryId));
   }
 
   function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
