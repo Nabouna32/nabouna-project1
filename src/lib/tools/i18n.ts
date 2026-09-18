@@ -1,4 +1,4 @@
-import { defaultLocale, isLocale, type Locale } from "../i18n/config";
+import { defaultLocale, isLocale, type Locale } from "../i18n/config.ts";
 import type { Tool } from "./types";
 
 export function getToolName(tool: Tool, locale: string): string {
