@@ -34,6 +34,10 @@ export default function Header() {
           >
             {t.nav.tools}
           </Link>
+          <div className="flex items-center rounded-xl border border-[var(--border)] bg-[var(--surface)] p-1" aria-label="Language">
+            <Link href={pathname.replace(/^\/[^/]+/, "/fr")} className={`rounded-lg px-2.5 py-1.5 text-xs font-semibold transition-colors ${locale === "fr" ? "bg-[var(--accent-soft)] text-[var(--foreground)]" : "text-[var(--muted)] hover:text-[var(--foreground)]"}`}>FR</Link>
+            <Link href={pathname.replace(/^\/[^/]+/, "/en")} className={`rounded-lg px-2.5 py-1.5 text-xs font-semibold transition-colors ${locale === "en" ? "bg-[var(--accent-soft)] text-[var(--foreground)]" : "text-[var(--muted)] hover:text-[var(--foreground)]"}`}>EN</Link>
+          </div>
           <ThemeToggle />
         </nav>
       </div>
