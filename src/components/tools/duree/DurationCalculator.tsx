@@ -96,14 +96,14 @@ export default function DurationCalculator() {
         {mode === "dates" ? (
           <>
             <CalculatorField
-              label=calculatorText("Date et heure de début", locale)
+              label={calculatorText("Date et heure de début", locale)}
               inputId="duration-start-date"
               type="datetime-local"
               value={startDateTime}
               onChange={(event) => setStartDateTime(event.target.value)}
             />
             <CalculatorField
-              label=calculatorText("Date et heure de fin", locale)
+              label={calculatorText("Date et heure de fin", locale)}
               inputId="duration-end-date"
               type="datetime-local"
               value={endDateTime}
@@ -113,14 +113,14 @@ export default function DurationCalculator() {
         ) : (
           <>
             <CalculatorField
-              label=calculatorText("Heure de début", locale)
+              label={calculatorText("Heure de début", locale)}
               inputId="duration-start-time"
               type="time"
               value={startTime}
               onChange={(event) => setStartTime(event.target.value)}
             />
             <CalculatorField
-              label=calculatorText("Heure de fin", locale)
+              label={calculatorText("Heure de fin", locale)}
               inputId="duration-end-time"
               type="time"
               value={endTime}
@@ -133,18 +133,18 @@ export default function DurationCalculator() {
       <div className={`mt-6 grid gap-4 ${mode === "dates" ? "sm:grid-cols-3" : "sm:grid-cols-2"}`}>
         {mode === "dates" && (
           <CalculatorResult
-            label=calculatorText("Jours", locale)
+            label={calculatorText("Jours", locale)}
             tone="accent"
             value={duration === null ? "—" : String(duration.days)}
           />
         )}
         <CalculatorResult
-          label=calculatorText("Heures", locale)
+          label={calculatorText("Heures", locale)}
           tone={mode === "horaires" ? "accent" : undefined}
           value={duration === null ? "—" : String(duration.hours)}
         />
         <CalculatorResult
-          label=calculatorText("Minutes", locale)
+          label={calculatorText("Minutes", locale)}
           value={duration === null ? "—" : String(duration.minutes)}
         />
       </div>
