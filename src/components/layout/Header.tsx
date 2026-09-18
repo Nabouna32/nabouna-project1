@@ -43,9 +43,12 @@ export default function Header() {
           >
             {t.nav.tools}
           </Link>
-          <div className="flex items-center rounded-xl border border-[var(--border)] bg-[var(--surface)] p-1" aria-label={t.nav.language}>\n            <button type="button" onClick={() => switchLocale("fr")} aria-pressed={locale === "fr"} className={`rounded-lg px-2.5 py-1.5 text-xs font-semibold transition-colors ${locale === "fr" ? "bg-[var(--accent-soft)] text-[var(--foreground)]" : "text-[var(--muted)] hover:text-[var(--foreground)]"}`}>FR</button>
+          <div className="flex items-center rounded-xl border border-[var(--border)] bg-[var(--surface)] p-1" aria-label={t.nav.language}>
+            <button type="button" onClick={() => switchLocale("fr")} aria-pressed={locale === "fr"} className={`rounded-lg px-2.5 py-1.5 text-xs font-semibold transition-colors ${locale === "fr" ? "bg-[var(--accent-soft)] text-[var(--foreground)]" : "text-[var(--muted)] hover:text-[var(--foreground)]"}`}>FR</button>
             <button type="button" onClick={() => switchLocale("en")} aria-pressed={locale === "en"} className={`rounded-lg px-2.5 py-1.5 text-xs font-semibold transition-colors ${locale === "en" ? "bg-[var(--accent-soft)] text-[var(--foreground)]" : "text-[var(--muted)] hover:text-[var(--foreground)]"}`}>EN</button>
-          </div>\n          <Link href={`/${locale}/parametres`} aria-label={t.nav.settings} title={t.nav.settings} className="rounded-xl px-3 py-2.5 text-[var(--muted)] transition-colors hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)]">⚙️</Link>\n          <ThemeToggle />
+          </div>
+          <Link href={`/${locale}/parametres`} aria-label={t.nav.settings} title={t.nav.settings} className="rounded-xl px-3 py-2.5 text-[var(--muted)] transition-colors hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)]">⚙️</Link>
+          <ThemeToggle />
         </nav>
       </div>
     </header>
