@@ -39,7 +39,7 @@ jobs:
 
       - name: Get GitHub Actions OIDC token
         id: oidc
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           script: |
             const token = await core.getIDToken();
@@ -48,7 +48,7 @@ jobs:
 
       - name: Wait for Vercel Preview
         id: preview
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         env:
           SHA: ${{ github.sha }}
         with:
