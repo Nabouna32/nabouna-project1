@@ -31,7 +31,7 @@ Avoid accumulating unrelated, untested changes.
 
 ## Validation
 
-The repository uses GitHub Actions as the baseline CI gate. The CI workflow runs on pushes to `main` and pull requests targeting `main` and currently validates, on Node 24.21.0 and Node 26.8.2:
+The repository uses GitHub Actions as the baseline CI gate. The CI workflow runs on pushes to `main` and pull requests targeting `main`. Node 24.21.0 is the normal CI/runtime line; Node 26.8.2 is an additional scheduled/manual compatibility check:
 
 - `npm ci`
 - `npm audit --audit-level=high`
@@ -65,15 +65,17 @@ For larger or risky changes, the preferred path is:
 - Playwright is used for browser-level smoke/E2E validation.
 - The smoke suite covers critical availability of the main French, tools, and English routes. Keep this baseline small and reliable.
 - For important user-facing features, add targeted E2E coverage only after the feature and its user flow are sufficiently stable; do not create large test suites for unfinished product areas.
-- Preview E2E tests run against the real Vercel Preview deployment, including protected previews through the configured GitHub Actions OIDC trusted-source mechanism. Do not weaken Deployment Protection just to make tests pass.
-- A passing local/browser test does not replace testing the real Preview when the change affects deployment/runtime behavior.
+- Vercel Preview deployments are intentionally disabled for branches and pull requests to avoid unnecessary deployment/quota usage.
+- Browser E2E runs locally in GitHub Actions against the Next.js development server; it does not depend on a Vercel Preview deployment.
+- A passing local/browser test does not replace checking production when the change affects deployment/runtime behavior.
 
-## Vercel deployment noise
+## Vercel deployment policy
 
-- Vercel previews are normally generated for commits pushed to pull requests.
-- When a commit is intentionally an intermediate/non-deploy commit, append `[skip vercel]` to its commit message. `vercel.json` skips that Preview build while never skipping production deployments.
-- The Preview E2E workflow detects the same marker and skips its Vercel-dependent steps for that commit, avoiding a false failure while still running the normal CI workflow.
-- The final commit intended for Preview validation must not contain `[skip vercel]` so that a real Preview is generated and tested before merge.
+- Vercel Git deployments are enabled only for `main`.
+- Feature branches and pull requests must not create Vercel Preview deployments.
+- Do not use `[skip vercel]` commit markers or `ignoreCommand` as a substitute for the branch deployment policy.
+- Production deployment is created automatically when `main` changes.
+- Because Preview deployments are disabled, PR validation must rely on GitHub Actions and local browser E2E rather than a Vercel Preview.
 
 ## Developer complexity vs user simplicity
 
