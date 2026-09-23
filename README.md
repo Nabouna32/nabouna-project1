@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Utiluna
 
-## Getting Started
+Utiluna is a lightweight collection of practical, browser-based tools for everyday calculations and conversions.
 
-First, run the development server:
+The project is built with Next.js, React, TypeScript, and Tailwind CSS. It supports French and English routes and is designed around a simple principle: get a useful result quickly, with explanations available when they add value.
+
+## Development
+
+Requirements:
+
+- Node.js 24 LTS
+- npm
+
+Install dependencies:
+
+```bash
+npm ci
+```
+
+Start the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Validation
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The repository uses GitHub Actions for continuous validation.
 
-## Learn More
+```bash
+npm run lint
+npm run typecheck
+npm test
+npm run build
+```
 
-To learn more about Next.js, take a look at the following resources:
+Browser smoke tests can be run with the dedicated Playwright workflow.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Project structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- `src/app` — Next.js App Router pages and localized routes
+- `src/components` — reusable UI components
+- `src/lib` — calculations, tool definitions, search, and i18n
+- `e2e` — browser smoke tests
+- `.github/workflows` — CI and E2E automation
 
-## Deploy on Vercel
+## Deployment
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Production deployment is handled by Vercel from the `main` branch.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Pull requests and feature branches are intentionally not deployed automatically. This keeps Vercel deployment usage focused on production while GitHub Actions remains the CI validation layer.
+
+## Contributing
+
+Changes should be made through pull requests. Keep changes focused, ensure the CI checks pass, and avoid committing secrets or local environment files.
+
+## License
+
+No open-source license has been selected yet. Until a license is added, the repository remains publicly visible but its contents are not automatically granted broad reuse rights.
