@@ -1,4 +1,10 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "git": {
+    "deploymentEnabled": {
+      "*": false,
+      "main": true
+    }
+  },
   "ignoreCommand": "node -e \"const skip=process.env.VERCEL_ENV !== 'production' && (process.env.VERCEL_GIT_COMMIT_MESSAGE || '').includes('[skip vercel]'); process.exit(skip ? 0 : 1)\""
 }
