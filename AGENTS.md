@@ -12,7 +12,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 ## Source of truth
 
-- The GitHub repository `Nabouna32/utiluna` is the source of truth for the application code.
+- The GitHub repository `Nabouna32/nabouna-project1` is the source of truth for the application code.
 - Always inspect the current repository state before making a significant change. Do not rely on an older copied version of a file.
 - Keep `main` deployable and stable.
 
