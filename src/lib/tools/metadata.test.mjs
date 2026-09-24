@@ -13,7 +13,10 @@ const tool = {
   version: 1,
   complexity: "small",
   categories: ["calculs"],
-  content: { fr: { name: "Fixture", description: "Fixture" } },
+  content: {
+    fr: { name: "Fixture", description: "Fixture" },
+    en: { name: "Fixture", description: "Fixture" },
+  },
   tags: ["fixture"],
   aliases: ["test"],
   seo: {
@@ -39,7 +42,7 @@ const tool = {
   contributor: { type: "internal" },
 };
 
-test("the metadata validator accepts a valid local tool", () => {
+test("the metadata validator accepts a valid local published tool", () => {
   assert.doesNotThrow(() => validateToolCatalog([tool]));
 });
 
@@ -48,6 +51,10 @@ test("the metadata validator rejects duplicate ids and slugs", () => {
     () => validateToolCatalog([tool, { ...tool }]),
     /Duplicate tool id/,
   );
+  assert.throws(
+    () => validateToolCatalog([{ ...tool, id: "other", slug: tool.slug }]),
+    /Duplicate tool slug/,
+  );
 });
 
 test("the metadata validator rejects broken relationships", () => {
@@ -55,17 +62,106 @@ test("the metadata validator rejects broken relationships", () => {
     () => validateToolCatalog([{ ...tool, relatedToolIds: ["missing-tool"] }]),
     /unknown related tool/,
   );
+  assert.throws(
+    () => validateToolCatalog([{ ...tool, relatedToolIds: [tool.id] }]),
+    /cannot reference itself/,
+  );
 });
 
-test("the metadata validator rejects incompatible local storage", () => {
+test("the metadata validator enforces lifecycle availability and published tests", () => {
+  assert.throws(
+    () => validateToolCatalog([{ ...tool, lifecycle: "published", available: false }]),
+    /must be available/,
+  );
+  assert.throws(
+    () =>
+      validateToolCatalog([
+        { ...tool, lifecycle: "draft", available: true },
+      ]),
+    /Draft tool/,
+  );
+  assert.throws(
+    () =>
+      validateToolCatalog([
+        { ...tool, quality: { ...tool.quality, tests: "partial" } },
+      ]),
+    /must require tests/,
+  );
+});
+
+test("the metadata validator enforces processing capabilities and providers", () => {
   assert.throws(
     () =>
       validateToolCatalog([
         {
           ...tool,
-          processing: { ...tool.processing, storage: "utiluna" },
+          processing: { ...tool.processing, mode: "external", externalProviders: ["example"] },
+          capabilities: ["local-processing"],
+          offline: false,
         },
       ]),
-    /incompatible storage metadata/,
+    /requires capability "network"/,
+  );
+  assert.throws(
+    () =>
+      validateToolCatalog([
+        {
+          ...tool,
+          processing: { ...tool.processing, mode: "external", externalProviders: [] },
+          capabilities: ["network"],
+          offline: false,
+        },
+      ]),
+    /must declare at least one external provider/,
+  );
+  assert.throws(
+    () =>
+      validateToolCatalog([
+        {
+          ...tool,
+          processing: { ...tool.processing, mode: "local", externalProviders: ["example"] },
+        },
+      ]),
+    /cannot declare external providers/,
+  );
+});
+
+test("the metadata validator rejects incompatible offline and network metadata", () => {
+  assert.throws(
+    () =>
+      validateToolCatalog([
+        {
+          ...tool,
+          processing: { ...tool.processing, mode: "external", externalProviders: ["example"] },
+          capabilities: ["network"],
+          offline: true,
+        },
+      ]),
+    /Only local tools can be declared offline/,
+  );
+});
+
+test("the metadata validator requires the primary category and canonical taxonomy", () => {
+  assert.throws(
+    () => validateToolCatalog([{ ...tool, categoryId: "dates" }]),
+    /must use categoryId as its primary category/,
+  );
+  assert.throws(
+    () => validateToolCatalog([{ ...tool, tags: ["fixture", "fixture"] }]),
+    /unique, non-empty tags/,
+  );
+  assert.throws(
+    () => validateToolCatalog([{ ...tool, aliases: [""] }]),
+    /unique, non-empty aliases/,
+  );
+});
+
+test("the metadata validator requires a contributor name for community tools", () => {
+  assert.throws(
+    () =>
+      validateToolCatalog([
+        { ...tool, contributor: { type: "community" } },
+      ]),
+    /must identify its contributor/,
   );
 });
