@@ -39,8 +39,8 @@ test("English locale renders", async ({ page }) => {
 test("file size calculator computes an estimated size", async ({ page }) => {
   await page.goto(`${baseUrl}/fr/outils/informatique/taille-fichier`, { waitUntil: "networkidle" });
   await expect(page.getByRole("heading", { name: "Calculateur de taille de fichier" })).toBeVisible();
-  await page.getByLabel("Durée").fill("10");
-  await page.getByLabel("Débit").fill("8");
+  await page.getByRole("spinbutton", { name: "Durée" }).fill("10");
+  await page.getByRole("spinbutton", { name: "Débit" }).fill("8");
   await expect(page.getByText("Taille estimée", { exact: true }).locator("..")).toContainText("600 Mo");
 });
 
