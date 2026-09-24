@@ -14,7 +14,7 @@ Goal: establish the platform that can grow without creating unnecessary technica
 - [x] Formal tool metadata contract
 - [x] Shared tool page shell
 - [x] Processing/privacy status component
-- [ ] i18n foundation review
+- [x] i18n foundation review
 - [ ] Core design system
 - [ ] Tool quality contract
 - [ ] Architecture validation
