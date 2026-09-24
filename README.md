@@ -1,8 +1,31 @@
 # Utiluna
 
-Utiluna is a lightweight collection of practical, browser-based tools for everyday calculations and conversions.
+**Utiluna is a universal browser-based toolbox: a large, organized collection of useful tools designed to make small digital tasks fast, understandable, visual, and pleasant.**
 
-The project is built with Next.js, React, TypeScript, and Tailwind CSS. It supports French and English routes and is designed around a simple principle: get a useful result quickly, with explanations available when they add value.
+The product is intentionally broader than calculators and converters. The long-term catalog may include practical, technical, creative, visual, educational, analytical, playful, emotional, symbolic, and other browser-realizable tools.
+
+## Product direction
+
+Utiluna follows a few core principles:
+
+- **Browser-first / local-first:** when possible, processing happens directly on the user's device.
+- **Transparent processing:** tools clearly explain whether data stays local, is sent to an external service, or requires Utiluna infrastructure.
+- **Simple by default:** users should get the result without learning the product.
+- **Powerful when needed:** advanced tools and detailed explanations remain available.
+- **Visual when useful:** results can be graphical, interactive, or animated when that improves understanding or enjoyment.
+- **Sober or playful:** users can choose a restrained or more expressive interaction style.
+- **Free and sustainable:** advertising may fund the service without obstructing the primary task.
+- **Anonymous-first:** accounts are optional and add personalization/synchronization rather than gating core tools.
+
+See the product documentation for the complete direction:
+
+- [Vision](docs/VISION.md)
+- [Product definition](docs/PRODUCT.md)
+- [UX specification](docs/UX.md)
+- [Architecture direction](docs/ARCHITECTURE.md)
+- [Privacy principles](docs/PRIVACY.md)
+- [Roadmap](docs/ROADMAP.md)
+- [Decisions](docs/DECISIONS.md)
 
 ## Development
 
@@ -36,7 +59,7 @@ npm test
 npm run build
 ```
 
-Browser smoke tests can be run with the dedicated Playwright workflow.
+Browser smoke tests use Playwright and run through GitHub Actions.
 
 ## Project structure
 
@@ -44,6 +67,7 @@ Browser smoke tests can be run with the dedicated Playwright workflow.
 - `src/components` — reusable UI components
 - `src/lib` — calculations, tool definitions, search, and i18n
 - `e2e` — browser smoke tests
+- `docs` — product, UX, architecture, privacy, roadmap, and decision documentation
 - `.github/workflows` — CI and E2E automation
 
 ## Deployment
@@ -56,6 +80,8 @@ Pull requests and feature branches are intentionally not deployed automatically.
 
 Changes should be made through pull requests. Keep changes focused, ensure the CI checks pass, and avoid committing secrets or local environment files.
 
+Before changing product behavior or architecture, consult the documentation in `docs/` and update the relevant decision/documentation when the change is durable.
+
 ## License
 
-No open-source license has been selected yet. Until a license is added, the repository remains publicly visible but its contents are not automatically granted broad reuse rights.
+No open-source license has been selected yet. The repository is publicly visible, but its contents are not automatically granted broad reuse rights.
