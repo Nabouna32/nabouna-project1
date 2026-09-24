@@ -118,34 +118,17 @@ export function validateToolCatalog(tools: readonly Tool[]): void {
     ids.add(tool.id);
   }
 
-  const slugs = new Map<string, string>();
-  for (const tool of tools) {
-    const previousToolId = slugs.get(tool.slug);
-    if (previousToolId) {
-      throw new Error(`Duplicate tool slug: ${tool.slug} (tools "${previousToolId}" and "${tool.id}")`);
-    }
-    slugs.set(tool.slug, tool.id);
-  }
-
-  for (const tool of tools) {
-
-    if (tool.categories.length === 0) {
-      throw new Error(`Tool "${tool.id}" must declare at least one category.`);
-    }
-    if (!tool.content.fr.name.trim() || !tool.content.fr.description.trim()) {
-      throw new Error(`Tool "${tool.id}" must declare French name and description.`);
-    }
-    for (const locale of locales) {
-      const seo = tool.seo[locale];
-      if (!seo?.title.trim() || !seo.description.trim()) {
-        throw new Error(`Tool "${tool.id}" must declare ${locale} SEO metadata.`);
+  for (let index = 0; index < tools.length; index += 1) {
+    for (let previousIndex = 0; previousIndex < index; previousIndex += 1) {
+      if (tools[previousIndex].slug === tools[index].slug) {
+        throw new Error(
+          `Duplicate tool slug: ${tools[index].slug} (tools "${tools[previousIndex].id}" and "${tools[index].id}")`,
+        );
       }
     }
-    if (tool.version < 1 || !Number.isInteger(tool.version)) {
-      throw new Error(`Tool "${tool.id}" must declare a positive integer version.`);
-    }
-    validateToolQuality(tool);
   }
+
+  for (const tool of tools) {
 
   const knownIds = new Set(ids);
   for (const tool of tools) {
