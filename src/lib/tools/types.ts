@@ -53,7 +53,7 @@ export type Tool = {
   content: Partial<Record<Locale, ToolLocalizedContent>> & { fr: ToolLocalizedContent };
   tags: string[];
   aliases: string[];
-  seo: ToolSeoMetadata;
+  seo: Record<Locale, ToolSeoMetadata>;
   examples: ToolExample[];
   processing: ToolProcessingMetadata;
   capabilities: ToolCapability[];
