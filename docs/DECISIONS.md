@@ -190,3 +190,103 @@ A decision materially affects:
 ### Reason
 
 This allows the project to move quickly while preserving user control over consequential decisions.
+
+
+---
+
+## DEC-011 — Privacy is a product feature
+
+**Status:** Accepted
+
+### Decision
+
+Privacy and transparency are first-class product requirements, not merely compliance documentation.
+
+### Principles
+
+- collect the minimum necessary data;
+- prefer local processing;
+- never request data a tool does not need;
+- disclose every meaningful data transfer;
+- provide understandable privacy details;
+- provide a transparency/data dashboard for authenticated users;
+- support export;
+- support account deletion with deletion or strong anonymization where deletion is impossible;
+- make non-essential consent refusal easy;
+- treat imported and client-provided data as untrusted.
+
+### Reason
+
+Users should be able to understand and control their relationship with Utiluna instead of being forced to trust an opaque system.
+
+---
+
+## DEC-012 — Simple consent choices
+
+**Status:** Accepted
+
+### Decision
+
+Consent UX must make refusal of non-essential tracking as easy as acceptance.
+
+### Reason
+
+Privacy controls should not become a maze of partner-by-partner decisions.
+
+### Consequences
+
+Utiluna should provide clear high-level choices such as accept, refuse non-essential tracking, or customize, while retaining the granular controls required by the actual legal/provider setup.
+
+---
+
+## DEC-013 — Capability-based tool permissions
+
+**Status:** Accepted
+
+### Decision
+
+Tools must explicitly declare and receive only the browser, network, account-data, and server capabilities they require.
+
+### Reason
+
+A universal toolbox will eventually contain many independent implementations. Capability boundaries reduce accidental data access and limit the impact of a compromised or defective tool.
+
+### Consequences
+
+The Tool contract must include capabilities. Tool execution architecture should enforce these boundaries rather than relying only on developer discipline.
+
+---
+
+## DEC-014 — External integrations are catalogued
+
+**Status:** Accepted
+
+### Decision
+
+Every external API/provider integration must be documented in a traceable catalog.
+
+### Reason
+
+External dependencies affect privacy, cost, availability, security, and user trust.
+
+### Consequences
+
+The catalog must include provider, domain, purpose, transmitted data, authentication model, policy reference, cost/quota, fallback behavior, and ownership.
+
+---
+
+## DEC-015 — User data transparency dashboard
+
+**Status:** Accepted as product direction
+
+### Decision
+
+Authenticated users should have a dedicated dashboard showing the data Utiluna stores or associates with their account and the relevant privacy/consent choices.
+
+### Reason
+
+Users should not need to navigate obscure settings or infer what is stored.
+
+### Consequences
+
+The data model must maintain clear ownership and deletion/export boundaries across identity, preferences, product data, community content, analytics, and security/moderation records.
