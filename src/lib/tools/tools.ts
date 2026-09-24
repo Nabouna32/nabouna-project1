@@ -125,7 +125,7 @@ export const tools: Tool[] = [
 ].map((tool): Tool => ({
   ...tool,
   version: 1,
-  complexity: "small",
+  complexity: tool.id === "taille-fichier" || tool.id === "bitrate-video" ? "advanced" : "small",
   categories: [tool.categoryId],
   content: { fr: { name: tool.name, description: tool.description } },
   tags: tool.keywords ?? [],
@@ -151,7 +151,7 @@ export const tools: Tool[] = [
   quality: {
     accessibility: "required",
     performance: "standard",
-    tests: "required",
+    tests: tool.available ? "required" : "not-yet",
   },
   lifecycle: tool.available ? "published" : "draft",
   contributor: { type: "internal" },
