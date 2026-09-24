@@ -1,0 +1,37 @@
+import type { ButtonHTMLAttributes } from "react";
+
+type ButtonVariant = "primary" | "secondary" | "ghost";
+
+type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
+  variant?: ButtonVariant;
+};
+
+const variants: Record<ButtonVariant, string> = {
+  primary:
+    "border border-transparent bg-[var(--accent)] text-[var(--accent-foreground)] hover:brightness-95",
+  secondary:
+    "border border-[var(--border)] bg-[var(--background)] text-[var(--foreground)] hover:border-[var(--accent)]/40",
+  ghost:
+    "border border-transparent bg-transparent text-[var(--muted)] hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)]",
+};
+
+export function Button({
+  variant = "primary",
+  className = "",
+  type = "button",
+  ...props
+}: ButtonProps) {
+  return (
+    <button
+      type={type}
+      className={[
+        "inline-flex min-h-10 items-center justify-center gap-2 rounded-[var(--radius-md)] px-4 py-2.5 text-sm font-semibold transition-colors",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--background)]",
+        "disabled:pointer-events-none disabled:opacity-50",
+        variants[variant],
+        className,
+      ].join(" ")}
+      {...props}
+    />
+  );
+}
