@@ -19,7 +19,7 @@ async function collectPageFiles(directory) {
 }
 
 function extractToolId(source, file) {
-  const toolPageTags = [...source.matchAll(/<ToolPage\\b[^>]*>/g)];
+  const toolPageTags = [...source.matchAll(/<ToolPage\b[^>]*>/g)];
   assert.equal(toolPageTags.length, 1, `Tool page ${file} must declare exactly one ToolPage shell.`);
   const match = toolPageTags[0][0].match(/\\btoolId="([^"]+)"/);
   assert.ok(match, `Tool page ${file} must declare a ToolPage toolId.`);
