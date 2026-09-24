@@ -289,6 +289,7 @@ export function getToolEditorial(toolId: string, locale: Locale): ReactNode {
               {fr
                 ? "Il peut aider à respecter une limite de caractères, préparer une publication, vérifier la longueur d'un texte ou contrôler rapidement un contenu avant de l'envoyer."
                 : "It can help meet a character limit, prepare a post, check text length, or quickly review content before sending it."}
+            </p>
           </ToolSection>
           <BackToTools locale={locale} />
         </>
