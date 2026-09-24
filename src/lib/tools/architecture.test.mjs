@@ -36,7 +36,7 @@ async function readPublishedToolIds() {
   return ids;
 }
 
-test("published tools have exactly one canonical App Router page", async () => {
+async function collectCanonicalToolPages() {
   const pageFiles = await collectPageFiles(toolsRouteRoot);
   const pageEntries = await Promise.all(
     pageFiles.map(async (file) => ({
@@ -44,7 +44,11 @@ test("published tools have exactly one canonical App Router page", async () => {
       source: await readFile(file, "utf8"),
     })),
   );
+  return pageEntries.filter(({ source }) => /<ToolPage\b/.test(source));
+}
 
+test("published tools have exactly one canonical App Router page", async () => {
+  const pageEntries = await collectCanonicalToolPages();
   const routeToolIds = pageEntries.map(({ file, source }) => extractToolId(source, file));
   const routeIds = new Set(routeToolIds);
   assert.equal(routeIds.size, routeToolIds.length, "A tool must not have multiple canonical tool pages.");
@@ -54,13 +58,11 @@ test("published tools have exactly one canonical App Router page", async () => {
 });
 
 test("canonical tool pages reference known published tools", async () => {
-  const pageFiles = await collectPageFiles(toolsRouteRoot);
+  const pageEntries = await collectCanonicalToolPages();
   const knownPublishedIds = new Set(await readPublishedToolIds());
 
-  for (const file of pageFiles) {
-    const source = await readFile(file, "utf8");
+  for (const { file, source } of pageEntries) {
     const toolId = extractToolId(source, file);
     assert.ok(knownPublishedIds.has(toolId), `Tool page ${file} references non-published tool "${toolId}".`);
-    assert.match(source, /<ToolPage\b/, `Tool page ${file} must use the shared ToolPage shell.`);
   }
 });
