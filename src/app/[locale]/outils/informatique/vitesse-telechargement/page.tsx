@@ -1,16 +1,17 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { isLocale } from "@/lib/i18n/config";
+import { getToolPageMetadata } from "@/lib/tools/page-metadata";
 import ToolPage from "@/components/tools/ToolPage/ToolPage";
 import ToolSection from "@/components/tools/ToolPage/ToolSection";
 import RelatedTools from "@/components/tools/RelatedTools";
 import DownloadSpeedConverter from "@/components/tools/vitesse-telechargement/DownloadSpeedConverter";
 
-export const metadata = {
-  title: "Convertisseur Mbps Mo/s | Utiluna",
-  description:
-    "Convertissez une vitesse Internet entre Mbps, Gbps, Ko/s, Mo/s et Go/s.",
-};
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  if (!isLocale(locale)) return {};
+  return getToolPageMetadata("vitesse-telechargement", locale);
+}
 
 export default async function DownloadSpeedConverterPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
