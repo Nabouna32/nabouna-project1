@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Button } from "@/components/ui/Button";
+import { ClearButton } from "@/components/ui/ClearButton";
 import { CopyButton } from "@/components/ui/CopyButton";
 import { ResultPanel } from "@/components/ui/ResultPanel";
 import { TextArea } from "@/components/ui/TextArea";
@@ -25,10 +25,7 @@ export default function TextCounter() {
   return (
     <section className="rounded-[var(--radius-2xl)] border border-[var(--border)] bg-[var(--surface)] p-5 shadow-[var(--shadow-sm)] sm:p-8">
       <div className="flex items-center justify-end gap-2">
-        <Button variant="secondary" onClick={() => setText("")} disabled={text.length === 0}>
-          <span aria-hidden="true">↺</span>
-          {t.clear}
-        </Button>
+        <ClearButton onClear={() => setText("")} disabled={text.length === 0} label={t.clear} />
         <CopyButton value={copyValue} label={t.copyStats} />
       </div>
 

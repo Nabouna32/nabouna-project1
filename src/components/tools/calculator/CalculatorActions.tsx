@@ -1,5 +1,4 @@
-import { useLocale } from "@/lib/i18n/use-locale";
-import { Button } from "@/components/ui/Button";
+import { ClearButton } from "@/components/ui/ClearButton";
 
 type CalculatorActionsProps = {
   showClear: boolean;
@@ -7,15 +6,6 @@ type CalculatorActionsProps = {
 };
 
 export function CalculatorActions({ showClear, onClear }: CalculatorActionsProps) {
-  const locale = useLocale();
   if (!showClear) return null;
-
-  return (
-    <div className="flex items-center justify-end">
-      <Button variant="secondary" onClick={onClear}>
-        <span aria-hidden="true">↺</span>
-        {locale === "fr" ? "Effacer" : "Clear"}
-      </Button>
-    </div>
-  );
+  return <ClearButton onClear={onClear} />;
 }
