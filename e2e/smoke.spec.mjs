@@ -44,4 +44,6 @@ test("text counter tool renders and counts words", async ({ page }) => {
   await input.fill("Bonjour le monde");
   await expect(page.getByText("Mots", { exact: true }).locator("..")).toContainText("3");
   await expect(page.getByText("Caractères", { exact: true }).locator("..")).toContainText("16");
+  await page.getByRole("button", { name: "Copier les statistiques" }).click();
+  await expect(page.getByRole("button", { name: "Copié" })).toBeVisible();
 });
