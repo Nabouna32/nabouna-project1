@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { Panel } from "@/components/ui/Panel";
 
 type CalculatorShellProps = {
   children: ReactNode;
@@ -6,11 +7,5 @@ type CalculatorShellProps = {
 };
 
 export function CalculatorShell({ children, className = "" }: CalculatorShellProps) {
-  return (
-    <section
-      className={`rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm sm:p-8 ${className}`}
-    >
-      {children}
-    </section>
-  );
+  return <Panel as="section" className={className}>{children}</Panel>;
 }
