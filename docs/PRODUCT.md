@@ -237,3 +237,47 @@ Consult the user when a decision is genuinely consequential, especially when it 
 - irreversible public commitments.
 
 This rule is part of the project's operating model.
+
+## Expanded product direction
+
+### Homepage and discovery
+
+The homepage follows an **action/search first, discovery in depth** model. The primary question is effectively “Que voulez-vous faire ?”, followed by popular tools, categories, recent/new content, recommendations, and personalized content where applicable.
+
+Intent-oriented navigation may expose actions such as:
+
+- Calculer
+- Convertir
+- Transformer
+- Créer
+- Analyser
+- Vérifier
+- Générer
+- Mesurer
+- Découvrir
+
+These are presentation concepts; the internal catalog remains structured with hierarchical categories and centrally managed tags/aliases.
+
+### Search as solution discovery
+
+Search must not require users to know a tool name. It should progressively support exact/prefix matching, descriptions, aliases, synonyms, tags, categories, typo tolerance, related queries, and natural-language intent. Deterministic requests may eventually be prefilled or executed directly where safe.
+
+No-result states should help the user reformulate, discover related tools/categories, and eventually propose a missing tool.
+
+### Anonymous-first personalization
+
+Anonymous users should be able to use core tools and retain appropriate local state such as preferences or favorites. When signing in, local favorites can merge into account favorites with deterministic conflict handling.
+
+Account features should progressively include synchronized preferences, collections, compatible history, personalization, community participation, and privacy/data controls.
+
+### Collections and sharing
+
+Collections are first-class user objects and may be private, shareable, or public by explicit choice. Sharing may expose a blank tool, a configured tool, or a current result/state depending on the tool. Sensitive data must never be exposed unintentionally through sharing URLs or state.
+
+### Tool diversity
+
+The platform defines a common trust, accessibility, processing, SEO, lifecycle, and interaction contract, but tools retain the freedom to have distinct layouts, visualizations, animations, and interaction models. The catalog supports three complexity levels: small tools, advanced tools, and mini-applications.
+
+### Community remains secondary
+
+Community features are intended to improve the catalog, not turn Utiluna into a social network. Public profiles, public collections, proposals, ratings, comments, reports, and contributor attribution remain subordinate to the toolbox experience.
