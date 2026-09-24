@@ -35,3 +35,13 @@ test("English locale renders", async ({ page }) => {
 
   await expect(page.locator("main")).toBeVisible();
 });
+
+test("text counter tool renders and counts words", async ({ page }) => {
+  await page.goto(`${baseUrl}/fr/outils/fichiers/mots-caracteres`, { waitUntil: "networkidle" });
+
+  await expect(page.getByRole("heading", { name: "Compteur de mots et caractères" })).toBeVisible();
+  const input = page.getByLabel("Votre texte");
+  await input.fill("Bonjour le monde");
+  await expect(page.getByText("Mots").locator("..")).toContainText("3");
+  await expect(page.getByText("Caractères", { exact: true }).locator("..")).toContainText("16");
+});
