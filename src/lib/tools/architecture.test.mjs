@@ -3,9 +3,9 @@ import { readdir, readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { test } from "node:test";
-import { tools } from "./tools.ts";
 
 const toolsRouteRoot = fileURLToPath(new URL("../../app/[locale]/outils", import.meta.url));
+const toolsCatalogFile = fileURLToPath(new URL("./tools.ts", import.meta.url));
 
 async function collectPageFiles(directory) {
   const entries = await readdir(directory, { withFileTypes: true });
@@ -24,6 +24,18 @@ function extractToolId(source, file) {
   return matches[0];
 }
 
+async function readPublishedToolIds() {
+  const source = await readFile(toolsCatalogFile, "utf8");
+  const ids = [];
+  for (const entry of source.split(/\n\s*\{\n/).slice(1)) {
+    const id = entry.match(/\bid:\s*"([^"]+)"/)?.[1];
+    const available = entry.match(/\bavailable:\s*(true|false)\b/)?.[1];
+    if (id && available === "true") ids.push(id);
+  }
+  assert.ok(ids.length > 0, "The tool catalog must declare at least one published tool.");
+  return ids;
+}
+
 test("published tools have exactly one canonical App Router page", async () => {
   const pageFiles = await collectPageFiles(toolsRouteRoot);
   const pageEntries = await Promise.all(
@@ -37,15 +49,13 @@ test("published tools have exactly one canonical App Router page", async () => {
   const routeIds = new Set(routeToolIds);
   assert.equal(routeIds.size, routeToolIds.length, "A tool must not have multiple canonical tool pages.");
 
-  const publishedIds = tools.filter((tool) => tool.lifecycle === "published").map((tool) => tool.id);
+  const publishedIds = await readPublishedToolIds();
   assert.deepEqual([...routeIds].sort(), [...publishedIds].sort());
 });
 
 test("canonical tool pages reference known published tools", async () => {
   const pageFiles = await collectPageFiles(toolsRouteRoot);
-  const knownPublishedIds = new Set(
-    tools.filter((tool) => tool.lifecycle === "published").map((tool) => tool.id),
-  );
+  const knownPublishedIds = new Set(await readPublishedToolIds());
 
   for (const file of pageFiles) {
     const source = await readFile(file, "utf8");
