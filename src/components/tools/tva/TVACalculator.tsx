@@ -39,7 +39,7 @@ export default function TVACalculator() {
   return (
     <CalculatorShell>
       <div className="flex items-center justify-between gap-4">
-        <SegmentedControl items={modes} value={mode} onChange={setMode} ariaLabel={t.mode} className="inline-grid grid-cols-2" />
+        <SegmentedControl items={modes} value={mode} onChange={setMode} ariaLabel={`${t.htToTtc} / ${t.ttcToHt}`} className="inline-grid grid-cols-2" />
         <CalculatorActions showClear={priceValue !== "" || rateValue !== "20"} onClear={clearValues} />
       </div>
       <div className="mt-5 grid gap-5 sm:grid-cols-2">
