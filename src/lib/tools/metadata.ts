@@ -113,14 +113,21 @@ function validateToolQuality(tool: Tool): void {
 
 export function validateToolCatalog(tools: readonly Tool[]): void {
   const ids = new Set<string>();
-  const slugs = new Set<string>();
-
   for (const tool of tools) {
     if (ids.has(tool.id)) throw new Error(`Duplicate tool id: ${tool.id}`);
     ids.add(tool.id);
+  }
 
-    if (slugs.has(tool.slug)) throw new Error(`Duplicate tool slug: ${tool.slug}`);
-    slugs.add(tool.slug);
+  const slugs = new Map<string, string>();
+  for (const tool of tools) {
+    const previousToolId = slugs.get(tool.slug);
+    if (previousToolId) {
+      throw new Error(`Duplicate tool slug: ${tool.slug} (tools "${previousToolId}" and "${tool.id}")`);
+    }
+    slugs.set(tool.slug, tool.id);
+  }
+
+  for (const tool of tools) {
 
     if (tool.categories.length === 0) {
       throw new Error(`Tool "${tool.id}" must declare at least one category.`);
