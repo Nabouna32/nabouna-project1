@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/Button";
+import { CopyButton } from "@/components/ui/CopyButton";
 import { ResultPanel } from "@/components/ui/ResultPanel";
 import { TextArea } from "@/components/ui/TextArea";
 import { useLocale } from "@/lib/i18n/use-locale";
@@ -13,14 +14,22 @@ export default function TextCounter() {
   const t = getToolMessages(locale).textCounter;
   const [text, setText] = useState("");
   const stats = useMemo(() => countTextStats(text), [text]);
+  const copyValue = [
+    `${t.words}: ${stats.words}`,
+    `${t.characters}: ${stats.characters}`,
+    `${t.charactersWithoutSpaces}: ${stats.charactersWithoutSpaces}`,
+    `${t.spaces}: ${stats.spaces}`,
+    `${t.lines}: ${stats.lines}`,
+  ].join("\n");
 
   return (
     <section className="rounded-[var(--radius-2xl)] border border-[var(--border)] bg-[var(--surface)] p-5 shadow-[var(--shadow-sm)] sm:p-8">
-      <div className="flex items-center justify-end">
+      <div className="flex items-center justify-end gap-2">
         <Button variant="secondary" onClick={() => setText("")} disabled={text.length === 0}>
           <span aria-hidden="true">↺</span>
           {t.clear}
         </Button>
+        <CopyButton value={copyValue} label={t.copyStats} />
       </div>
 
       <div className="mt-4">

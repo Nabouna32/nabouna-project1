@@ -57,7 +57,7 @@ type ToolMessages = {
   };
   textCounter: {
     input: string; placeholder: string; characters: string; charactersWithoutSpaces: string;
-    words: string; spaces: string; lines: string; clear: string;
+    words: string; spaces: string; lines: string; clear: string; copyStats: string;
   };
 };
 
@@ -130,7 +130,7 @@ export const toolMessages: Record<Locale, ToolMessages> = {
     },
     textCounter: {
       input: "Votre texte", placeholder: "Saisissez ou collez votre texte ici…", characters: "Caractères",
-      charactersWithoutSpaces: "Caractères sans espaces", words: "Mots", spaces: "Espaces", lines: "Lignes", clear: "Effacer",
+      charactersWithoutSpaces: "Caractères sans espaces", words: "Mots", spaces: "Espaces", lines: "Lignes", clear: "Effacer", copyStats: "Copier les statistiques",
     },
   },
   en: {
@@ -201,7 +201,7 @@ export const toolMessages: Record<Locale, ToolMessages> = {
     },
     textCounter: {
       input: "Your text", placeholder: "Type or paste your text here…", characters: "Characters",
-      charactersWithoutSpaces: "Characters without spaces", words: "Words", spaces: "Spaces", lines: "Lines", clear: "Clear",
+      charactersWithoutSpaces: "Characters without spaces", words: "Words", spaces: "Spaces", lines: "Lines", clear: "Clear", copyStats: "Copy statistics",
     },
   },
 };

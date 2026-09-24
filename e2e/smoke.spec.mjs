@@ -37,6 +37,13 @@ test("English locale renders", async ({ page }) => {
 });
 
 test("text counter tool renders and counts words", async ({ page }) => {
+  await page.addInitScript(() => {
+    Object.defineProperty(navigator, "clipboard", {
+      configurable: true,
+      value: { writeText: async () => {} },
+    });
+  });
+
   await page.goto(`${baseUrl}/fr/outils/fichiers/mots-caracteres`, { waitUntil: "networkidle" });
 
   await expect(page.getByRole("heading", { name: "Compteur de mots et caractères" })).toBeVisible();
@@ -44,4 +51,6 @@ test("text counter tool renders and counts words", async ({ page }) => {
   await input.fill("Bonjour le monde");
   await expect(page.getByText("Mots", { exact: true }).locator("..")).toContainText("3");
   await expect(page.getByText("Caractères", { exact: true }).locator("..")).toContainText("16");
+  await page.getByRole("button", { name: "Copier les statistiques" }).click();
+  await expect(page.getByRole("button", { name: "Copié" })).toBeVisible();
 });
