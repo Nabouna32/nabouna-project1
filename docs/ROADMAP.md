@@ -12,7 +12,7 @@ Goal: establish the platform that can grow without creating unnecessary technica
 - [x] Browser smoke/E2E baseline
 - [x] Product direction documented
 - [x] Formal tool metadata contract
-- [ ] Shared tool page shell
+- [x] Shared tool page shell
 - [x] Processing/privacy status component
 - [ ] i18n foundation review
 - [ ] Core design system
