@@ -6,6 +6,8 @@ import { CalculatorField } from "@/components/tools/calculator/CalculatorField";
 import { CalculatorResult } from "@/components/tools/calculator/CalculatorResult";
 import { CalculatorShell } from "@/components/tools/calculator/CalculatorShell";
 import { calculateAge } from "@/lib/age";
+import { useLocale } from "@/lib/i18n/use-locale";
+import { getToolMessages } from "@/lib/i18n/tool-messages";
 
 function toInputDate(date: Date): string {
   const year = date.getFullYear();
@@ -19,6 +21,8 @@ function formatAgePart(value: number, singular: string, plural: string): string 
 }
 
 export default function AgeCalculator() {
+  const locale = useLocale();
+  const t = getToolMessages(locale).age;
   const today = toInputDate(new Date());
   const [birthDate, setBirthDate] = useState("");
   const [referenceDate, setReferenceDate] = useState(today);
@@ -34,50 +38,31 @@ export default function AgeCalculator() {
     setReferenceDate(toInputDate(new Date()));
   }
 
+  const years = age === null ? "—" : String(age.years);
+  const months = age === null ? "—" : String(age.months);
+  const days = age === null ? "—" : String(age.days);
+
   return (
     <CalculatorShell>
-      <CalculatorActions
-        showClear={hasBirthDate || referenceDate !== today}
-        onClear={clearValues}
-      />
-
+      <CalculatorActions showClear={hasBirthDate || referenceDate !== today} onClear={clearValues} />
       <div className="grid gap-5 sm:grid-cols-2">
-        <CalculatorField
-          label="Date de naissance"
-          inputId="age-birth-date"
-          type="date"
-          value={birthDate}
-          onChange={(event) => setBirthDate(event.target.value)}
-        />
-        <CalculatorField
-          label="Calculer au"
-          inputId="age-reference-date"
-          type="date"
-          value={referenceDate}
-          onChange={(event) => setReferenceDate(event.target.value)}
-        />
+        <CalculatorField label={t.birthDate} inputId="age-birth-date" type="date" value={birthDate} onChange={(event) => setBirthDate(event.target.value)} />
+        <CalculatorField label={t.referenceDate} inputId="age-reference-date" type="date" value={referenceDate} onChange={(event) => setReferenceDate(event.target.value)} />
       </div>
-
       <div className="mt-6 grid gap-4 sm:grid-cols-3">
-        <CalculatorResult
-          label="Années"
-          tone="accent"
-          value={age === null ? "—" : String(age.years)}
-        />
-        <CalculatorResult label="Mois" value={age === null ? "—" : String(age.months)} />
-        <CalculatorResult label="Jours" value={age === null ? "—" : String(age.days)} />
+        <CalculatorResult label={t.years} tone="accent" value={years} />
+        <CalculatorResult label={t.months} value={months} />
+        <CalculatorResult label={t.days} value={days} />
       </div>
-
-      {invalidRange && (
-        <p className="mt-4 text-sm font-medium text-[var(--foreground)]">
-          La date de naissance doit être antérieure ou égale à la date de référence.
-        </p>
-      )}
-
+      {invalidRange && <p className="mt-4 text-sm font-medium text-[var(--foreground)]">{t.invalidRange}</p>}
       {age && (
         <div className="mt-6 rounded-2xl border border-[var(--border)] bg-[var(--background)] p-4">
           <p className="text-sm leading-6 text-[var(--muted)]">
-            Vous avez {formatAgePart(age.years, "an", "ans")}, {formatAgePart(age.months, "mois", "mois")} et {formatAgePart(age.days, "jour", "jours")}.
+            {t.summary(
+              formatAgePart(age.years, t.yearSingular, t.yearPlural),
+              formatAgePart(age.months, t.monthSingular, t.monthPlural),
+              formatAgePart(age.days, t.daySingular, t.dayPlural),
+            )}
           </p>
         </div>
       )}
