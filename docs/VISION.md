@@ -124,3 +124,37 @@ The most important long-term product outcome is the user's feeling after using U
 > **“That was easy, useful, and nicely made.”**
 
 This is intentionally a product-quality goal rather than a single metric.
+
+## Expanded product direction from validated brainstorming
+
+Utiluna is not merely a large list of utilities. The long-term product model is a **universal environment for solving needs** through micro-tools, advanced tools, and mini-applications.
+
+The intended journey is:
+
+> **Besoin → Utiluna → recherche/découverte → outil(s) → résultat → action/partage/sauvegarde**
+
+The working positioning may evolve, but the product promise is that Utiluna helps users find simply how to accomplish something.
+
+### Universal scope
+
+Any useful browser-realizable tool may belong in the catalog, including technical, practical, creative, analytical, visual, educational, playful, emotional, introspective, symbolic, or spiritual experiences, subject to technical feasibility, safety/legal constraints, cost, and product quality. Symbolic or spiritual tools must be presented honestly rather than as scientific facts when they are not scientific claims.
+
+### Progressive richness
+
+The product should expose complexity progressively. Users should not pay in loading time, memory, cognitive load, or interface complexity for capabilities they do not need.
+
+### Personal Utiluna
+
+Over time, authenticated users should be able to create a personalized Utiluna space with favorites, collections, history, hidden tools, ordering, visible elements, theme, animation level, density/style, personalized home, privacy preferences, and contextual experience preferences where useful.
+
+### Three product layers
+
+- **Public:** search, catalog, discovery.
+- **Tool:** execution, result, explanation, actions, sharing.
+- **Personal:** favorites, collections, history, preferences, personalization, profile.
+
+Anonymous use must remain useful; personal features add depth rather than create an account wall.
+
+### Long-term solution engine
+
+The long-term ambition can evolve from finding a tool to solving a need. A complex request may eventually lead to several complementary tools or a composed workflow. This is future direction, not a requirement that the MVP implement multi-tool orchestration.

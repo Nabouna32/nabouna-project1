@@ -265,3 +265,55 @@ Any major technology change must be justified against the product's browser-firs
 The web platform remains primary.
 
 Tool/domain logic should be separated from browser-specific infrastructure when doing so is inexpensive and useful, but the architecture must not introduce abstractions solely for a hypothetical future mobile client.
+
+## Expanded platform model
+
+### Three product layers
+
+The architecture should preserve a clear separation between:
+
+1. **Public discovery** — catalog, search, categories, SEO, related tools;
+2. **Tool execution** — inputs, processing, results, actions, sharing;
+3. **Personal layer** — identity, preferences, favorites, collections, history, personalization, community participation.
+
+This separation allows anonymous-first usage while providing a coherent path to authenticated personalization.
+
+### Tool complexity levels
+
+The platform supports three implementation levels:
+
+- **small tools** for deterministic/simple tasks;
+- **advanced tools** for richer analysis, editing, processing, or technical workflows;
+- **mini-applications** for multi-step or state-rich experiences.
+
+All levels share platform contracts for trust, privacy, capabilities, accessibility, performance, SEO, lifecycle, and discovery. Complexity should not force the entire platform to pay the cost of the heaviest tool.
+
+### Capability model
+
+Tool capabilities should be explicit and eventually enforceable. Examples include local processing, file input, clipboard, camera, microphone, geolocation, external network/API access, account data, and server/database access. A tool should receive only the capabilities it requires.
+
+### Browser processing escalation
+
+For heavier local workloads, prefer progressive escalation: main-thread processing for small tasks, Web Workers for expensive work, WebAssembly where justified, and chunking/streaming for large local datasets. Long-running operations should expose truthful progress and cancellation when technically possible.
+
+### State and synchronization
+
+Use the least powerful persistence layer that satisfies the requirement: React/local state for transient state, URL state for safe shareable configuration, localStorage for small preferences, IndexedDB for larger local structured state, and account-backed persistence for selected cross-device metadata. Sensitive raw tool content should remain local by default.
+
+When local and account state are merged, the synchronization strategy and conflict behavior must be deterministic and explicit.
+
+### Search and solution discovery
+
+Search is a platform subsystem rather than a simple filter. It should support catalog matching, aliases/synonyms/tags/categories, typo tolerance, intent, and eventually a solution-engine layer that can connect multiple tools. AI may sit behind this abstraction but must remain optional.
+
+### External services
+
+Every external API/provider should be traceable through an integration catalog containing purpose, domain, transmitted data, authentication model, cost/quota, fallback behavior, ownership, and relevant policy references. Provider-specific analytics and advertising implementations should also remain behind abstractions.
+
+### Resilience and performance
+
+External tools should use appropriate timeout, controlled retry, fallback, and clear error patterns. The platform should progressively load tools, enforce page/tool performance budgets, support graceful degradation, and test simple tools and heavy mini-applications separately.
+
+### Future clients
+
+Web remains the primary product. Android and other clients are future surfaces. Shared domain/tool logic may be extracted when it has immediate value, but the web architecture must not acquire costly abstractions solely for hypothetical clients.

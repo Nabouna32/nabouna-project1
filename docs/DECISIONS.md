@@ -290,3 +290,88 @@ Users should not need to navigate obscure settings or infer what is stored.
 ### Consequences
 
 The data model must maintain clear ownership and deletion/export boundaries across identity, preferences, product data, community content, analytics, and security/moderation records.
+
+
+---
+
+## DEC-016 — Three-layer product model
+
+**Status:** Accepted
+
+### Decision
+
+Structure the product conceptually around three layers: **Public discovery**, **Tool execution**, and **Personal**.
+
+### Consequences
+
+Anonymous users can use the public and tool layers without an account. Authentication adds favorites, collections, history, preferences, personalization and community capabilities without creating an account wall.
+
+---
+
+## DEC-017 — First-class collections and safe sharing
+
+**Status:** Accepted
+
+### Decision
+
+Collections are first-class user objects and may be private, shareable, or public by explicit choice. Tool sharing may preserve a blank configuration, configured state, or current result when appropriate.
+
+### Consequences
+
+Sensitive values must not be exposed unintentionally in URLs or shared state. Local anonymous favorites may be merged into the account with deterministic conflict handling.
+
+---
+
+## DEC-018 — Three levels of tool complexity
+
+**Status:** Accepted
+
+### Decision
+
+The platform supports small tools, advanced tools, and mini-applications while keeping common trust, privacy, capability, accessibility, performance, SEO and lifecycle contracts.
+
+### Reason
+
+A universal toolbox must support both tiny deterministic utilities and rich applications without forcing one implementation model on every tool.
+
+---
+
+## DEC-019 — Progressive richness and capability-aware performance
+
+**Status:** Accepted
+
+### Decision
+
+Complexity must be loaded progressively. Heavy tools may use Workers, WebAssembly, chunking/streaming and capability checks, while simple tools remain lightweight. Long-running work should expose truthful progress and cancellation when possible.
+
+### Reason
+
+The product must remain fast and usable on modest devices and slow connections without excluding genuinely useful heavy tools.
+
+---
+
+## DEC-020 — Search is a solution-discovery subsystem
+
+**Status:** Accepted
+
+### Decision
+
+Search is not limited to tool-name matching. It progressively supports catalog matching, aliases/synonyms/tags/categories, typo tolerance, natural-language intent and eventually multi-tool solution discovery. AI remains optional.
+
+### Consequences
+
+Search must remain useful without an AI provider and must expose no-result recovery paths such as related queries, related tools and eventually tool proposals.
+
+---
+
+## DEC-021 — Product brainstorming is durable historical context
+
+**Status:** Accepted
+
+### Decision
+
+The validated brainstorming document is preserved as an immutable historical/contextual record of the product exploration. Its content may be propagated into canonical specifications and decisions, but the brainstorming document itself must not be rewritten to reflect later implementation changes.
+
+### Consequences
+
+Canonical docs describe the current accepted direction; the brainstorming document preserves the richer original reasoning and ideas. Future agents must distinguish historical intent from currently committed scope.
