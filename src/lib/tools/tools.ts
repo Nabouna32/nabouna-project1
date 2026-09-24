@@ -1,5 +1,6 @@
 import type { Tool } from "@/lib/tools/types";
 import { validateToolCatalog } from "@/lib/tools/metadata";
+import { toolSeo } from "@/lib/tools/seo";
 
 export const tools: Tool[] = [
   {
@@ -120,7 +121,7 @@ export const tools: Tool[] = [
   categories: [tool.categoryId],
   tags: tool.keywords ?? [],
   aliases: tool.keywords ?? [],
-  seo: { title: tool.name + " | Utiluna", description: tool.description },
+  seo: toolSeo[tool.id],
   examples: [],
   processing: {
     mode: "local",

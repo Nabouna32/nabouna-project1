@@ -1,15 +1,17 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { isLocale } from "@/lib/i18n/config";
+import { getToolPageMetadata } from "@/lib/tools/page-metadata";
 import ToolPage from "@/components/tools/ToolPage/ToolPage";
 import ToolSection from "@/components/tools/ToolPage/ToolSection";
 import RelatedTools from "@/components/tools/RelatedTools";
 import DownloadTimeCalculator from "@/components/tools/temps-telechargement/DownloadTimeCalculator";
 
-export const metadata = {
-  title: "Temps de téléchargement | Utiluna",
-  description: "Estimez le temps nécessaire pour télécharger un fichier selon sa taille et votre débit.",
-};
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  if (!isLocale(locale)) return {};
+  return getToolPageMetadata("temps-telechargement", locale);
+}
 
 export default async function DownloadTimeCalculatorPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;

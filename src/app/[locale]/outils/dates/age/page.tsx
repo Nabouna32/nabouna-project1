@@ -1,15 +1,17 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { isLocale } from "@/lib/i18n/config";
+import { getToolPageMetadata } from "@/lib/tools/page-metadata";
 import ToolPage from "@/components/tools/ToolPage/ToolPage";
 import ToolSection from "@/components/tools/ToolPage/ToolSection";
 import RelatedTools from "@/components/tools/RelatedTools";
 import AgeCalculator from "@/components/tools/age/AgeCalculator";
 
-export const metadata = {
-  title: "Calculateur d'âge | Utiluna",
-  description: "Calculez précisément votre âge en années, mois et jours.",
-};
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  if (!isLocale(locale)) return {};
+  return getToolPageMetadata("age", locale);
+}
 
 export default async function AgeCalculatorPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;

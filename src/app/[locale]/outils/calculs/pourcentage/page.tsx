@@ -1,16 +1,17 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { isLocale } from "@/lib/i18n/config";
+import { getToolPageMetadata } from "@/lib/tools/page-metadata";
 import ToolPage from "@/components/tools/ToolPage/ToolPage";
 import ToolSection from "@/components/tools/ToolPage/ToolSection";
 import RelatedTools from "@/components/tools/RelatedTools";
 import PercentageCalculator from "@/components/tools/percentage/PercentageCalculator";
 
-export const metadata = {
-  title: "Calculateur de pourcentage gratuit | Utiluna",
-  description:
-    "Calculez facilement un pourcentage, une augmentation ou une diminution en pourcentage grâce à notre calculateur gratuit.",
-};
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  if (!isLocale(locale)) return {};
+  return getToolPageMetadata("pourcentage", locale);
+}
 
 export default async function PercentagePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;

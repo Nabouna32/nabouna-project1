@@ -1,3 +1,4 @@
+import { locales } from "../i18n/config.ts";
 import type { Tool } from "@/lib/tools/types";
 
 export function validateToolCatalog(tools: readonly Tool[]): void {
@@ -15,6 +16,12 @@ export function validateToolCatalog(tools: readonly Tool[]): void {
     }
     if (!tool.content.fr.name.trim() || !tool.content.fr.description.trim()) {
       throw new Error(`Tool "${tool.id}" must declare French name and description.`);
+    }
+    for (const locale of locales) {
+      const seo = tool.seo[locale];
+      if (!seo?.title.trim() || !seo.description.trim()) {
+        throw new Error(`Tool "${tool.id}" must declare ${locale} SEO metadata.`);
+      }
     }
     if (tool.version < 1 || !Number.isInteger(tool.version)) {
       throw new Error(`Tool "${tool.id}" must declare a positive integer version.`);

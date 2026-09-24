@@ -1,16 +1,17 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { isLocale } from "@/lib/i18n/config";
+import { getToolPageMetadata } from "@/lib/tools/page-metadata";
 import ToolPage from "@/components/tools/ToolPage/ToolPage";
 import ToolSection from "@/components/tools/ToolPage/ToolSection";
 import RelatedTools from "@/components/tools/RelatedTools";
 import TVACalculator from "@/components/tools/tva/TVACalculator";
 
-export const metadata = {
-  title: "Calculateur TVA HT / TTC gratuit | Utiluna",
-  description:
-    "Calculez rapidement un prix HT, TTC et le montant de TVA avec le taux de votre choix.",
-};
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  if (!isLocale(locale)) return {};
+  return getToolPageMetadata("tva", locale);
+}
 
 export default async function TVAPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;

@@ -1,16 +1,17 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { isLocale } from "@/lib/i18n/config";
+import { getToolPageMetadata } from "@/lib/tools/page-metadata";
 import ToolPage from "@/components/tools/ToolPage/ToolPage";
 import ToolSection from "@/components/tools/ToolPage/ToolSection";
 import RelatedTools from "@/components/tools/RelatedTools";
 import ReductionCalculator from "@/components/tools/reduction/ReductionCalculator";
 
-export const metadata = {
-  title: "Calculateur de réduction gratuit | Utiluna",
-  description:
-    "Calculez le prix après une réduction et le montant économisé grâce à notre calculateur gratuit.",
-};
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  if (!isLocale(locale)) return {};
+  return getToolPageMetadata("reduction", locale);
+}
 
 export default async function ReductionPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;

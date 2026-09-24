@@ -1,16 +1,17 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { isLocale } from "@/lib/i18n/config";
+import { getToolPageMetadata } from "@/lib/tools/page-metadata";
 import ToolPage from "@/components/tools/ToolPage/ToolPage";
 import ToolSection from "@/components/tools/ToolPage/ToolSection";
 import RelatedTools from "@/components/tools/RelatedTools";
 import RuleOfThreeCalculator from "@/components/tools/regle-de-trois/RuleOfThreeCalculator";
 
-export const metadata = {
-  title: "Règle de trois en ligne | Utiluna",
-  description:
-    "Résolvez rapidement un calcul de proportionnalité avec notre calculateur de règle de trois gratuit.",
-};
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  if (!isLocale(locale)) return {};
+  return getToolPageMetadata("regle-de-trois", locale);
+}
 
 export default async function RuleOfThreePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
