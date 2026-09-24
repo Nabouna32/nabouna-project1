@@ -26,3 +26,8 @@ Important ideas must end in a repository record: implemented requirements go in 
 
 ## Ask only consequential questions
 Consult the user for fundamental product direction, significant recurring cost, sensitive data handling, legal/compliance exposure, business model changes, irreversible public commitments, or another genuinely consequential decision where intent cannot be inferred safely. Otherwise choose and proceed.
+
+
+## Documentation integrity
+
+Product, UX and architecture Markdown are durable specifications, not code snapshots. Never rewrite them simply to match the current implementation. Before changing them, read and preserve existing decisions; distinguish vision, architecture, foundations, planned work and completed functionality. If code diverges from the vision, correct the code or explicitly document the gap rather than silently redefining the product. Any genuine vision change must be explicit and update the canonical document, its recorded decision and all dependent documents. Make surgical edits and preserve historical intent. Before implementing new functionality, audit the relevant Markdown specifications and decisions.
