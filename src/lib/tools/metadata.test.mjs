@@ -126,7 +126,7 @@ test("the metadata validator enforces processing capabilities and providers", ()
   );
 });
 
-test("the metadata validator rejects incompatible offline and network metadata", () => {
+test("the metadata validator rejects incompatible offline, storage and network metadata", () => {
   assert.throws(
     () =>
       validateToolCatalog([
@@ -138,6 +138,26 @@ test("the metadata validator rejects incompatible offline and network metadata",
         },
       ]),
     /Only local tools can be declared offline/,
+  );
+  assert.throws(
+    () =>
+      validateToolCatalog([
+        {
+          ...tool,
+          processing: { ...tool.processing, storage: "utiluna" },
+        },
+      ]),
+    /incompatible storage metadata/,
+  );
+  assert.throws(
+    () =>
+      validateToolCatalog([
+        {
+          ...tool,
+          capabilities: ["local-processing", "network"],
+        },
+      ]),
+    /Local tool .* cannot require network access/,
   );
 });
 
