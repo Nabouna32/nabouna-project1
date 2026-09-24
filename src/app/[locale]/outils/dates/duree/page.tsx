@@ -1,15 +1,17 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { isLocale } from "@/lib/i18n/config";
+import { getToolPageMetadata } from "@/lib/tools/page-metadata";
 import ToolPage from "@/components/tools/ToolPage/ToolPage";
 import ToolSection from "@/components/tools/ToolPage/ToolSection";
 import RelatedTools from "@/components/tools/RelatedTools";
 import DurationCalculator from "@/components/tools/duree/DurationCalculator";
 
-export const metadata = {
-  title: "Calculateur de durée | Utiluna",
-  description: "Calculez facilement une durée entre deux dates ou deux horaires.",
-};
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  if (!isLocale(locale)) return {};
+  return getToolPageMetadata("duree", locale);
+}
 
 export default async function DurationCalculatorPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
