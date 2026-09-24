@@ -27,6 +27,7 @@ See the product documentation for the complete direction:
 - [Roadmap](docs/ROADMAP.md)
 - [Decisions](docs/DECISIONS.md)
 - [Tool architecture](docs/TOOL_ARCHITECTURE.md)
+- [Tool quality contract](docs/TOOL_QUALITY.md)
 - [Database](docs/DATABASE.md)
 - [Search](docs/SEARCH.md)
 - [Internationalization](docs/I18N.md)
