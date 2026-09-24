@@ -1,16 +1,17 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { isLocale } from "@/lib/i18n/config";
+import { getToolPageMetadata } from "@/lib/tools/page-metadata";
 import ToolPage from "@/components/tools/ToolPage/ToolPage";
 import ToolSection from "@/components/tools/ToolPage/ToolSection";
 import RelatedTools from "@/components/tools/RelatedTools";
 import FileSizeConverter from "@/components/tools/convertisseur-taille/FileSizeConverter";
 
-export const metadata = {
-  title: "Convertisseur de taille de fichier | Utiluna",
-  description:
-    "Convertissez facilement une taille de fichier entre octets, Ko, Mo, Go et To.",
-};
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  if (!isLocale(locale)) return {};
+  return getToolPageMetadata("convertisseur-taille", locale);
+}
 
 export default async function FileSizeConverterPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
