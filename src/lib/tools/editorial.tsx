@@ -53,7 +53,6 @@ export function getToolEditorial(toolId: string, locale: Locale): ReactNode {
               </p>
             </Card>
           </ToolSection>
-
           <ToolSection title={fr ? "📈 Calculer une augmentation ou une diminution en pourcentage" : "📈 Calculate a percentage increase or decrease"}>
             <p>
               {fr
@@ -76,7 +75,6 @@ export function getToolEditorial(toolId: string, locale: Locale): ReactNode {
               </p>
             </Card>
           </ToolSection>
-
           <details className="group rounded-2xl border border-[var(--border)] bg-[var(--surface)]">
             <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-5 text-xl font-bold text-[var(--foreground)] sm:text-2xl">
               <span>{fr ? "↔️ Évolution ou différence en pourcentage ?" : "↔️ Percentage change or percentage difference?"}</span>
@@ -190,7 +188,7 @@ export function getToolEditorial(toolId: string, locale: Locale): ReactNode {
       return (
         <>
           <ToolSection title={fr ? "📅 Comment calculer son âge ?" : "📅 How do you calculate your age?"}>
-            <p>{fr ? "Saisissez votre date de naissance puis la date à laquelle vous souhaitez calculer votre âge. Le résultat indique le nombre d'années, de mois et de jours écoulés entre ces deux dates." : "Enter your birth date and the date for which you want to calculate your age. The result shows the number of years, months, and days between the two dates."}</p>
+            <p>{fr ? "Saisissez votre date de naissance puis la date à laquelle vous souhaitez calculer votre âge. Le résultat indique le nombre d'années, de mois et de jours écoulés entre ces deux dates." : "Enter your birth date and the date for which you want to calculate your age. The result shows the number of years, months, and days between those two dates."}</p>
           </ToolSection>
           <ToolSection title={fr ? "💡 À quoi sert ce calcul ?" : "💡 What is this calculation useful for?"}>
             <p>{fr ? "Le calculateur peut servir à connaître un âge exact pour une démarche administrative, vérifier un âge à une date donnée ou simplement connaître la durée écoulée depuis une naissance." : "The calculator can help determine an exact age for an administrative process, check an age on a given date, or simply find the time elapsed since a birth."}</p>
@@ -246,6 +244,51 @@ export function getToolEditorial(toolId: string, locale: Locale): ReactNode {
           </ToolSection>
           <ToolSection title={fr ? "💡 Pourquoi convertir Mbps en Mo/s ?" : "💡 Why convert Mbps to MB/s?"}>
             <p>{fr ? "Les fournisseurs d’accès indiquent généralement les débits en mégabits par seconde (Mbps), tandis que les logiciels de téléchargement affichent souvent les vitesses en mégaoctets par seconde (Mo/s). Cette conversion permet de comparer les deux valeurs plus facilement." : "Internet providers usually report speeds in megabits per second (Mbps), while download software often displays speeds in megabytes per second (MB/s). This conversion makes the two values easier to compare."}</p>
+          </ToolSection>
+          <BackToTools locale={locale} />
+        </>
+      );
+
+    case "taille-fichier":
+      return (
+        <>
+          <ToolSection title={fr ? "💾 Comment estimer une taille de fichier ?" : "💾 How do you estimate a file size?"}>
+            <p>
+              {fr
+                ? "Indiquez la durée du contenu et son débit binaire. Le calcul convertit la durée en secondes, multiplie par le débit et exprime le résultat dans l'unité de stockage choisie."
+                : "Enter the content duration and its bitrate. The calculation converts the duration to seconds, multiplies it by the bitrate, and expresses the result in the selected storage unit."}
+            </p>
+            <Formula>
+              <p className="font-semibold text-[var(--foreground)]">{fr ? "Principe" : "Principle"}</p>
+              <p className="mt-2 font-mono text-sm text-[var(--foreground)]">file size = duration × bitrate ÷ 8</p>
+            </Formula>
+          </ToolSection>
+          <ToolSection title={fr ? "💡 Exemple" : "💡 Example"}>
+            <p>
+              {fr
+                ? "Pour 10 minutes à 8 Mbit/s, la taille théorique est d'environ 600 Mo. Le résultat est une estimation : un fichier réel peut contenir des données supplémentaires ou utiliser une compression variable."
+                : "For 10 minutes at 8 Mbps, the theoretical size is about 600 MB. This is an estimate: a real file may contain additional data or use variable compression."}
+            </p>
+          </ToolSection>
+          <BackToTools locale={locale} />
+        </>
+      );
+
+    case "mots-caracteres":
+      return (
+        <>
+          <ToolSection title={fr ? "🔤 Que compte cet outil ?" : "🔤 What does this tool count?"}>
+            <p>
+              {fr
+                ? "Saisissez ou collez un texte pour obtenir instantanément le nombre de mots, de caractères, de caractères sans espaces, d'espaces et de lignes."
+                : "Enter or paste text to instantly count words, characters, characters without spaces, spaces, and lines."}
+            </p>
+          </ToolSection>
+          <ToolSection title={fr ? "💡 À quoi peut-il servir ?" : "💡 What is it useful for?"}>
+            <p>
+              {fr
+                ? "Il peut aider à respecter une limite de caractères, préparer une publication, vérifier la longueur d'un texte ou contrôler rapidement un contenu avant de l'envoyer."
+                : "It can help meet a character limit, prepare a post, check text length, or quickly review content before sending it."}
           </ToolSection>
           <BackToTools locale={locale} />
         </>
