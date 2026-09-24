@@ -66,7 +66,19 @@ function validateToolQuality(tool: Tool): void {
     }
   }
 
-  if (tool.processing.mode === "local" && tool.capabilities.includes("network")) {\n    throw new Error(`Local tool "${tool.id}" cannot require network access.`);\n  }\n\n  if (tool.processing.mode === "external" && tool.capabilities.includes("local-processing")) {\n    throw new Error(`External tool "${tool.id}" cannot require local processing.`);\n  }\n\n  if (tool.processing.mode === "utiluna-server" && tool.capabilities.includes("local-processing")) {\n    throw new Error(`Utiluna-server tool "${tool.id}" cannot require local processing.`);\n  }\n\n  if (tool.processing.mode === "local" && tool.processing.externalProviders.length > 0) {
+  if (tool.processing.mode === "local" && tool.capabilities.includes("network")) {
+    throw new Error(`Local tool "${tool.id}" cannot require network access.`);
+  }
+
+  if (tool.processing.mode === "external" && tool.capabilities.includes("local-processing")) {
+    throw new Error(`External tool "${tool.id}" cannot require local processing.`);
+  }
+
+  if (tool.processing.mode === "utiluna-server" && tool.capabilities.includes("local-processing")) {
+    throw new Error(`Utiluna-server tool "${tool.id}" cannot require local processing.`);
+  }
+
+  if (tool.processing.mode === "local" && tool.processing.externalProviders.length > 0) {
     throw new Error(`Local tool "${tool.id}" cannot declare external providers.`);
   }
 
