@@ -99,7 +99,7 @@ export const tools: Tool[] = [
   {
     id: "mots-caracteres", slug: "mots-caracteres", categoryId: "fichiers", icon: "🔤",
     name: "Compteur de mots et caractères", description: "Comptez les mots, caractères, espaces et lignes d'un texte.",
-    keywords: ["texte", "lettres", "compter", "ligne", "paragraphes"], available: false,
+    keywords: ["texte", "lettres", "compter", "ligne", "paragraphes"], available: true,
     content: {
       fr: { name: "Compteur de mots et caractères", description: "Comptez les mots, caractères, espaces et lignes d'un texte." },
       en: { name: "Word and Character Counter", description: "Count words, characters, spaces, and lines in a text." },
