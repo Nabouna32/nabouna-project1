@@ -13,6 +13,7 @@ export const metadata = {
 export default function ReductionPage() {
   return (
     <ToolPage
+      toolId="reduction"
       icon="🏷️"
       title="Calculateur de réduction"
       description="Calculez rapidement le prix après une remise et le montant économisé."

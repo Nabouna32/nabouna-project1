@@ -13,6 +13,7 @@ export const metadata = {
 export default function TVAPage() {
   return (
     <ToolPage
+      toolId="tva"
       icon="💶"
       title="Calculateur TVA HT / TTC"
       description="Convertissez facilement un prix HT en TTC et inversement."
