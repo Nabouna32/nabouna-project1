@@ -5,7 +5,7 @@ import { getTheme } from "@teispace/next-themes/server";
 import ThemeProvider from "@/components/theme/ThemeProvider";
 import Header from "@/components/layout/Header";
 import { getMessages } from "@/lib/i18n/messages";
-import { isLocale, locales, type Locale } from "@/lib/i18n/config";
+import { getLanguage, isLocale, locales } from "@/lib/i18n/config";
 import "@/app/globals.css";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
@@ -37,7 +37,7 @@ export default async function LocaleLayout({
   if (!isLocale(locale)) notFound();
 
   const initialTheme = await getTheme();
-  const direction = locale === ("en" as Locale) ? "ltr" : "ltr";
+  const direction = getLanguage(locale).direction;
 
   return (
     <html lang={locale} dir={direction} suppressHydrationWarning>
