@@ -13,6 +13,7 @@ export const metadata = {
 export default function RuleOfThreePage() {
   return (
     <ToolPage
+      toolId="regle-de-trois"
       icon="⚖️"
       title="Règle de trois"
       description="Résolvez rapidement vos calculs de proportionnalité."

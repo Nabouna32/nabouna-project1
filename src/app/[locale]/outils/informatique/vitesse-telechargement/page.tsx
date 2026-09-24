@@ -13,6 +13,7 @@ export const metadata = {
 export default function DownloadSpeedConverterPage() {
   return (
     <ToolPage
+      toolId="vitesse-telechargement"
       icon="🚀"
       title="Mbps ↔ Mo/s"
       description="Convertissez facilement une vitesse Internet entre bits et octets par seconde."

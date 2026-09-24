@@ -13,6 +13,7 @@ export const metadata = {
 export default function FileSizeConverterPage() {
   return (
     <ToolPage
+      toolId="convertisseur-taille"
       icon="🔄"
       title="Convertisseur de taille"
       description="Convertissez une taille de fichier entre octets, Ko, Mo, Go et To."
