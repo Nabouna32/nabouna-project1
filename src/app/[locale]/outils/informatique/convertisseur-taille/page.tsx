@@ -1,4 +1,6 @@
+import { notFound } from "next/navigation";
 import Link from "next/link";
+import { isLocale } from "@/lib/i18n/config";
 import ToolPage from "@/components/tools/ToolPage/ToolPage";
 import ToolSection from "@/components/tools/ToolPage/ToolSection";
 import RelatedTools from "@/components/tools/RelatedTools";
@@ -10,9 +12,12 @@ export const metadata = {
     "Convertissez facilement une taille de fichier entre octets, Ko, Mo, Go et To.",
 };
 
-export default function FileSizeConverterPage() {
+export default async function FileSizeConverterPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  if (!isLocale(locale)) notFound();
   return (
     <ToolPage
+      locale={locale}
       toolId="convertisseur-taille"
       content={
         <>
