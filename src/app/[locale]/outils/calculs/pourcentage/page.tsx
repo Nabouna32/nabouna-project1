@@ -1,4 +1,6 @@
+import { notFound } from "next/navigation";
 import Link from "next/link";
+import { isLocale } from "@/lib/i18n/config";
 import ToolPage from "@/components/tools/ToolPage/ToolPage";
 import ToolSection from "@/components/tools/ToolPage/ToolSection";
 import RelatedTools from "@/components/tools/RelatedTools";
@@ -10,9 +12,12 @@ export const metadata = {
     "Calculez facilement un pourcentage, une augmentation ou une diminution en pourcentage grâce à notre calculateur gratuit.",
 };
 
-export default function PercentagePage() {
+export default async function PercentagePage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  if (!isLocale(locale)) notFound();
   return (
     <ToolPage
+      locale={locale}
       toolId="pourcentage"
       content={
         <>

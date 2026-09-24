@@ -1,4 +1,6 @@
+import { notFound } from "next/navigation";
 import Link from "next/link";
+import { isLocale } from "@/lib/i18n/config";
 import ToolPage from "@/components/tools/ToolPage/ToolPage";
 import ToolSection from "@/components/tools/ToolPage/ToolSection";
 import RelatedTools from "@/components/tools/RelatedTools";
@@ -10,9 +12,12 @@ export const metadata = {
     "Calculez le prix après une réduction et le montant économisé grâce à notre calculateur gratuit.",
 };
 
-export default function ReductionPage() {
+export default async function ReductionPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  if (!isLocale(locale)) notFound();
   return (
     <ToolPage
+      locale={locale}
       toolId="reduction"
       content={
         <>

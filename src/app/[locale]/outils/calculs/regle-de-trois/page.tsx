@@ -1,4 +1,6 @@
+import { notFound } from "next/navigation";
 import Link from "next/link";
+import { isLocale } from "@/lib/i18n/config";
 import ToolPage from "@/components/tools/ToolPage/ToolPage";
 import ToolSection from "@/components/tools/ToolPage/ToolSection";
 import RelatedTools from "@/components/tools/RelatedTools";
@@ -10,9 +12,12 @@ export const metadata = {
     "Résolvez rapidement un calcul de proportionnalité avec notre calculateur de règle de trois gratuit.",
 };
 
-export default function RuleOfThreePage() {
+export default async function RuleOfThreePage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  if (!isLocale(locale)) notFound();
   return (
     <ToolPage
+      locale={locale}
       toolId="regle-de-trois"
       content={
         <>

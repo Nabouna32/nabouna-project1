@@ -2,51 +2,33 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { isLocale, type Locale } from "@/lib/i18n/config";
 import { tools } from "@/lib/tools/tools";
 import { getRelatedTools } from "@/lib/tools/relations";
 
-type RelatedToolsProps = {
-  toolId: string;
-};
-
-export default function RelatedTools({ toolId }: RelatedToolsProps) {
+export default function RelatedTools({ toolId }: { toolId: string }) {
   const pathname = usePathname();
-  const locale = pathname.split("/")[1] || "fr";
+  const segment = pathname.split("/")[1];
+  const locale: Locale = isLocale(segment) ? segment : "fr";
   const tool = tools.find((item) => item.id === toolId);
   if (!tool) return null;
-
   const relatedTools = getRelatedTools(tool, tools);
   if (relatedTools.length === 0) return null;
-
+  const title = locale === "fr" ? "Vous pourriez aussi avoir besoin de" : "You may also need";
   return (
-    <section
-      className="rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-5 sm:p-7"
-      aria-labelledby="related-tools-title"
-    >
-      <h2
-        id="related-tools-title"
-        className="text-xl font-bold text-[var(--foreground)] sm:text-2xl"
-      >
-        Vous pourriez aussi avoir besoin de
-      </h2>
+    <section className="rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-5 sm:p-7" aria-labelledby="related-tools-title">
+      <h2 id="related-tools-title" className="text-xl font-bold text-[var(--foreground)] sm:text-2xl">{title}</h2>
       <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {relatedTools.map((relatedTool) => (
-          <Link
-            key={relatedTool.id}
-            href={`/${locale}/outils/${relatedTool.categoryId}/${relatedTool.slug}`}
-            className="group rounded-2xl border border-[var(--border)] bg-[var(--background)] p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-[var(--accent)] hover:shadow-lg hover:shadow-black/5"
-          >
-            <span className="text-2xl" aria-hidden="true">
-              {relatedTool.icon}
-            </span>
-            <h3 className="mt-4 font-semibold text-[var(--foreground)]">
-              {relatedTool.name}
-            </h3>
-            <p className="mt-2 text-sm leading-6 text-[var(--muted)]">
-              {relatedTool.description}
-            </p>
-          </Link>
-        ))}
+        {relatedTools.map((relatedTool) => {
+          const content = relatedTool.content[locale] ?? relatedTool.content.fr;
+          return (
+            <Link key={relatedTool.id} href={"/" + locale + "/outils/" + relatedTool.categoryId + "/" + relatedTool.slug} className="group rounded-2xl border border-[var(--border)] bg-[var(--background)] p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-[var(--accent)] hover:shadow-lg hover:shadow-black/5">
+              <span className="text-2xl" aria-hidden="true">{relatedTool.icon}</span>
+              <h3 className="mt-4 font-semibold text-[var(--foreground)]">{content.name}</h3>
+              <p className="mt-2 text-sm leading-6 text-[var(--muted)]">{content.description}</p>
+            </Link>
+          );
+        })}
       </div>
     </section>
   );
