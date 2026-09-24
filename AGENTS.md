@@ -20,6 +20,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - `docs/ROADMAP.md` defines capability sequencing.
 - `docs/DECISIONS.md` records durable product and architecture decisions.
 - `docs/TOOL_ARCHITECTURE.md` defines the Tool contract and capability model.
+- `docs/TOOL_QUALITY.md` defines the machine-checkable tool quality contract.
 - `docs/DATABASE.md` defines durable data domains and persistence boundaries.
 - `docs/SEARCH.md` defines discovery and intent-search direction.
 - `docs/I18N.md` defines localization and language architecture.
