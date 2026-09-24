@@ -219,3 +219,42 @@ A tool page may expose:
 - recently used tools.
 
 Relationships should be meaningful rather than generated solely to fill page space.
+
+## Expanded experience direction
+
+### Homepage experience
+
+The default homepage should foreground the user's action or need rather than a wall of categories. Search/action is primary; discovery depth follows through popular tools, categories, suggestions, recent tools, and personalized content for authenticated users.
+
+### Result-first interaction
+
+The recommended hierarchy is:
+
+1. inputs;
+2. primary result;
+3. actions;
+4. explanation;
+5. documentation;
+6. related/discovery content.
+
+For simple tools, the result should appear with minimal interaction. “How did we get this result?” can be available as an expandable secondary explanation.
+
+### Tool-specific identity
+
+A common design system should establish trust and consistency without making every tool visually identical. Small utilities may be compact; advanced tools and mini-applications may use richer layouts. Visual and animation identity can vary by tool when this improves comprehension or enjoyment.
+
+### Personal experience
+
+Authenticated users should eventually be able to hide/reorder tools and page elements, customize the home, choose theme and animation level, adjust density/style, manage favorites and collections, and control privacy/history behavior. These controls should enhance the experience without making anonymous usage feel second-class.
+
+### Contextual tone
+
+A professional tool can remain sober while a creative or exploratory tool can be more expressive. Contextual tone is an optional future capability and must remain subordinate to clarity and the user's selected experience mode.
+
+### Feedback and lightweight trust signals
+
+Where useful, tool pages may provide lightweight feedback such as “Cet outil vous a été utile ? 👍 👎” and authenticated ratings without distracting from the task.
+
+### Mobile and advertising
+
+Mobile is a first-class experience, not a compressed desktop layout. Advertising must never sit between the primary input and result, cover controls, or create forced interaction. Wide desktop layouts may use side rails; smaller layouts should prefer non-intrusive alternatives or omit the placement when necessary.
