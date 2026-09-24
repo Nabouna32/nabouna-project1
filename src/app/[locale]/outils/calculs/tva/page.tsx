@@ -23,9 +23,9 @@ export default async function TVAPage({ params }: { params: Promise<{ locale: st
         <>
           <TVACalculator />
 
-          <RelatedTools toolId="tva" />
-
           <div className="space-y-12">{getToolEditorial("tva", locale)}</div>
+
+          <RelatedTools toolId="tva" />
         </>
       }
     />
