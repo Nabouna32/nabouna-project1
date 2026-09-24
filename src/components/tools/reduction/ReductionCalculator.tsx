@@ -5,107 +5,47 @@ import { CalculatorActions } from "@/components/tools/calculator/CalculatorActio
 import { CalculatorField } from "@/components/tools/calculator/CalculatorField";
 import { CalculatorResult } from "@/components/tools/calculator/CalculatorResult";
 import { CalculatorShell } from "@/components/tools/calculator/CalculatorShell";
-import {
-  calculateDiscountAmount,
-  calculateDiscountedPrice,
-  isValidDiscountRate,
-  isValidReductionPrice,
-} from "@/lib/reduction";
+import { calculateDiscountAmount, calculateDiscountedPrice, isValidDiscountRate, isValidReductionPrice } from "@/lib/reduction";
+import { useLocale } from "@/lib/i18n/use-locale";
+import { getToolMessages } from "@/lib/i18n/tool-messages";
 
-function formatNumber(value: number): string {
-  return new Intl.NumberFormat("fr-FR", {
-    maximumFractionDigits: 2,
-  }).format(value);
+function formatNumber(value: number, locale: "fr" | "en"): string {
+  return new Intl.NumberFormat(locale === "fr" ? "fr-FR" : "en-US", { maximumFractionDigits: 2 }).format(value);
 }
 
 export default function ReductionCalculator() {
+  const locale = useLocale();
+  const t = getToolMessages(locale).reduction;
   const [priceValue, setPriceValue] = useState("");
   const [discountValue, setDiscountValue] = useState("");
-
   const price = Number(priceValue);
   const discountRate = Number(discountValue);
-  const hasValues =
-    priceValue.trim() !== "" &&
-    discountValue.trim() !== "" &&
-    Number.isFinite(price) &&
-    Number.isFinite(discountRate);
+  const hasValues = priceValue.trim() !== "" && discountValue.trim() !== "" && Number.isFinite(price) && Number.isFinite(discountRate);
   const valid = hasValues && isValidReductionPrice(price) && isValidDiscountRate(discountRate);
-  const discountAmount = valid
-    ? calculateDiscountAmount(price, discountRate)
-    : null;
-  const discountedPrice = valid
-    ? calculateDiscountedPrice(price, discountRate)
-    : null;
-
-  function clearValues() {
-    setPriceValue("");
-    setDiscountValue("");
-  }
+  const discountAmount = valid ? calculateDiscountAmount(price, discountRate) : null;
+  const discountedPrice = valid ? calculateDiscountedPrice(price, discountRate) : null;
+  function clearValues() { setPriceValue(""); setDiscountValue(""); }
 
   return (
     <CalculatorShell>
-      <CalculatorActions
-        showClear={priceValue !== "" || discountValue !== ""}
-        onClear={clearValues}
-      />
-
+      <CalculatorActions showClear={priceValue !== "" || discountValue !== ""} onClear={clearValues} />
       <div className="mt-2 grid gap-5 sm:grid-cols-2">
-        <CalculatorField
-          label="Prix initial"
-          inputId="reduction-price"
-          min="0.01"
-          value={priceValue}
-          onChange={(event) => setPriceValue(event.target.value)}
-          placeholder="Ex. 150"
-          unit="€"
-        />
-        <CalculatorField
-          label="Réduction"
-          inputId="reduction-rate"
-          min="0"
-          max="100"
-          value={discountValue}
-          onChange={(event) => setDiscountValue(event.target.value)}
-          placeholder="Ex. 20"
-          unit="%"
-        />
+        <CalculatorField label={t.price} inputId="reduction-price" min="0.01" value={priceValue} onChange={(event) => setPriceValue(event.target.value)} placeholder={t.placeholderPrice} unit="€" />
+        <CalculatorField label={t.discount} inputId="reduction-rate" min="0" max="100" value={discountValue} onChange={(event) => setDiscountValue(event.target.value)} placeholder={t.placeholderDiscount} unit="%" />
       </div>
-
       <div className="mt-6 grid gap-4 sm:grid-cols-2">
-        <CalculatorResult
-          label="Prix après réduction"
-          tone="accent"
-          value={discountedPrice === null ? "—" : `${formatNumber(discountedPrice)} €`}
-        />
-        <CalculatorResult
-          label="Montant économisé"
-          value={discountAmount === null ? "—" : `${formatNumber(discountAmount)} €`}
-        />
+        <CalculatorResult label={t.discountedPrice} tone="accent" value={discountedPrice === null ? "—" : `${formatNumber(discountedPrice, locale)} €`} />
+        <CalculatorResult label={t.saved} value={discountAmount === null ? "—" : `${formatNumber(discountAmount, locale)} €`} />
       </div>
-
-      {hasValues && !valid && (
-        <p className="mt-4 text-sm font-medium text-[var(--foreground)]">
-          Saisissez un prix positif et une réduction comprise entre 0 et 100 %.
-        </p>
-      )}
-
+      {hasValues && !valid && <p className="mt-4 text-sm font-medium text-[var(--foreground)]">{t.invalid}</p>}
       {valid && discountedPrice !== null && discountAmount !== null && (
         <details className="group mt-4 rounded-2xl border border-[var(--border)] bg-[var(--background)]">
-          <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-4 text-sm font-semibold text-[var(--foreground)]">
-            <span>💡 Comment avons-nous trouvé ce résultat ?</span>
-            <span className="text-lg text-[var(--muted)] transition-transform group-open:rotate-45">+</span>
-          </summary>
+          <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-4 text-sm font-semibold text-[var(--foreground)]"><span>{t.how}</span><span className="text-lg text-[var(--muted)] transition-transform group-open:rotate-45">+</span></summary>
           <div className="border-t border-[var(--border)] px-4 pb-4 pt-4">
-            <p className="text-sm leading-6 text-[var(--muted)]">
-              La réduction représente {formatNumber(discountAmount)} € sur le prix initial.
-            </p>
+            <p className="text-sm leading-6 text-[var(--muted)]">{t.explanation(`${formatNumber(discountAmount, locale)} €`)}</p>
             <div className="mt-3 rounded-xl bg-[var(--surface-soft)] p-4">
-              <p className="font-mono text-sm leading-6 text-[var(--foreground)]">
-                {formatNumber(price)} × {formatNumber(discountRate)} ÷ 100 = {formatNumber(discountAmount)} €
-              </p>
-              <p className="mt-2 font-mono text-sm leading-6 text-[var(--foreground)]">
-                {formatNumber(price)} − {formatNumber(discountAmount)} = {formatNumber(discountedPrice)} €
-              </p>
+              <p className="font-mono text-sm leading-6 text-[var(--foreground)]">{formatNumber(price, locale)} × {formatNumber(discountRate, locale)} ÷ 100 = {formatNumber(discountAmount, locale)} €</p>
+              <p className="mt-2 font-mono text-sm leading-6 text-[var(--foreground)]">{formatNumber(price, locale)} − {formatNumber(discountAmount, locale)} = {formatNumber(discountedPrice, locale)} €</p>
             </div>
           </div>
         </details>
