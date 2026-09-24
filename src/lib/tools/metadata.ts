@@ -1,5 +1,103 @@
 import { locales } from "../i18n/config.ts";
-import type { Tool } from "@/lib/tools/types";
+import type { Tool, ToolCapability, ToolProcessingMode } from "@/lib/tools/types";
+
+const slugPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+
+function expectedProcessingCapabilities(mode: ToolProcessingMode): Set<ToolCapability> {
+  switch (mode) {
+    case "local":
+      return new Set(["local-processing"]);
+    case "external":
+      return new Set(["network"]);
+    case "utiluna-server":
+      return new Set(["network"]);
+    case "hybrid":
+      return new Set(["local-processing", "network"]);
+  }
+}
+
+function validateToolQuality(tool: Tool): void {
+  if (!slugPattern.test(tool.slug)) {
+    throw new Error(`Tool "${tool.id}" must declare a URL-safe kebab-case slug.`);
+  }
+
+  if (tool.categoryId !== tool.categories[0]) {
+    throw new Error(`Tool "${tool.id}" must use categoryId as its primary category.`);
+  }
+
+  if (tool.tags.some((tag) => !tag.trim()) || new Set(tool.tags).size !== tool.tags.length) {
+    throw new Error(`Tool "${tool.id}" must declare unique, non-empty tags.`);
+  }
+
+  if (
+    tool.aliases.some((alias) => !alias.trim()) ||
+    new Set(tool.aliases).size !== tool.aliases.length
+  ) {
+    throw new Error(`Tool "${tool.id}" must declare unique, non-empty aliases.`);
+  }
+
+  if (tool.quality.accessibility !== "required") {
+    throw new Error(`Tool "${tool.id}" must require accessibility validation.`);
+  }
+
+  if (tool.lifecycle === "published") {
+    if (!tool.available) {
+      throw new Error(`Published tool "${tool.id}" must be available.`);
+    }
+    if (tool.quality.tests !== "required") {
+      throw new Error(`Published tool "${tool.id}" must require tests.`);
+    }
+  }
+
+  if (tool.lifecycle === "draft" && tool.available) {
+    throw new Error(`Draft tool "${tool.id}" cannot be available.`);
+  }
+
+  if (tool.contributor.type === "community" && !tool.contributor.name?.trim()) {
+    throw new Error(`Community tool "${tool.id}" must identify its contributor.`);
+  }
+
+  const expected = expectedProcessingCapabilities(tool.processing.mode);
+  for (const capability of expected) {
+    if (!tool.capabilities.includes(capability)) {
+      throw new Error(
+        `Tool "${tool.id}" processing mode "${tool.processing.mode}" requires capability "${capability}".`,
+      );
+    }
+  }
+
+  if (tool.processing.mode === "local" && tool.capabilities.includes("network")) {\n    throw new Error(`Local tool "${tool.id}" cannot require network access.`);\n  }\n\n  if (tool.processing.mode === "external" && tool.capabilities.includes("local-processing")) {\n    throw new Error(`External tool "${tool.id}" cannot require local processing.`);\n  }\n\n  if (tool.processing.mode === "utiluna-server" && tool.capabilities.includes("local-processing")) {\n    throw new Error(`Utiluna-server tool "${tool.id}" cannot require local processing.`);\n  }\n\n  if (tool.processing.mode === "local" && tool.processing.externalProviders.length > 0) {
+    throw new Error(`Local tool "${tool.id}" cannot declare external providers.`);
+  }
+
+  if (tool.processing.mode !== "local" && tool.processing.externalProviders.length === 0) {
+    throw new Error(`Remote tool "${tool.id}" must declare at least one external provider.`);
+  }
+
+  if (tool.processing.mode === "local" && !["none", "local"].includes(tool.processing.storage)) {
+    throw new Error(`Local tool "${tool.id}" has incompatible storage metadata.`);
+  }
+
+  if (tool.processing.mode === "utiluna-server" && tool.processing.storage === "external") {
+    throw new Error(`Utiluna-server tool "${tool.id}" cannot declare external-only storage.`);
+  }
+
+  if (tool.offline && tool.processing.mode !== "local") {
+    throw new Error(`Only local tools can be declared offline: ${tool.id}`);
+  }
+
+  if (tool.offline && tool.capabilities.includes("network")) {
+    throw new Error(`Offline tool "${tool.id}" cannot require network access.`);
+  }
+
+  if (!tool.sharing.supported && tool.sharing.mode !== "none") {
+    throw new Error(`Tool "${tool.id}" has sharing mode without sharing support.`);
+  }
+
+  if (tool.sharing.supported && tool.sharing.mode === "none") {
+    throw new Error(`Tool "${tool.id}" enables sharing without a sharing mode.`);
+  }
+}
 
 export function validateToolCatalog(tools: readonly Tool[]): void {
   const ids = new Set<string>();
@@ -26,21 +124,7 @@ export function validateToolCatalog(tools: readonly Tool[]): void {
     if (tool.version < 1 || !Number.isInteger(tool.version)) {
       throw new Error(`Tool "${tool.id}" must declare a positive integer version.`);
     }
-    if (tool.processing.mode === "local" && tool.processing.externalProviders.length > 0) {
-      throw new Error(`Local tool "${tool.id}" cannot declare external providers.`);
-    }
-    if (tool.processing.mode === "local" && !["none", "local"].includes(tool.processing.storage)) {
-      throw new Error(`Local tool "${tool.id}" has incompatible storage metadata.`);
-    }
-    if (tool.offline && tool.processing.mode !== "local") {
-      throw new Error(`Only local tools can be declared offline: ${tool.id}`);
-    }
-    if (!tool.sharing.supported && tool.sharing.mode !== "none") {
-      throw new Error(`Tool "${tool.id}" has sharing mode without sharing support.`);
-    }
-    if (tool.sharing.supported && tool.sharing.mode === "none") {
-      throw new Error(`Tool "${tool.id}" enables sharing without a sharing mode.`);
-    }
+    validateToolQuality(tool);
   }
 
   const knownIds = new Set(ids);
