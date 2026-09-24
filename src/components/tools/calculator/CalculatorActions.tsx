@@ -1,5 +1,4 @@
 import { useLocale } from "@/lib/i18n/use-locale";
-import { getToolMessages } from "@/lib/i18n/tool-messages";
 
 type CalculatorActionsProps = {
   showClear: boolean;
