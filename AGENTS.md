@@ -181,3 +181,15 @@ For larger or risky changes, use a dedicated branch, validate locally, validate 
 - Never commit API keys, tokens, passwords, private credentials, secret-bearing `.env` files, or confidential values.
 - Use GitHub/Vercel environment variables and secrets for sensitive configuration.
 - Treat client-side configuration as public unless a provider explicitly guarantees otherwise.
+
+
+## Documentation integrity and product authority
+
+- Product, UX, architecture and other canonical Markdown documents are durable project specifications, not mirrors of the current implementation.
+- Never rewrite product/UX/architecture Markdown merely to make it match the latest code.
+- Before modifying any Markdown specification, read the existing decisions and preserve them unless an explicit product evolution supersedes them.
+- Distinguish clearly between product vision, architecture, foundations/infrastructure, planned functionality and functionality actually completed in code.
+- If code diverges from the documented vision, fix the code or document the gap explicitly; never silently redefine the product to match the implementation.
+- A genuine change of product vision must be explicit: update the canonical document, record the decision/change, and update all dependent documents consistently.
+- Prefer surgical documentation changes over broad rewrites. Preserve historical intent and decision context.
+- Before any new implementation, audit the relevant existing Markdown specifications and decisions so implementation follows the documented product direction rather than accidentally redefining it.
