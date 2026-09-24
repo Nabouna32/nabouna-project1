@@ -1,51 +1,69 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-
 import { searchTools } from "./search.ts";
 
-const tools = [
+const fixtureTools = [
   {
-    id: "duree",
-    slug: "duree",
-    categoryId: "dates",
-    icon: "⏱️",
-    name: "Calculateur de durée",
-    description: "Calculez la durée entre deux dates.",
-    keywords: ["temps", "intervalle"],
+    id: "pourcentage",
+    name: "Calculateur de pourcentage",
+    description: "Calculez un pourcentage.",
+    keywords: ["%", "taux"],
+    aliases: ["pourcentage"],
     available: true,
+    content: {
+      fr: { name: "Calculateur de pourcentage", description: "Calculez un pourcentage." },
+      en: { name: "Percentage Calculator", description: "Calculate a percentage." },
+    },
   },
   {
-    id: "tva",
-    slug: "tva",
-    categoryId: "calculs",
-    icon: "💶",
-    name: "Calculateur TVA HT / TTC",
-    description: "Convertissez un prix HT en TTC.",
-    keywords: ["taxe", "prix"],
+    id: "regle-de-trois",
+    name: "Règle de trois",
+    description: "Résolvez une proportionnalité.",
+    keywords: ["proportion"],
+    aliases: ["ratio"],
     available: true,
+    content: {
+      fr: { name: "Règle de trois", description: "Résolvez une proportionnalité." },
+      en: { name: "Rule of Three Calculator", description: "Solve proportional calculations." },
+    },
   },
   {
-    id: "internet",
-    slug: "internet",
-    categoryId: "informatique",
-    icon: "🚀",
-    name: "Mbps ↔ Mo/s",
-    description: "Convertissez une vitesse Internet.",
-    keywords: ["débit", "connexion"],
+    id: "temps-telechargement",
+    name: "Temps de téléchargement",
+    description: "Estimez une durée de téléchargement.",
+    keywords: ["download", "internet"],
+    aliases: ["telechargement"],
     available: true,
+    content: {
+      fr: { name: "Temps de téléchargement", description: "Estimez une durée de téléchargement." },
+      en: { name: "Download Time Calculator", description: "Estimate download time." },
+    },
   },
 ];
 
-test("search is case and accent insensitive", () => {
-  assert.equal(searchTools(tools, "DUREE")[0].tool.id, "duree");
-  assert.equal(searchTools(tools, "duree")[0].tool.id, "duree");
+function ids(query, locale = "fr") {
+  return searchTools(fixtureTools, query, locale).map(({ tool }) => tool.id);
+}
+
+test("matches localized names and ignores accents", () => {
+  assert.equal(ids("regle")[0], "regle-de-trois");
+  assert.equal(ids("règle")[0], "regle-de-trois");
 });
 
-test("search matches aliases and ranks exact intent", () => {
-  assert.equal(searchTools(tools, "taxe")[0].tool.id, "tva");
-  assert.equal(searchTools(tools, "connexion")[0].tool.id, "internet");
+test("matches aliases and keywords", () => {
+  assert.equal(ids("internet")[0], "temps-telechargement");
+  assert.equal(ids("telechargement")[0], "temps-telechargement");
 });
 
-test("empty search returns no suggestions", () => {
-  assert.deepEqual(searchTools(tools, "   "), []);
+test("tolerates a small typo in a tool name", () => {
+  assert.equal(ids("pourcentge")[0], "pourcentage");
+  assert.equal(ids("telechargemnt")[0], "temps-telechargement");
+});
+
+test("supports multi-term queries with a typo", () => {
+  assert.equal(ids("calculer pourcentge")[0], "pourcentage");
+});
+
+test("does not fuzzy-match very short terms", () => {
+  assert.deepEqual(ids("tvx"), []);
 });
