@@ -69,7 +69,7 @@ export default function DurationCalculator() {
   return (
     <CalculatorShell>
       <div className="mb-4">
-        <SegmentedControl items={modes} value={mode} onChange={switchMode} ariaLabel={t.mode} className="grid-cols-2" />
+        <SegmentedControl items={modes} value={mode} onChange={switchMode} ariaLabel={`${t.datesMode} / ${t.timesMode}`} className="grid-cols-2" />
       </div>
       <CalculatorActions showClear={hasValues} onClear={clearValues} />
       <div className="grid gap-5 sm:grid-cols-2">
