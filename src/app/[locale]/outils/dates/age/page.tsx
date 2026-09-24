@@ -1,10 +1,9 @@
 import { notFound } from "next/navigation";
-import Link from "next/link";
 import { isLocale } from "@/lib/i18n/config";
 import { getToolPageMetadata } from "@/lib/tools/page-metadata";
 import ToolPage from "@/components/tools/ToolPage/ToolPage";
-import ToolSection from "@/components/tools/ToolPage/ToolSection";
 import RelatedTools from "@/components/tools/RelatedTools";
+import { getToolEditorial } from "@/lib/tools/editorial";
 import AgeCalculator from "@/components/tools/age/AgeCalculator";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
@@ -26,30 +25,7 @@ export default async function AgeCalculatorPage({ params }: { params: Promise<{ 
 
           <RelatedTools toolId="age" />
 
-          <ToolSection title="📅 Comment calculer son âge ?">
-            <p>
-              Saisissez votre date de naissance puis la date à laquelle vous
-              souhaitez calculer votre âge. Le résultat indique le nombre
-              d'années, de mois et de jours écoulés entre ces deux dates.
-            </p>
-          </ToolSection>
-
-          <ToolSection title="💡 À quoi sert ce calcul ?">
-            <p>
-              Le calculateur peut servir à connaître un âge exact pour une
-              démarche administrative, vérifier un âge à une date donnée ou
-              simplement connaître la durée écoulée depuis une naissance.
-            </p>
-          </ToolSection>
-
-          <div className="mt-8 flex justify-start">
-            <Link
-              href="/fr/outils"
-              className="text-sm font-medium text-[var(--accent)] hover:underline"
-            >
-              ← Retour aux outils
-            </Link>
-          </div>
+          <div className="space-y-12">{getToolEditorial("age", locale)}</div>
         </>
       }
     />
