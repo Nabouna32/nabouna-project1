@@ -2,7 +2,7 @@ import type { Locale } from "./config.ts";
 
 export type Messages = {
   nav: { home: string; tools: string; language: string };
-  actions: { copy: string; copied: string };
+  actions: { copy: string; copied: string; clear: string };
   home: { badge: string; title: string; description: string; examples: string; explore: string; categoriesTitle: string; categoriesDescription: string };
   tools: {
     eyebrow: string; title: string; description: string; explore: string; one: string; many: string; back: string;
@@ -19,7 +19,7 @@ export type Messages = {
 export const messages: Record<Locale, Messages> = {
   fr: {
     nav: { home: "Accueil", tools: "Outils", language: "Langue" },
-    actions: { copy: "Copier", copied: "Copié" },
+    actions: { copy: "Copier", copied: "Copié", clear: "Effacer" },
     home: {
       badge: "Des outils simples pour le quotidien",
       title: "Trouvez l’outil qu’il vous faut.",
@@ -50,7 +50,7 @@ export const messages: Record<Locale, Messages> = {
   },
   en: {
     nav: { home: "Home", tools: "Tools", language: "Language" },
-    actions: { copy: "Copy", copied: "Copied" },
+    actions: { copy: "Copy", copied: "Copied", clear: "Clear" },
     home: {
       badge: "Simple tools for everyday tasks",
       title: "Find the tool you need.",
