@@ -19,6 +19,14 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - `docs/PRIVACY.md` defines privacy and processing principles.
 - `docs/ROADMAP.md` defines capability sequencing.
 - `docs/DECISIONS.md` records durable product and architecture decisions.
+- `docs/TOOL_ARCHITECTURE.md` defines the Tool contract and capability model.
+- `docs/DATABASE.md` defines durable data domains and persistence boundaries.
+- `docs/SEARCH.md` defines discovery and intent-search direction.
+- `docs/I18N.md` defines localization and language architecture.
+- `docs/ACCESSIBILITY.md` and `docs/PERFORMANCE.md` define quality targets.
+- `docs/SEO.md`, `docs/ANALYTICS.md`, `docs/MONETIZATION.md`, `docs/COMMUNITY.md`, and `docs/ADMIN.md` define the corresponding platform directions.
+- `docs/DISCUSSIONS.md` and `docs/FUTURE.md` preserve deferred ideas.
+- `docs/PROJECT_INSTRUCTIONS.md` contains the project-specific operating instructions for ChatGPT.
 - This repository is public; never put secrets, private data, or credentials into source, documentation, issues, or tests.
 
 ## Product leadership and autonomy
