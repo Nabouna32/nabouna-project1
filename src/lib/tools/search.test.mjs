@@ -1,10 +1,48 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { tools } from "./tools.ts";
 import { searchTools } from "./search.ts";
 
+const fixtureTools = [
+  {
+    id: "pourcentage",
+    name: "Calculateur de pourcentage",
+    description: "Calculez un pourcentage.",
+    keywords: ["%", "taux"],
+    aliases: ["pourcentage"],
+    available: true,
+    content: {
+      fr: { name: "Calculateur de pourcentage", description: "Calculez un pourcentage." },
+      en: { name: "Percentage Calculator", description: "Calculate a percentage." },
+    },
+  },
+  {
+    id: "regle-de-trois",
+    name: "Règle de trois",
+    description: "Résolvez une proportionnalité.",
+    keywords: ["proportion"],
+    aliases: ["ratio"],
+    available: true,
+    content: {
+      fr: { name: "Règle de trois", description: "Résolvez une proportionnalité." },
+      en: { name: "Rule of Three Calculator", description: "Solve proportional calculations." },
+    },
+  },
+  {
+    id: "temps-telechargement",
+    name: "Temps de téléchargement",
+    description: "Estimez une durée de téléchargement.",
+    keywords: ["download", "internet"],
+    aliases: ["telechargement"],
+    available: true,
+    content: {
+      fr: { name: "Temps de téléchargement", description: "Estimez une durée de téléchargement." },
+      en: { name: "Download Time Calculator", description: "Estimate download time." },
+    },
+  },
+];
+
 function ids(query, locale = "fr") {
-  return searchTools(tools, query, locale).map(({ tool }) => tool.id);
+  return searchTools(fixtureTools, query, locale).map(({ tool }) => tool.id);
 }
 
 test("matches localized names and ignores accents", () => {
@@ -13,8 +51,8 @@ test("matches localized names and ignores accents", () => {
 });
 
 test("matches aliases and keywords", () => {
-  assert.equal(ids("bitrate")[0], "taille-fichier");
-  assert.equal(ids("internet")[0], "vitesse-telechargement");
+  assert.equal(ids("internet")[0], "temps-telechargement");
+  assert.equal(ids("telechargement")[0], "temps-telechargement");
 });
 
 test("tolerates a small typo in a tool name", () => {
