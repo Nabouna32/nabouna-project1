@@ -1,51 +1,31 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-
+import { tools } from "./tools.ts";
 import { searchTools } from "./search.ts";
 
-const tools = [
-  {
-    id: "duree",
-    slug: "duree",
-    categoryId: "dates",
-    icon: "⏱️",
-    name: "Calculateur de durée",
-    description: "Calculez la durée entre deux dates.",
-    keywords: ["temps", "intervalle"],
-    available: true,
-  },
-  {
-    id: "tva",
-    slug: "tva",
-    categoryId: "calculs",
-    icon: "💶",
-    name: "Calculateur TVA HT / TTC",
-    description: "Convertissez un prix HT en TTC.",
-    keywords: ["taxe", "prix"],
-    available: true,
-  },
-  {
-    id: "internet",
-    slug: "internet",
-    categoryId: "informatique",
-    icon: "🚀",
-    name: "Mbps ↔ Mo/s",
-    description: "Convertissez une vitesse Internet.",
-    keywords: ["débit", "connexion"],
-    available: true,
-  },
-];
+function ids(query, locale = "fr") {
+  return searchTools(tools, query, locale).map(({ tool }) => tool.id);
+}
 
-test("search is case and accent insensitive", () => {
-  assert.equal(searchTools(tools, "DUREE")[0].tool.id, "duree");
-  assert.equal(searchTools(tools, "duree")[0].tool.id, "duree");
+test("matches localized names and ignores accents", () => {
+  assert.equal(ids("regle")[0], "regle-de-trois");
+  assert.equal(ids("règle")[0], "regle-de-trois");
 });
 
-test("search matches aliases and ranks exact intent", () => {
-  assert.equal(searchTools(tools, "taxe")[0].tool.id, "tva");
-  assert.equal(searchTools(tools, "connexion")[0].tool.id, "internet");
+test("matches aliases and keywords", () => {
+  assert.equal(ids("bitrate")[0], "taille-fichier");
+  assert.equal(ids("internet")[0], "vitesse-telechargement");
 });
 
-test("empty search returns no suggestions", () => {
-  assert.deepEqual(searchTools(tools, "   "), []);
+test("tolerates a small typo in a tool name", () => {
+  assert.equal(ids("pourcentge")[0], "pourcentage");
+  assert.equal(ids("telechargemnt")[0], "temps-telechargement");
+});
+
+test("supports multi-term queries with a typo", () => {
+  assert.equal(ids("calculer pourcentge")[0], "pourcentage");
+});
+
+test("does not fuzzy-match very short terms", () => {
+  assert.deepEqual(ids("tvx"), []);
 });

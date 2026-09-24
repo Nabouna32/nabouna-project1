@@ -15,6 +15,48 @@ function getSearchText(tool: Tool, locale: Locale): string {
   ].join(" "));
 }
 
+function getTypoTolerance(term: string): number {
+  if (term.length >= 8) return 2;
+  if (term.length >= 4) return 1;
+  return 0;
+}
+
+function levenshteinDistance(a: string, b: string): number {
+  if (a === b) return 0;
+  if (a.length === 0) return b.length;
+  if (b.length === 0) return a.length;
+
+  let previous = Array.from({ length: b.length + 1 }, (_, index) => index);
+
+  for (let i = 0; i < a.length; i += 1) {
+    const current = [i + 1];
+
+    for (let j = 0; j < b.length; j += 1) {
+      current.push(
+        Math.min(
+          current[j] + 1,
+          previous[j + 1] + 1,
+          previous[j] + (a[i] === b[j] ? 0 : 1),
+        ),
+      );
+    }
+
+    previous = current;
+  }
+
+  return previous[b.length];
+}
+
+function hasFuzzyTermMatch(term: string, haystack: string): boolean {
+  const tolerance = getTypoTolerance(term);
+  if (tolerance === 0) return false;
+
+  return haystack
+    .split(/\s+/)
+    .filter(Boolean)
+    .some((candidate) => levenshteinDistance(term, candidate) <= tolerance);
+}
+
 export function searchTools(tools: Tool[], query: string, locale: Locale = "fr"): ToolSearchResult[] {
   const normalizedQuery = normalizeSearchText(query);
   if (!normalizedQuery) return [];
@@ -36,7 +78,15 @@ export function searchTools(tools: Tool[], query: string, locale: Locale = "fr")
     if (keywords.some((keyword) => keyword.startsWith(normalizedQuery))) score += 25;
     if (aliases.some((alias) => alias.startsWith(normalizedQuery))) score += 25;
     if (description.includes(normalizedQuery)) score += 20;
-    if (terms.every((term) => haystack.includes(term))) score += 15;
+    const allTermsMatch = terms.every((term) =>
+      haystack.includes(term) || hasFuzzyTermMatch(term, haystack),
+    );
+    if (allTermsMatch) score += 15;
+
+    const fuzzyMatches = terms.filter(
+      (term) => !haystack.includes(term) && hasFuzzyTermMatch(term, haystack),
+    ).length;
+    score += fuzzyMatches * 12;
     return { tool, score };
   }).filter(({ score }) => score > 0).sort((a, b) => {
     const aName = a.tool.content?.[locale]?.name ?? a.tool.content?.fr?.name ?? a.tool.name;
