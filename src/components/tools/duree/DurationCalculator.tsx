@@ -6,6 +6,8 @@ import { CalculatorField } from "@/components/tools/calculator/CalculatorField";
 import { CalculatorResult } from "@/components/tools/calculator/CalculatorResult";
 import { CalculatorShell } from "@/components/tools/calculator/CalculatorShell";
 import { calculateDateDuration, calculateTimeDuration } from "@/lib/duree";
+import { useLocale } from "@/lib/i18n/use-locale";
+import { getToolMessages } from "@/lib/i18n/tool-messages";
 
 type Mode = "dates" | "horaires";
 
@@ -23,6 +25,8 @@ function formatDurationPart(value: number, singular: string, plural: string): st
 }
 
 export default function DurationCalculator() {
+  const locale = useLocale();
+  const t = getToolMessages(locale).duration;
   const [initialEndDateTime] = useState(() => toInputDateTime(new Date()));
   const [mode, setMode] = useState<Mode>("dates");
   const [startDateTime, setStartDateTime] = useState("");
@@ -30,18 +34,14 @@ export default function DurationCalculator() {
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
 
-  const dateDuration =
-    mode === "dates" && startDateTime && endDateTime
-      ? calculateDateDuration(new Date(startDateTime), new Date(endDateTime))
-      : null;
+  const dateDuration = mode === "dates" && startDateTime && endDateTime
+    ? calculateDateDuration(new Date(startDateTime), new Date(endDateTime)) : null;
   const timeDuration = mode === "horaires" ? calculateTimeDuration(startTime, endTime) : null;
   const duration = mode === "dates" ? dateDuration : timeDuration;
-  const hasValues =
-    mode === "dates"
-      ? startDateTime !== "" || endDateTime !== initialEndDateTime
-      : startTime !== "" || endTime !== "";
-  const invalidRange =
-    mode === "dates" && startDateTime !== "" && endDateTime !== "" && dateDuration === null;
+  const hasValues = mode === "dates"
+    ? startDateTime !== "" || endDateTime !== initialEndDateTime
+    : startTime !== "" || endTime !== "";
+  const invalidRange = mode === "dates" && startDateTime !== "" && endDateTime !== "" && dateDuration === null;
 
   function clearValues() {
     setStartDateTime("");
@@ -52,117 +52,55 @@ export default function DurationCalculator() {
 
   function switchMode(nextMode: Mode) {
     if (nextMode === mode) return;
-
     setMode(nextMode);
     clearValues();
   }
 
+  const days = duration === null ? "—" : String(duration.days);
+  const hours = duration === null ? "—" : String(duration.hours);
+  const minutes = duration === null ? "—" : String(duration.minutes);
+
   return (
     <CalculatorShell>
       <div className="mb-4 grid grid-cols-2 gap-2 rounded-2xl border border-[var(--border)] bg-[var(--background)] p-1">
-        <button
-          type="button"
-          aria-pressed={mode === "dates"}
-          onClick={() => switchMode("dates")}
-          className={`rounded-xl px-4 py-2.5 text-sm font-medium transition ${
-            mode === "dates"
-              ? "bg-[var(--accent)] text-white"
-              : "text-[var(--muted)] hover:text-[var(--foreground)]"
-          }`}
-        >
-          📅 Entre deux dates
-        </button>
-        <button
-          type="button"
-          aria-pressed={mode === "horaires"}
-          onClick={() => switchMode("horaires")}
-          className={`rounded-xl px-4 py-2.5 text-sm font-medium transition ${
-            mode === "horaires"
-              ? "bg-[var(--accent)] text-white"
-              : "text-[var(--muted)] hover:text-[var(--foreground)]"
-          }`}
-        >
-          🕐 Entre deux horaires
-        </button>
+        <button type="button" aria-pressed={mode === "dates"} onClick={() => switchMode("dates")} className={`rounded-xl px-4 py-2.5 text-sm font-medium transition ${mode === "dates" ? "bg-[var(--accent)] text-white" : "text-[var(--muted)] hover:text-[var(--foreground)]"}`}>{t.datesMode}</button>
+        <button type="button" aria-pressed={mode === "horaires"} onClick={() => switchMode("horaires")} className={`rounded-xl px-4 py-2.5 text-sm font-medium transition ${mode === "horaires" ? "bg-[var(--accent)] text-white" : "text-[var(--muted)] hover:text-[var(--foreground)]"}`}>{t.timesMode}</button>
       </div>
-
       <CalculatorActions showClear={hasValues} onClear={clearValues} />
-
       <div className="grid gap-5 sm:grid-cols-2">
         {mode === "dates" ? (
           <>
-            <CalculatorField
-              label="Date et heure de début"
-              inputId="duration-start-date"
-              type="datetime-local"
-              value={startDateTime}
-              onChange={(event) => setStartDateTime(event.target.value)}
-            />
-            <CalculatorField
-              label="Date et heure de fin"
-              inputId="duration-end-date"
-              type="datetime-local"
-              value={endDateTime}
-              onChange={(event) => setEndDateTime(event.target.value)}
-            />
+            <CalculatorField label={t.startDate} inputId="duration-start-date" type="datetime-local" value={startDateTime} onChange={(event) => setStartDateTime(event.target.value)} />
+            <CalculatorField label={t.endDate} inputId="duration-end-date" type="datetime-local" value={endDateTime} onChange={(event) => setEndDateTime(event.target.value)} />
           </>
         ) : (
           <>
-            <CalculatorField
-              label="Heure de début"
-              inputId="duration-start-time"
-              type="time"
-              value={startTime}
-              onChange={(event) => setStartTime(event.target.value)}
-            />
-            <CalculatorField
-              label="Heure de fin"
-              inputId="duration-end-time"
-              type="time"
-              value={endTime}
-              onChange={(event) => setEndTime(event.target.value)}
-            />
+            <CalculatorField label={t.startTime} inputId="duration-start-time" type="time" value={startTime} onChange={(event) => setStartTime(event.target.value)} />
+            <CalculatorField label={t.endTime} inputId="duration-end-time" type="time" value={endTime} onChange={(event) => setEndTime(event.target.value)} />
           </>
         )}
       </div>
-
       <div className={`mt-6 grid gap-4 ${mode === "dates" ? "sm:grid-cols-3" : "sm:grid-cols-2"}`}>
-        {mode === "dates" && (
-          <CalculatorResult
-            label="Jours"
-            tone="accent"
-            value={duration === null ? "—" : String(duration.days)}
-          />
-        )}
-        <CalculatorResult
-          label="Heures"
-          tone={mode === "horaires" ? "accent" : undefined}
-          value={duration === null ? "—" : String(duration.hours)}
-        />
-        <CalculatorResult
-          label="Minutes"
-          value={duration === null ? "—" : String(duration.minutes)}
-        />
+        {mode === "dates" && <CalculatorResult label={t.days} tone="accent" value={days} />}
+        <CalculatorResult label={t.hours} tone={mode === "horaires" ? "accent" : undefined} value={hours} />
+        <CalculatorResult label={t.minutes} value={minutes} />
       </div>
-
-      {invalidRange && (
-        <p className="mt-4 text-sm font-medium text-[var(--foreground)]">
-          La date et l'heure de début doivent être antérieures ou égales à la date et l'heure de fin.
-        </p>
-      )}
-
+      {invalidRange && <p className="mt-4 text-sm font-medium text-[var(--foreground)]">{t.invalidRange}</p>}
       {duration && (
         <div className="mt-6 rounded-2xl border border-[var(--border)] bg-[var(--background)] p-4">
           <p className="text-sm leading-6 text-[var(--muted)]">
             {mode === "dates"
-              ? `La durée est de ${formatDurationPart(duration.days, "jour", "jours")}, ${formatDurationPart(duration.hours, "heure", "heures")} et ${formatDurationPart(duration.minutes, "minute", "minutes")}.`
-              : `La durée est de ${formatDurationPart(duration.hours, "heure", "heures")} et ${formatDurationPart(duration.minutes, "minute", "minutes")}.`}
+              ? t.summaryDates(
+                  formatDurationPart(duration.days, t.daySingular, t.dayPlural),
+                  formatDurationPart(duration.hours, t.hourSingular, t.hourPlural),
+                  formatDurationPart(duration.minutes, t.minuteSingular, t.minutePlural),
+                )
+              : t.summaryTimes(
+                  formatDurationPart(duration.hours, t.hourSingular, t.hourPlural),
+                  formatDurationPart(duration.minutes, t.minuteSingular, t.minutePlural),
+                )}
           </p>
-          {mode === "horaires" && endTime < startTime && (
-            <p className="mt-2 text-xs text-[var(--muted)]">
-              Le calcul considère que l'heure de fin est le lendemain.
-            </p>
-          )}
+          {mode === "horaires" && endTime < startTime && <p className="mt-2 text-xs text-[var(--muted)]">{t.overnight}</p>}
         </div>
       )}
     </CalculatorShell>
