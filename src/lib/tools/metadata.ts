@@ -1,4 +1,4 @@
-import { locales } from "@/lib/i18n/config";
+import { locales } from "../i18n/config.ts";
 import type { Tool } from "@/lib/tools/types";
 
 export function validateToolCatalog(tools: readonly Tool[]): void {
