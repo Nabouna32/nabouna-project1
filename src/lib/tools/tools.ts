@@ -1,4 +1,5 @@
 import type { Tool } from "@/lib/tools/types";
+import { validateToolCatalog } from "@/lib/tools/metadata";
 
 export const tools: Tool[] = [
   {
@@ -121,4 +122,39 @@ export const tools: Tool[] = [
     keywords: ["vidéo", "qualité", "débit", "encodage", "compression"],
     available: false,
   },
-];
+].map((tool): Tool => ({
+  ...tool,
+  version: 1,
+  complexity: tool.id === "taille-fichier" || tool.id === "bitrate-video" ? "advanced" : "small",
+  categories: [tool.categoryId],
+  content: { fr: { name: tool.name, description: tool.description } },
+  tags: tool.keywords ?? [],
+  aliases: tool.keywords ?? [],
+  seo: {
+    title: tool.name + " | Utiluna",
+    description: tool.description,
+  },
+  examples: [],
+  processing: {
+    mode: "local",
+    dataCategories: [],
+    externalProviders: [],
+    storage: "none",
+    retention: "Aucune donnée n'est transmise ou stockée par Utiluna.",
+    fallback: "Le traitement ne dépend pas d'un service distant.",
+  },
+  capabilities: ["local-processing"],
+  browserRequirements: { apis: [] },
+  offline: true,
+  sharing: { supported: false, mode: "none" },
+  relatedToolIds: [],
+  quality: {
+    accessibility: "required",
+    performance: "standard",
+    tests: tool.available ? "required" : "not-yet",
+  },
+  lifecycle: tool.available ? "published" : "draft",
+  contributor: { type: "internal" },
+}));
+
+validateToolCatalog(tools);

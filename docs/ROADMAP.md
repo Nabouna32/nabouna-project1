@@ -11,7 +11,7 @@ Goal: establish the platform that can grow without creating unnecessary technica
 - [x] GitHub Actions CI
 - [x] Browser smoke/E2E baseline
 - [x] Product direction documented
-- [ ] Formal tool metadata contract
+- [x] Formal tool metadata contract
 - [ ] Shared tool page shell
 - [ ] Processing/privacy status component
 - [ ] i18n foundation review
