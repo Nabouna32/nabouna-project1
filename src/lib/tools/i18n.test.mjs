@@ -9,6 +9,8 @@ test("i18n registry exposes the initial languages", () => {
   assert.equal(languages.en.direction, "ltr");
   assert.equal(languages.fr.enabled, true);
   assert.equal(languages.en.enabled, true);
+  assert.equal(languages.fr.translationStatus, "complete");
+  assert.equal(languages.en.translationStatus, "partial");
 });
 
 test("global messages are available in every enabled locale", () => {
