@@ -1,4 +1,5 @@
 import { useLocale } from "@/lib/i18n/use-locale";
+import { Button } from "@/components/ui/Button";
 
 type CalculatorActionsProps = {
   showClear: boolean;
@@ -11,14 +12,10 @@ export function CalculatorActions({ showClear, onClear }: CalculatorActionsProps
 
   return (
     <div className="flex items-center justify-end">
-      <button
-        type="button"
-        onClick={onClear}
-        className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 py-1.5 text-sm font-medium text-[var(--muted)] transition hover:border-[var(--accent)]/40 hover:text-[var(--foreground)]"
-      >
+      <Button variant="secondary" onClick={onClear}>
         <span aria-hidden="true">↺</span>
         {locale === "fr" ? "Effacer" : "Clear"}
-      </button>
+      </Button>
     </div>
   );
 }
