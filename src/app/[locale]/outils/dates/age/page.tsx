@@ -13,9 +13,6 @@ export default function AgeCalculatorPage() {
   return (
     <ToolPage
       toolId="age"
-      icon="🎂"
-      title="Calculateur d'âge"
-      description="Calculez votre âge précis à partir de votre date de naissance."
       content={
         <>
           <AgeCalculator />
