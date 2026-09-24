@@ -43,6 +43,11 @@ type ToolMessages = {
     htToTtc: string; ttcToHt: string; priceHt: string; priceTtc: string; rate: string; resultHt: string; vat: string; resultTtc: string;
     placeholders: { ht: string; ttc: string; rate: string }; invalid: string; how: string; explanation: (rate: string, vat: string) => string;
   };
+  fileSizeCalculator: {
+    duration: string; durationPlaceholder: string; durationUnit: string; durationUnits: Record<string, string>;
+    bitrate: string; bitratePlaceholder: string; bitrateUnit: string; bitrateUnits: Record<string, string>;
+    sizeUnit: string; sizeUnits: Record<string, string>; result: string; note: string;
+  };
   fileSize: {
     value: string; from: string; to: string; result: string; placeholder: string;
     units: Record<string, string>;
@@ -63,6 +68,14 @@ type ToolMessages = {
 
 export const toolMessages: Record<Locale, ToolMessages> = {
   fr: {
+    fileSizeCalculator: {
+      duration: "Durée", durationPlaceholder: "Ex. 10", durationUnit: "Unité de durée",
+      durationUnits: { seconds: "Secondes", minutes: "Minutes", hours: "Heures" },
+      bitrate: "Débit", bitratePlaceholder: "Ex. 8", bitrateUnit: "Unité de débit",
+      bitrateUnits: { kbps: "Kbit/s", mbps: "Mbit/s", gbps: "Gbit/s" },
+      sizeUnit: "Unité de taille", sizeUnits: { mb: "Mégaoctets (Mo)", gb: "Gigaoctets (Go)" },
+      result: "Taille estimée", note: "Estimation théorique à débit constant. Les unités de taille et de débit sont décimales.",
+    },
     age: {
       birthDate: "Date de naissance", referenceDate: "Calculer au", years: "Années", months: "Mois", days: "Jours",
       invalidRange: "La date de naissance doit être antérieure ou égale à la date de référence.",
@@ -134,6 +147,14 @@ export const toolMessages: Record<Locale, ToolMessages> = {
     },
   },
   en: {
+    fileSizeCalculator: {
+      duration: "Duration", durationPlaceholder: "e.g. 10", durationUnit: "Duration unit",
+      durationUnits: { seconds: "Seconds", minutes: "Minutes", hours: "Hours" },
+      bitrate: "Bitrate", bitratePlaceholder: "e.g. 8", bitrateUnit: "Bitrate unit",
+      bitrateUnits: { kbps: "Kbit/s", mbps: "Mbit/s", gbps: "Gbit/s" },
+      sizeUnit: "Size unit", sizeUnits: { mb: "Megabytes (MB)", gb: "Gigabytes (GB)" },
+      result: "Estimated size", note: "Theoretical estimate at a constant bitrate. Size and bitrate units are decimal.",
+    },
     age: {
       birthDate: "Birth date", referenceDate: "Calculate on", years: "Years", months: "Months", days: "Days",
       invalidRange: "The birth date must be on or before the reference date.",

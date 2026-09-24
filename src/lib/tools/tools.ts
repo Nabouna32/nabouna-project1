@@ -81,7 +81,7 @@ export const tools: Tool[] = [
   {
     id: "taille-fichier", slug: "taille-fichier", categoryId: "informatique", icon: "💾",
     name: "Calculateur de taille de fichier", description: "Estimez la taille d'un fichier selon sa durée et son débit.",
-    keywords: ["poids", "taille", "stockage", "vidéo", "audio"], available: false,
+    keywords: ["poids", "taille", "stockage", "vidéo", "audio", "bitrate"], available: true,
     content: {
       fr: { name: "Calculateur de taille de fichier", description: "Estimez la taille d'un fichier selon sa durée et son débit." },
       en: { name: "File Size Calculator", description: "Estimate a file size from its duration and bitrate." },
