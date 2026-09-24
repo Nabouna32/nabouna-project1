@@ -125,3 +125,29 @@ The web remains the primary platform until evidence supports expansion.
 - mobile-first implementation constraints before the web product is mature.
 
 Deferred does not mean forbidden forever.
+
+## Directional additions from validated brainstorming
+
+The phases below should preserve the following capabilities as they become relevant; they are not claims that the functionality already exists.
+
+### Personalization and collections
+
+The account phase should ultimately cover:
+- anonymous local favorites with deterministic account merge;
+- private/shareable/public collections;
+- personalized home and tool ordering;
+- hidden tools and configurable visible elements;
+- theme, animation and density/style preferences;
+- privacy/history controls.
+
+### Performance and resilience
+
+Across all phases, apply progressive loading, tool/page performance budgets, low-end device awareness, slow-connection resilience, truthful progress, cancellation where possible, and graceful degradation.
+
+### Future discovery evolution
+
+The discovery phase can progress from catalog search to intent-aware search, then to solution discovery and eventually multi-tool composition when product evidence justifies it. AI remains optional and must earn its recurring cost, privacy, latency, and reliability trade-offs.
+
+### Future surfaces
+
+PWA/offline capabilities, public profiles, custom themes, contextual tool tone, richer educational content, Android, additional languages/RTL, stronger offline support, and child-oriented experiences remain deferred directions. Each requires its own decision/specification before becoming committed scope.
