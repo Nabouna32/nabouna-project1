@@ -16,7 +16,10 @@ const tool = {
   content: { fr: { name: "Fixture", description: "Fixture" } },
   tags: ["fixture"],
   aliases: ["test"],
-  seo: { title: "Fixture", description: "Fixture" },
+  seo: {
+    fr: { title: "Fixture", description: "Fixture" },
+    en: { title: "Fixture", description: "Fixture" },
+  },
   examples: [],
   processing: {
     mode: "local",
