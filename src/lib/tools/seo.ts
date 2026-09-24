@@ -1,4 +1,4 @@
-import type { Locale } from "@/lib/i18n/config";
+import type { Locale } from "../i18n/config.ts";
 import type { ToolSeoMetadata } from "./types";
 
 export const toolSeo: Record<string, Record<Locale, ToolSeoMetadata>> = {
