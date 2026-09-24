@@ -7,6 +7,7 @@ import { getMessages } from "@/lib/i18n/messages";
 import { getCategoryName } from "@/lib/tools/categories";
 import { tools } from "@/lib/tools/tools";
 import { normalizeSearchText, searchTools } from "@/lib/tools/search";
+import { Button } from "@/components/ui/Button";
 
 function HighlightMatch({ text, query }: { text: string; query: string }) {
   const normalizedQuery = normalizeSearchText(query);
@@ -57,8 +58,27 @@ export default function ToolSearch({ className = "", placeholder, locale: locale
       <div className={"flex items-center rounded-2xl border bg-[var(--surface)] p-2 shadow-lg shadow-black/5 transition-all duration-200 " + (isFocused ? "border-[var(--accent)] ring-2 ring-[var(--accent)]/15" : "border-[var(--border)]")}>
         <span className="px-3 text-xl text-[var(--muted)]" aria-hidden="true">🔍</span>
         <input id="tool-search" type="search" value={query} placeholder={placeholder ?? t.tools.searchPlaceholder} autoComplete="off" role="combobox" aria-autocomplete="list" aria-expanded={showResults} aria-controls="tool-search-results" aria-activedescendant={activeIndex >= 0 ? "tool-result-" + activeIndex : undefined} onChange={(event) => { setQuery(event.target.value); setActiveIndex(-1); }} onFocus={() => setIsFocused(true)} onKeyDown={handleKeyDown} className="min-w-0 flex-1 bg-transparent px-2 py-3 text-base text-[var(--foreground)] outline-none placeholder:text-[var(--muted)]" />
-        {query && <button type="button" onMouseDown={(event) => event.preventDefault()} onClick={() => { setQuery(""); setActiveIndex(-1); setIsFocused(true); }} className="rounded-lg px-3 py-2 text-lg text-[var(--muted)] transition-colors hover:bg-[var(--background)] hover:text-[var(--foreground)]" aria-label={t.tools.clearSearch}>×</button>}
-        <button type="button" onMouseDown={(event) => event.preventDefault()} onClick={() => openResult(0)} disabled={results.length === 0} className="hidden rounded-xl bg-[var(--accent)] px-5 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50 sm:block">{t.tools.searchButton}</button>
+        {query && (
+          <Button
+            variant="ghost"
+            type="button"
+            onMouseDown={(event) => event.preventDefault()}
+            onClick={() => { setQuery(""); setActiveIndex(-1); setIsFocused(true); }}
+            className="min-h-9 w-9 rounded-[var(--radius-md)] p-0 text-lg"
+            aria-label={t.tools.clearSearch}
+          >
+            ×
+          </Button>
+        )}
+        <Button
+          type="button"
+          onMouseDown={(event) => event.preventDefault()}
+          onClick={() => openResult(0)}
+          disabled={results.length === 0}
+          className="hidden sm:inline-flex"
+        >
+          {t.tools.searchButton}
+        </Button>
       </div>
       {showResults && <div id="tool-search-results" role="listbox" className="absolute left-0 right-0 top-full z-30 mt-2 overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-2 shadow-2xl shadow-black/10">
         {results.length > 0 ? <>
