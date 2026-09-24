@@ -46,13 +46,19 @@ test("the metadata validator accepts a valid local published tool", () => {
   assert.doesNotThrow(() => validateToolCatalog([tool]));
 });
 
-test("the metadata validator rejects duplicate ids and slugs", () => {
+test("the metadata validator rejects duplicate ids", () => {
   assert.throws(
     () => validateToolCatalog([tool, { ...tool }]),
     /Duplicate tool id/,
   );
+});
+
+test("the metadata validator rejects duplicate slugs", () => {
+  const duplicateSlugTool = { ...tool, id: "other", slug: "fixture" };
+  assert.equal(duplicateSlugTool.id, "other");
+  assert.equal(duplicateSlugTool.slug, tool.slug);
   assert.throws(
-    () => validateToolCatalog([{ ...tool, id: "other", slug: tool.slug }]),
+    () => validateToolCatalog([tool, duplicateSlugTool]),
     /Duplicate tool slug/,
   );
 });
