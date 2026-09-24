@@ -14,9 +14,6 @@ export default function PercentagePage() {
   return (
     <ToolPage
       toolId="pourcentage"
-      icon="📊"
-      title="Calculateur de pourcentage"
-      description="Calculez facilement un pourcentage d'une valeur, une évolution ou une différence entre deux nombres."
       content={
         <>
           <PercentageCalculator />

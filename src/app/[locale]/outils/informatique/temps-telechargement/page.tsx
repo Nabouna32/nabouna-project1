@@ -13,9 +13,6 @@ export default function DownloadTimeCalculatorPage() {
   return (
     <ToolPage
       toolId="temps-telechargement"
-      icon="⏳"
-      title="Temps de téléchargement"
-      description="Estimez le temps nécessaire pour télécharger un fichier selon sa taille et votre débit."
       content={
         <>
           <DownloadTimeCalculator />

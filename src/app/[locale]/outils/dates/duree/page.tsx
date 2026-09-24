@@ -13,9 +13,6 @@ export default function DurationCalculatorPage() {
   return (
     <ToolPage
       toolId="duree"
-      icon="⏱️"
-      title="Calculateur de durée"
-      description="Calculez la durée entre deux dates ou deux horaires."
       content={
         <>
           <DurationCalculator />
