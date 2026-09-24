@@ -117,8 +117,9 @@ export function validateToolCatalog(tools: readonly Tool[]): void {
 
   for (const tool of tools) {
     if (ids.has(tool.id)) throw new Error(`Duplicate tool id: ${tool.id}`);
-    if (slugs.has(tool.slug)) throw new Error(`Duplicate tool slug: ${tool.slug}`);
     ids.add(tool.id);
+
+    if (slugs.has(tool.slug)) throw new Error(`Duplicate tool slug: ${tool.slug}`);
     slugs.add(tool.slug);
 
     if (tool.categories.length === 0) {
