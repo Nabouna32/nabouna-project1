@@ -1,9 +1,9 @@
 import { locales } from "../i18n/config.ts";
-import type { Tool, ToolProcessingMode } from "@/lib/tools/types";
+import type { Tool, ToolCapability, ToolProcessingMode } from "@/lib/tools/types";
 
 const slugPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
-function expectedProcessingCapabilities(mode: ToolProcessingMode): Set<string> {
+function expectedProcessingCapabilities(mode: ToolProcessingMode): Set<ToolCapability> {
   switch (mode) {
     case "local":
       return new Set(["local-processing"]);
@@ -59,14 +59,14 @@ function validateToolQuality(tool: Tool): void {
 
   const expected = expectedProcessingCapabilities(tool.processing.mode);
   for (const capability of expected) {
-    if (!tool.capabilities.includes(capability as Tool["capabilities"][number])) {
+    if (!tool.capabilities.includes(capability)) {
       throw new Error(
         `Tool "${tool.id}" processing mode "${tool.processing.mode}" requires capability "${capability}".`,
       );
     }
   }
 
-  if (tool.processing.mode === "local" && tool.processing.externalProviders.length > 0) {
+  if (tool.processing.mode === "local" && tool.capabilities.includes("network")) {\n    throw new Error(`Local tool "${tool.id}" cannot require network access.`);\n  }\n\n  if (tool.processing.mode === "external" && tool.capabilities.includes("local-processing")) {\n    throw new Error(`External tool "${tool.id}" cannot require local processing.`);\n  }\n\n  if (tool.processing.mode === "utiluna-server" && tool.capabilities.includes("local-processing")) {\n    throw new Error(`Utiluna-server tool "${tool.id}" cannot require local processing.`);\n  }\n\n  if (tool.processing.mode === "local" && tool.processing.externalProviders.length > 0) {
     throw new Error(`Local tool "${tool.id}" cannot declare external providers.`);
   }
 
