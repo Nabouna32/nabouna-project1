@@ -17,7 +17,7 @@ Goal: establish the platform that can grow without creating unnecessary technica
 - [x] i18n foundation review
 - [ ] Core design system
 - [x] Tool quality contract
-- [ ] Architecture validation
+- [x] Architecture validation
 
 ## Phase 1 — Core toolbox
 
