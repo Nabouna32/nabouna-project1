@@ -54,11 +54,15 @@ export default function FileSizeCalculator() {
           {Object.entries(t.bitrateUnits).map(([value, label]) => <option key={value} value={value}>{label}</option>)}
         </Select>
         <Select label={t.sizeUnit} id="file-size-output-unit" value={sizeUnit} onChange={(event) => setSizeUnit(event.target.value as FileSizeUnit)} className="sm:col-span-2">
-          {Object.entries(t.sizeUnits).map(([value, label]) => <option key={value} value={label ? value : value}>{label}</option>)}
+          {Object.entries(t.sizeUnits).map(([value, label]) => <option key={value} value={value}>{label}</option>)}
         </Select>
       </div>
       <div className="mt-6">
-        <CalculatorResult label={t.result} value={result === null ? "—" : `${formatNumber(result, locale)} ${sizeUnit.toUpperCase()}`} tone="accent" />
+        <CalculatorResult
+          label={t.result}
+          value={result === null ? "—" : `${formatNumber(result, locale)} ${sizeUnit === "mb" ? (locale === "fr" ? "Mo" : "MB") : (locale === "fr" ? "Go" : "GB")}`}
+          tone="accent"
+        />
       </div>
       <p className="mt-4 text-sm leading-6 text-[var(--muted)]">{t.note}</p>
     </CalculatorShell>
