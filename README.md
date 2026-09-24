@@ -26,6 +26,18 @@ See the product documentation for the complete direction:
 - [Privacy principles](docs/PRIVACY.md)
 - [Roadmap](docs/ROADMAP.md)
 - [Decisions](docs/DECISIONS.md)
+- [Tool architecture](docs/TOOL_ARCHITECTURE.md)
+- [Database](docs/DATABASE.md)
+- [Search](docs/SEARCH.md)
+- [Internationalization](docs/I18N.md)
+- [Accessibility](docs/ACCESSIBILITY.md)
+- [Performance](docs/PERFORMANCE.md)
+- [SEO](docs/SEO.md)
+- [Analytics](docs/ANALYTICS.md)
+- [Monetization](docs/MONETIZATION.md)
+- [Community](docs/COMMUNITY.md)
+- [Admin](docs/ADMIN.md)
+- [Discussions / future](docs/DISCUSSIONS.md)
 
 ## Development
 
