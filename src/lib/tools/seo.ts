@@ -38,6 +38,18 @@ export const toolSeo: Record<string, Record<Locale, ToolSeoMetadata>> = {
     fr: { title: "Convertisseur Mbps Mo/s | Utiluna", description: "Convertissez une vitesse Internet entre Mbps, Gbps, Ko/s, Mo/s et Go/s." },
     en: { title: "Download Speed Converter | Utiluna", description: "Convert internet speeds between Mbps, Gbps, KB/s, MB/s, and GB/s." },
   },
+  "taille-fichier": {
+    fr: { title: "Calculateur de taille de fichier | Utiluna", description: "Estimez la taille d'un fichier selon sa durée et son débit." },
+    en: { title: "File Size Calculator | Utiluna", description: "Estimate a file size from its duration and bitrate." },
+  },
+  "mots-caracteres": {
+    fr: { title: "Compteur de mots et caractères | Utiluna", description: "Comptez les mots, caractères, espaces et lignes d'un texte." },
+    en: { title: "Word and Character Counter | Utiluna", description: "Count words, characters, spaces, and lines in a text." },
+  },
+  "bitrate-video": {
+    fr: { title: "Calculateur de bitrate vidéo | Utiluna", description: "Calculez le bitrate ou la taille approximative d'une vidéo." },
+    en: { title: "Video Bitrate Calculator | Utiluna", description: "Calculate video bitrate or approximate file size." },
+  },
 };
 
 export function getToolSeo(toolId: string, locale: Locale): ToolSeoMetadata {
