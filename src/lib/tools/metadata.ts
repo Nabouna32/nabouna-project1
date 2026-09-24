@@ -113,8 +113,11 @@ function validateToolQuality(tool: Tool): void {
 
 export function validateToolCatalog(tools: readonly Tool[]): void {
   const ids = new Set<string>();
+
   for (const tool of tools) {
-    if (ids.has(tool.id)) throw new Error(`Duplicate tool id: ${tool.id}`);
+    if (ids.has(tool.id)) {
+      throw new Error(`Duplicate tool id: ${tool.id}`);
+    }
     ids.add(tool.id);
   }
 
@@ -129,6 +132,23 @@ export function validateToolCatalog(tools: readonly Tool[]): void {
   }
 
   for (const tool of tools) {
+    if (tool.categories.length === 0) {
+      throw new Error(`Tool "${tool.id}" must declare at least one category.`);
+    }
+    if (!tool.content.fr.name.trim() || !tool.content.fr.description.trim()) {
+      throw new Error(`Tool "${tool.id}" must declare French name and description.`);
+    }
+    for (const locale of locales) {
+      const seo = tool.seo[locale];
+      if (!seo?.title.trim() || !seo.description.trim()) {
+        throw new Error(`Tool "${tool.id}" must declare ${locale} SEO metadata.`);
+      }
+    }
+    if (tool.version < 1 || !Number.isInteger(tool.version)) {
+      throw new Error(`Tool "${tool.id}" must declare a positive integer version.`);
+    }
+    validateToolQuality(tool);
+  }
 
   const knownIds = new Set(ids);
   for (const tool of tools) {
