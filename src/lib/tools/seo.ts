@@ -42,6 +42,6 @@ export const toolSeo: Record<string, Record<Locale, ToolSeoMetadata>> = {
 
 export function getToolSeo(toolId: string, locale: Locale): ToolSeoMetadata {
   const seo = toolSeo[toolId]?.[locale];
-  if (!seo) throw new Error(\`Missing \${locale} SEO metadata for tool "\${toolId}".\`);
+  if (!seo) throw new Error(`Missing ${locale} SEO metadata for tool "${toolId}".`);
   return seo;
 }
