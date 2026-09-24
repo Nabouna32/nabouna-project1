@@ -66,7 +66,19 @@ function validateToolQuality(tool: Tool): void {
     }
   }
 
-  if (tool.processing.mode === "local" && tool.capabilities.includes("network")) {\n    throw new Error(`Local tool "${tool.id}" cannot require network access.`);\n  }\n\n  if (tool.processing.mode === "external" && tool.capabilities.includes("local-processing")) {\n    throw new Error(`External tool "${tool.id}" cannot require local processing.`);\n  }\n\n  if (tool.processing.mode === "utiluna-server" && tool.capabilities.includes("local-processing")) {\n    throw new Error(`Utiluna-server tool "${tool.id}" cannot require local processing.`);\n  }\n\n  if (tool.processing.mode === "local" && tool.processing.externalProviders.length > 0) {
+  if (tool.processing.mode === "local" && tool.capabilities.includes("network")) {
+    throw new Error(`Local tool "${tool.id}" cannot require network access.`);
+  }
+
+  if (tool.processing.mode === "external" && tool.capabilities.includes("local-processing")) {
+    throw new Error(`External tool "${tool.id}" cannot require local processing.`);
+  }
+
+  if (tool.processing.mode === "utiluna-server" && tool.capabilities.includes("local-processing")) {
+    throw new Error(`Utiluna-server tool "${tool.id}" cannot require local processing.`);
+  }
+
+  if (tool.processing.mode === "local" && tool.processing.externalProviders.length > 0) {
     throw new Error(`Local tool "${tool.id}" cannot declare external providers.`);
   }
 
@@ -101,14 +113,25 @@ function validateToolQuality(tool: Tool): void {
 
 export function validateToolCatalog(tools: readonly Tool[]): void {
   const ids = new Set<string>();
-  const slugs = new Set<string>();
 
   for (const tool of tools) {
-    if (ids.has(tool.id)) throw new Error(`Duplicate tool id: ${tool.id}`);
-    if (slugs.has(tool.slug)) throw new Error(`Duplicate tool slug: ${tool.slug}`);
+    if (ids.has(tool.id)) {
+      throw new Error(`Duplicate tool id: ${tool.id}`);
+    }
     ids.add(tool.id);
-    slugs.add(tool.slug);
+  }
 
+  for (let index = 0; index < tools.length; index += 1) {
+    for (let previousIndex = 0; previousIndex < index; previousIndex += 1) {
+      if (tools[previousIndex].slug === tools[index].slug) {
+        throw new Error(
+          `Duplicate tool slug: ${tools[index].slug} (tools "${tools[previousIndex].id}" and "${tools[index].id}")`,
+        );
+      }
+    }
+  }
+
+  for (const tool of tools) {
     if (tool.categories.length === 0) {
       throw new Error(`Tool "${tool.id}" must declare at least one category.`);
     }
