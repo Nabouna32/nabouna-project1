@@ -8,6 +8,8 @@ import { CalculatorShell } from "@/components/tools/calculator/CalculatorShell";
 import { calculateDifference, calculateEvolution, calculatePercentage } from "@/lib/percentage";
 import { useLocale } from "@/lib/i18n/use-locale";
 import { getToolMessages } from "@/lib/i18n/tool-messages";
+import { SegmentedControl } from "@/components/ui/SegmentedControl";
+import { Select } from "@/components/ui/Select";
 
 type Mode = "percentage" | "evolution" | "difference";
 
@@ -79,20 +81,19 @@ export default function PercentageCalculator() {
     <CalculatorShell>
       <CalculatorActions showClear={firstValue !== "" || secondValue !== ""} onClear={clearValues} />
       <div className="mt-2">
-        <div className="hidden gap-2 rounded-2xl bg-[var(--surface-soft)] p-2 sm:grid sm:grid-cols-3" role="tablist" aria-label={t.type}>
-          {modes.map((item) => {
-            const active = mode === item.id;
-            return <button key={item.id} type="button" role="tab" aria-selected={active} onClick={() => setMode(item.id)} className={`rounded-xl px-4 py-3 text-left transition ${active ? "bg-[var(--surface)] shadow-sm" : "hover:bg-[var(--surface)]/60"}`}>
-              <p className={`font-semibold ${active ? "text-[var(--foreground)]" : "text-[var(--muted)]"}`}>{item.title}</p>
-              <p className="mt-0.5 text-xs text-[var(--muted)]">{item.description}</p>
-            </button>;
-          })}
+        <div className="hidden sm:block">
+          <SegmentedControl
+            items={modes.map((item) => ({ id: item.id, label: item.title, description: item.description }))}
+            value={mode}
+            onChange={setMode}
+            ariaLabel={t.type}
+            className="grid-cols-3"
+          />
         </div>
         <div className="sm:hidden">
-          <label htmlFor="percentage-mode" className="mb-2 block text-sm font-medium text-[var(--foreground)]">{t.type}</label>
-          <select id="percentage-mode" value={mode} onChange={(event) => setMode(event.target.value as Mode)} className="w-full appearance-none rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3 text-sm font-medium text-[var(--foreground)] outline-none transition focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/20">
+          <Select id="percentage-mode" label={t.type} value={mode} onChange={(event) => setMode(event.target.value as Mode)}>
             {modes.map((item) => <option key={item.id} value={item.id}>{item.title} — {item.description}</option>)}
-          </select>
+          </Select>
         </div>
       </div>
       <div className="mt-8 grid gap-5 sm:grid-cols-2">

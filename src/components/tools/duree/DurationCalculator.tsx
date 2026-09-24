@@ -8,6 +8,7 @@ import { CalculatorShell } from "@/components/tools/calculator/CalculatorShell";
 import { calculateDateDuration, calculateTimeDuration } from "@/lib/duree";
 import { useLocale } from "@/lib/i18n/use-locale";
 import { getToolMessages } from "@/lib/i18n/tool-messages";
+import { SegmentedControl } from "@/components/ui/SegmentedControl";
 
 type Mode = "dates" | "horaires";
 
@@ -43,6 +44,11 @@ export default function DurationCalculator() {
     : startTime !== "" || endTime !== "";
   const invalidRange = mode === "dates" && startDateTime !== "" && endDateTime !== "" && dateDuration === null;
 
+  const modes = [
+    { id: "dates" as const, label: t.datesMode },
+    { id: "horaires" as const, label: t.timesMode },
+  ];
+
   function clearValues() {
     setStartDateTime("");
     setEndDateTime(initialEndDateTime);
@@ -62,9 +68,8 @@ export default function DurationCalculator() {
 
   return (
     <CalculatorShell>
-      <div className="mb-4 grid grid-cols-2 gap-2 rounded-2xl border border-[var(--border)] bg-[var(--background)] p-1">
-        <button type="button" aria-pressed={mode === "dates"} onClick={() => switchMode("dates")} className={`rounded-xl px-4 py-2.5 text-sm font-medium transition ${mode === "dates" ? "bg-[var(--accent)] text-white" : "text-[var(--muted)] hover:text-[var(--foreground)]"}`}>{t.datesMode}</button>
-        <button type="button" aria-pressed={mode === "horaires"} onClick={() => switchMode("horaires")} className={`rounded-xl px-4 py-2.5 text-sm font-medium transition ${mode === "horaires" ? "bg-[var(--accent)] text-white" : "text-[var(--muted)] hover:text-[var(--foreground)]"}`}>{t.timesMode}</button>
+      <div className="mb-4">
+        <SegmentedControl items={modes} value={mode} onChange={switchMode} ariaLabel={`${t.datesMode} / ${t.timesMode}`} className="grid-cols-2" />
       </div>
       <CalculatorActions showClear={hasValues} onClear={clearValues} />
       <div className="grid gap-5 sm:grid-cols-2">

@@ -8,6 +8,7 @@ import { CalculatorShell } from "@/components/tools/calculator/CalculatorShell";
 import { calculateHt, calculateTtc, calculateVatAmount, isValidVatRate } from "@/lib/tva";
 import { useLocale } from "@/lib/i18n/use-locale";
 import { getToolMessages } from "@/lib/i18n/tool-messages";
+import { SegmentedControl } from "@/components/ui/SegmentedControl";
 
 type Mode = "ht-to-ttc" | "ttc-to-ht";
 
@@ -28,15 +29,17 @@ export default function TVACalculator() {
   const ht = valid ? (mode === "ht-to-ttc" ? price : calculateHt(price, rate)) : null;
   const ttc = valid ? (mode === "ht-to-ttc" ? calculateTtc(price, rate) : price) : null;
   const vat = valid && ht !== null ? calculateVatAmount(ht, rate) : null;
+  const modes = [
+    { id: "ht-to-ttc" as const, label: t.htToTtc },
+    { id: "ttc-to-ht" as const, label: t.ttcToHt },
+  ];
+
   function clearValues() { setPriceValue(""); setRateValue("20"); }
 
   return (
     <CalculatorShell>
       <div className="flex items-center justify-between gap-4">
-        <div className="inline-flex rounded-xl border border-[var(--border)] bg-[var(--background)] p-1">
-          <button type="button" aria-pressed={mode === "ht-to-ttc"} onClick={() => setMode("ht-to-ttc")} className={`rounded-lg px-3 py-2 text-sm font-medium transition ${mode === "ht-to-ttc" ? "bg-[var(--accent-soft)] text-[var(--foreground)]" : "text-[var(--muted)] hover:text-[var(--foreground)]"}`}>{t.htToTtc}</button>
-          <button type="button" aria-pressed={mode === "ttc-to-ht"} onClick={() => setMode("ttc-to-ht")} className={`rounded-lg px-3 py-2 text-sm font-medium transition ${mode === "ttc-to-ht" ? "bg-[var(--accent-soft)] text-[var(--foreground)]" : "text-[var(--muted)] hover:text-[var(--foreground)]"}`}>{t.ttcToHt}</button>
-        </div>
+        <SegmentedControl items={modes} value={mode} onChange={setMode} ariaLabel={`${t.htToTtc} / ${t.ttcToHt}`} className="inline-grid grid-cols-2" />
         <CalculatorActions showClear={priceValue !== "" || rateValue !== "20"} onClear={clearValues} />
       </div>
       <div className="mt-5 grid gap-5 sm:grid-cols-2">
