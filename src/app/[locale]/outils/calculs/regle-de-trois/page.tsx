@@ -21,13 +21,13 @@ export default async function RuleOfThreePage({ params }: { params: Promise<{ lo
       toolId="regle-de-trois"
       content={
         <>
-          <RuleOfThreeCalculator />
-
           <div className="space-y-12">{getToolEditorial("regle-de-trois", locale)}</div>
 
           <RelatedTools toolId="regle-de-trois" />
         </>
       }
-    />
+    >
+      <RuleOfThreeCalculator />
+    </ToolPage>
   );
 }

@@ -21,13 +21,13 @@ export default async function DurationCalculatorPage({ params }: { params: Promi
       toolId="duree"
       content={
         <>
-          <DurationCalculator />
-
           <div className="space-y-12">{getToolEditorial("duree", locale)}</div>
 
           <RelatedTools toolId="duree" />
         </>
       }
-    />
+    >
+      <DurationCalculator />
+    </ToolPage>
   );
 }

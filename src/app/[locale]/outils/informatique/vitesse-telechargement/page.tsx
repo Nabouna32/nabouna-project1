@@ -21,13 +21,13 @@ export default async function DownloadSpeedConverterPage({ params }: { params: P
       toolId="vitesse-telechargement"
       content={
         <>
-          <DownloadSpeedConverter />
-
           <div className="space-y-12">{getToolEditorial("vitesse-telechargement", locale)}</div>
 
           <RelatedTools toolId="vitesse-telechargement" />
         </>
       }
-    />
+    >
+      <DownloadSpeedConverter />
+    </ToolPage>
   );
 }

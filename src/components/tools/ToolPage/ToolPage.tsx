@@ -11,12 +11,12 @@ export default function ToolPage({ toolId, locale = defaultLocale, children, con
   const localizedContent = getToolContent(tool, locale);
 
   return (
-    <main className="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-10">
+    <main className="mx-auto max-w-6xl px-4 py-4 sm:px-6 sm:py-6 lg:px-8 lg:py-8">
       <ToolPageHeader icon={tool.icon} title={localizedContent.name} description={localizedContent.description} />
-      <div className="mt-5">
+      <div className="mt-3">
         <ToolProcessingStatus processing={tool.processing} locale={locale} />
       </div>
-      {children && <div className="mt-6">{children}</div>}
+      {children && <div className="mt-4">{children}</div>}
       {content && <div className="mt-8 space-y-10 sm:mt-12 sm:space-y-12">{content}</div>}
     </main>
   );

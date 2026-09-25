@@ -21,13 +21,13 @@ export default async function FileSizeConverterPage({ params }: { params: Promis
       toolId="convertisseur-taille"
       content={
         <>
-          <FileSizeConverter />
-
           <div className="space-y-12">{getToolEditorial("convertisseur-taille", locale)}</div>
 
           <RelatedTools toolId="convertisseur-taille" />
         </>
       }
-    />
+    >
+      <FileSizeConverter />
+    </ToolPage>
   );
 }

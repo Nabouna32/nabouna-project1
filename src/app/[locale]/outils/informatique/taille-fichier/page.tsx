@@ -21,11 +21,12 @@ export default async function FileSizeCalculatorPage({ params }: { params: Promi
       toolId="taille-fichier"
       content={
         <>
-          <FileSizeCalculator />
           <div className="space-y-12">{getToolEditorial("taille-fichier", locale)}</div>
           <RelatedTools toolId="taille-fichier" />
         </>
       }
-    />
+    >
+      <FileSizeCalculator />
+    </ToolPage>
   );
 }

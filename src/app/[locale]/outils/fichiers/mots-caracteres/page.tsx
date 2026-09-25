@@ -26,11 +26,12 @@ export default async function TextCounterPage({
       toolId="mots-caracteres"
       content={
         <>
-          <TextCounter />
           <div className="space-y-12">{getToolEditorial("mots-caracteres", locale)}</div>
           <RelatedTools toolId="mots-caracteres" />
         </>
       }
-    />
+    >
+      <TextCounter />
+    </ToolPage>
   );
 }

@@ -21,13 +21,13 @@ export default async function ReductionPage({ params }: { params: Promise<{ loca
       toolId="reduction"
       content={
         <>
-          <ReductionCalculator />
-
           <div className="space-y-12">{getToolEditorial("reduction", locale)}</div>
 
           <RelatedTools toolId="reduction" />
         </>
       }
-    />
+    >
+      <ReductionCalculator />
+    </ToolPage>
   );
 }
