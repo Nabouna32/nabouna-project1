@@ -19,7 +19,7 @@ export default async function DurationCalculatorPage({ params }: { params: Promi
     <ToolPage
       locale={locale}
       toolId="duree"
-      children={<DurationCalculator />}
+      <DurationCalculator />
       content={
         <>
           <div className="space-y-12">{getToolEditorial("duree", locale)}</div>
