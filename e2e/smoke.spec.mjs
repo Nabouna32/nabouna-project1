@@ -30,6 +30,29 @@ test("tools page renders", async ({ page }) => {
   await expect(page.getByText("Retrouvez tous nos outils gratuits")).toBeVisible();
 });
 
+test("all published tool pages render", async ({ page }) => {
+  const publishedToolRoutes = [
+    "/fr/outils/calculs/pourcentage",
+    "/fr/outils/calculs/reduction",
+    "/fr/outils/calculs/tva",
+    "/fr/outils/calculs/regle-de-trois",
+    "/fr/outils/dates/age",
+    "/fr/outils/dates/duree",
+    "/fr/outils/informatique/vitesse-telechargement",
+    "/fr/outils/informatique/temps-telechargement",
+    "/fr/outils/informatique/taille-fichier",
+    "/fr/outils/informatique/convertisseur-taille",
+    "/fr/outils/fichiers/mots-caracteres",
+  ];
+
+  for (const route of publishedToolRoutes) {
+    const response = await page.goto(`${baseUrl}${route}`, { waitUntil: "networkidle" });
+    expect(response?.ok(), `Expected ${route} to return a successful response.`).toBe(true);
+    await expect(page.locator("main")).toBeVisible();
+    await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+  }
+});
+
 test("English locale renders", async ({ page }) => {
   await page.goto(`${baseUrl}/en`, { waitUntil: "networkidle" });
 
