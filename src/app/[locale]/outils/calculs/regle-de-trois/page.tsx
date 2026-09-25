@@ -19,10 +19,9 @@ export default async function RuleOfThreePage({ params }: { params: Promise<{ lo
     <ToolPage
       locale={locale}
       toolId="regle-de-trois"
+      children={<RuleOfThreeCalculator />}
       content={
         <>
-          <RuleOfThreeCalculator />
-
           <div className="space-y-12">{getToolEditorial("regle-de-trois", locale)}</div>
 
           <RelatedTools toolId="regle-de-trois" />
