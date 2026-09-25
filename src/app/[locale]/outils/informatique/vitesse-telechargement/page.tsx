@@ -19,7 +19,6 @@ export default async function DownloadSpeedConverterPage({ params }: { params: P
     <ToolPage
       locale={locale}
       toolId="vitesse-telechargement"
-      <DownloadSpeedConverter />
       content={
         <>
           <div className="space-y-12">{getToolEditorial("vitesse-telechargement", locale)}</div>
@@ -27,6 +26,8 @@ export default async function DownloadSpeedConverterPage({ params }: { params: P
           <RelatedTools toolId="vitesse-telechargement" />
         </>
       }
-    />
+    >
+      <DownloadSpeedConverter />
+    </ToolPage>
   );
 }
