@@ -19,7 +19,7 @@ export default async function DownloadTimeCalculatorPage({ params }: { params: P
     <ToolPage
       locale={locale}
       toolId="temps-telechargement"
-      children={<DownloadTimeCalculator />}
+      <DownloadTimeCalculator />
       content={
         <>
           <div className="space-y-12">{getToolEditorial("temps-telechargement", locale)}</div>
