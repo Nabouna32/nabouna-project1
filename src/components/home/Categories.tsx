@@ -19,8 +19,8 @@ export default function Categories({ locale }: { locale: Locale }) {
         </span>
       </div>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {visibleCategories.map((category, index) => (
-          <CategoryCard key={category.id} category={category} name={getCategoryName(locale, category.id)} toolLabel={t.tools.many} toolCount={getToolCount(category.id)} locale={locale} index={index} />
+        {visibleCategories.map((category) => (
+          <CategoryCard key={category.id} category={category} name={getCategoryName(locale, category.id)} toolLabel={t.tools.many} toolCount={getToolCount(category.id)} locale={locale} />
         ))}
       </div>
     </section>
