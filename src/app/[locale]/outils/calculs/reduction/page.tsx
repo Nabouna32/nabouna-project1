@@ -19,7 +19,6 @@ export default async function ReductionPage({ params }: { params: Promise<{ loca
     <ToolPage
       locale={locale}
       toolId="reduction"
-      <ReductionCalculator />
       content={
         <>
           <div className="space-y-12">{getToolEditorial("reduction", locale)}</div>
@@ -27,6 +26,8 @@ export default async function ReductionPage({ params }: { params: Promise<{ loca
           <RelatedTools toolId="reduction" />
         </>
       }
-    />
+    >
+      <ReductionCalculator />
+    </ToolPage>
   );
 }
