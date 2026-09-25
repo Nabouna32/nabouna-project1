@@ -1,15 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { CalculatorActions } from "@/components/tools/calculator/CalculatorActions";
 import { CalculatorField } from "@/components/tools/calculator/CalculatorField";
-import { CalculatorResult } from "@/components/tools/calculator/CalculatorResult";
-import { CalculatorShell } from "@/components/tools/calculator/CalculatorShell";
 import { calculateDifference, calculateEvolution, calculatePercentage } from "@/lib/percentage";
 import { useLocale } from "@/lib/i18n/use-locale";
 import { getToolMessages } from "@/lib/i18n/tool-messages";
 import { SegmentedControl } from "@/components/ui/SegmentedControl";
 import { Select } from "@/components/ui/Select";
+import { ClearButton } from "@/components/ui/ClearButton";
+import { CopyButton } from "@/components/ui/CopyButton";
 
 type Mode = "percentage" | "evolution" | "difference";
 
@@ -23,12 +22,18 @@ export default function PercentageCalculator() {
   const [mode, setMode] = useState<Mode>("percentage");
   const [firstValue, setFirstValue] = useState("");
   const [secondValue, setSecondValue] = useState("");
+
   const first = Number(firstValue);
   const second = Number(secondValue);
-  const hasValues = firstValue.trim() !== "" && secondValue.trim() !== "" && Number.isFinite(first) && Number.isFinite(second);
+  const hasValues =
+    firstValue.trim() !== "" &&
+    secondValue.trim() !== "" &&
+    Number.isFinite(first) &&
+    Number.isFinite(second);
 
   let result: number | null = null;
   let error: string | null = null;
+
   if (hasValues) {
     if (mode === "percentage") result = calculatePercentage(first, second);
     if (mode === "evolution") {
@@ -52,68 +57,187 @@ export default function PercentageCalculator() {
   const firstPlaceholder = t.firstPlaceholders[mode];
   const secondPlaceholder = t.secondPlaceholders[mode];
 
+  function clearValues() {
+    setFirstValue("");
+    setSecondValue("");
+  }
+
   function getResultExplanation() {
     if (result === null || error) return null;
+
     const firstText = formatNumber(first, locale);
     const secondText = formatNumber(second, locale);
     const resultText = formatNumber(Math.abs(result), locale);
-    if (mode === "percentage") return <>{t.percentageExplanation(firstText, secondText, resultText)}</>;
+
+    if (mode === "percentage") return t.percentageExplanation(firstText, secondText, resultText);
     if (mode === "evolution") {
-      if (result > 0) return <>{t.increaseExplanation(secondText, firstText, resultText)}</>;
-      if (result < 0) return <>{t.decreaseExplanation(secondText, firstText, resultText)}</>;
-      return <>{t.unchangedExplanation}</>;
+      if (result > 0) return t.increaseExplanation(secondText, firstText, resultText);
+      if (result < 0) return t.decreaseExplanation(secondText, firstText, resultText);
+      return t.unchangedExplanation;
     }
-    return <>{t.differenceExplanation(firstText, secondText, resultText)}</>;
+    return t.differenceExplanation(firstText, secondText, resultText);
   }
 
   function getFormula() {
     if (!hasValues || error || result === null) return null;
-    if (mode === "percentage") return <>{formatNumber(second, locale)} × {formatNumber(first, locale)} ÷ 100 = <strong>{formatNumber(result, locale)}</strong></>;
-    if (mode === "evolution") return <>({formatNumber(first, locale)} − {formatNumber(second, locale)}) ÷ {formatNumber(second, locale)} × 100 = <strong>{formatNumber(result, locale)} %</strong></>;
+
+    if (mode === "percentage") {
+      return (
+        <>
+          {formatNumber(second, locale)} × {formatNumber(first, locale)} ÷ 100 ={" "}
+          <strong>{formatNumber(result, locale)}</strong>
+        </>
+      );
+    }
+
+    if (mode === "evolution") {
+      return (
+        <>
+          ({formatNumber(first, locale)} − {formatNumber(second, locale)}) ÷{" "}
+          {formatNumber(second, locale)} × 100 ={" "}
+          <strong>{formatNumber(result, locale)} %</strong>
+        </>
+      );
+    }
+
     const difference = Math.abs(first - second);
     const average = (Math.abs(first) + Math.abs(second)) / 2;
-    return <>{formatNumber(difference, locale)} ÷ {formatNumber(average, locale)} × 100 = <strong>{formatNumber(result, locale)} %</strong></>;
+    return (
+      <>
+        {formatNumber(difference, locale)} ÷ {formatNumber(average, locale)} × 100 ={" "}
+        <strong>{formatNumber(result, locale)} %</strong>
+      </>
+    );
   }
 
-  function clearValues() { setFirstValue(""); setSecondValue(""); }
+  const resultText =
+    error
+      ? error
+      : result === null
+        ? t.waitingResult
+        : `${formatNumber(result, locale)}${mode !== "percentage" ? " %" : ""}`;
 
   return (
-    <CalculatorShell>
-      <CalculatorActions showClear={firstValue !== "" || secondValue !== ""} onClear={clearValues} />
-      <div className="mt-2">
-        <div className="hidden sm:block">
-          <SegmentedControl
-            items={modes.map((item) => ({ id: item.id, label: item.title, description: item.description }))}
-            value={mode}
-            onChange={setMode}
-            ariaLabel={t.type}
-            className="grid-cols-3"
-          />
-        </div>
-        <div className="sm:hidden">
-          <Select id="percentage-mode" label={t.type} value={mode} onChange={(event) => setMode(event.target.value as Mode)}>
-            {modes.map((item) => <option key={item.id} value={item.id}>{item.title} — {item.description}</option>)}
-          </Select>
-        </div>
-      </div>
-      <div className="mt-8 grid gap-5 sm:grid-cols-2">
-        <CalculatorField label={firstLabel} inputId="first-value" value={firstValue} onChange={(event) => setFirstValue(event.target.value)} placeholder={firstPlaceholder} />
-        <CalculatorField label={secondLabel} inputId="second-value" value={secondValue} onChange={(event) => setSecondValue(event.target.value)} placeholder={secondPlaceholder} />
-      </div>
-      <div className="mt-6">
-        <CalculatorResult label={t.result} tone={mode === "evolution" && result !== null ? "neutral" : "accent"} value={error ? error : result === null ? "—" : `${formatNumber(result, locale)}${mode !== "percentage" ? " %" : ""}`} />
-        {result !== null && !error && <p className="mt-3 text-sm leading-6 text-[var(--muted)]">{getResultExplanation()}</p>}
-      </div>
-      {result !== null && !error && (
-        <details className="group mt-4 rounded-2xl border border-[var(--border)] bg-[var(--background)]">
-          <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-4 text-sm font-semibold text-[var(--foreground)]"><span>{t.how}</span><span className="text-lg text-[var(--muted)] transition-transform group-open:rotate-45">+</span></summary>
-          <div className="border-t border-[var(--border)] px-4 pb-4 pt-4">
-            <p className="text-sm leading-6 text-[var(--muted)]">{t.formulaIntroWithValues}</p>
-            <div className="mt-3 rounded-xl bg-[var(--surface-soft)] p-4"><p className="font-mono text-sm leading-6 text-[var(--foreground)]">{getFormula()}</p></div>
+    <section className="overflow-hidden rounded-[2rem] border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow-md)]">
+      <div className="border-b border-[var(--border)] bg-[var(--surface-soft)] px-5 py-5 sm:px-7">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.16em] text-[var(--accent)]">{t.eyebrow}</p>
+            <h2 className="mt-1 text-xl font-black tracking-tight sm:text-2xl">{t.heading}</h2>
+            <p className="mt-1 max-w-2xl text-sm leading-6 text-[var(--muted)]">{t.intro}</p>
           </div>
-        </details>
-      )}
-      {mode === "difference" && result !== null && !error && <div className="mt-4 rounded-2xl border border-[var(--border)] bg-[var(--background)] p-4"><p className="text-sm leading-6 text-[var(--muted)]">{t.differenceNote}</p></div>}
-    </CalculatorShell>
+          {(firstValue !== "" || secondValue !== "") && <ClearButton onClear={clearValues} />}
+        </div>
+      </div>
+
+      <div className="grid lg:grid-cols-[minmax(0,1.35fr)_minmax(19rem,0.65fr)]">
+        <div className="p-5 sm:p-7 lg:p-8">
+          <div className="hidden sm:block">
+            <SegmentedControl
+              items={modes.map((item) => ({ id: item.id, label: item.title, description: item.description }))}
+              value={mode}
+              onChange={(nextMode) => {
+                setMode(nextMode);
+                clearValues();
+              }}
+              ariaLabel={t.type}
+              className="grid-cols-3"
+            />
+          </div>
+
+          <div className="sm:hidden">
+            <Select
+              id="percentage-mode"
+              label={t.type}
+              value={mode}
+              onChange={(event) => {
+                setMode(event.target.value as Mode);
+                clearValues();
+              }}
+            >
+              {modes.map((item) => (
+                <option key={item.id} value={item.id}>
+                  {item.title} — {item.description}
+                </option>
+              ))}
+            </Select>
+          </div>
+
+          <div className="mt-7 grid gap-5 sm:grid-cols-2">
+            <CalculatorField
+              label={firstLabel}
+              inputId="first-value"
+              value={firstValue}
+              onChange={(event) => setFirstValue(event.target.value)}
+              placeholder={firstPlaceholder}
+              aria-describedby="percentage-input-help"
+            />
+            <CalculatorField
+              label={secondLabel}
+              inputId="second-value"
+              value={secondValue}
+              onChange={(event) => setSecondValue(event.target.value)}
+              placeholder={secondPlaceholder}
+              aria-describedby="percentage-input-help"
+            />
+          </div>
+
+          <p id="percentage-input-help" className="mt-3 text-xs leading-5 text-[var(--muted)]">
+            {t.inputHint}
+          </p>
+        </div>
+
+        <div className="flex flex-col border-t border-[var(--border)] bg-[var(--background)] p-5 sm:p-7 lg:border-l lg:border-t-0 lg:p-8">
+          <div className="flex items-center justify-between gap-3">
+            <p className="text-sm font-semibold text-[var(--muted)]">{t.result}</p>
+            {result !== null && !error && (
+              <CopyButton value={resultText} />
+            )}
+          </div>
+
+          <div
+            aria-live="polite"
+            className={[
+              "mt-3 flex min-h-36 flex-1 flex-col justify-center rounded-[1.5rem] border p-5 transition-all sm:p-6",
+              error
+                ? "border-[var(--danger)]/25 bg-[var(--danger-soft)]"
+                : result !== null
+                  ? "border-[var(--accent)]/25 bg-[var(--accent-soft)]"
+                  : "border-[var(--border)] bg-[var(--surface)]",
+            ].join(" ")}
+          >
+            {result === null && !error && (
+              <p className="text-sm leading-6 text-[var(--muted)]">{t.emptyResult}</p>
+            )}
+            {error && <p className="text-sm font-medium leading-6 text-[var(--danger)]">{error}</p>}
+            {result !== null && !error && (
+              <>
+                <p className="text-4xl font-black tracking-[-0.04em] sm:text-5xl">{resultText}</p>
+                <p className="mt-3 text-sm leading-6 text-[var(--muted)]">{getResultExplanation()}</p>
+              </>
+            )}
+          </div>
+
+          {result !== null && !error && (
+            <details className="group mt-4 rounded-2xl border border-[var(--border)] bg-[var(--surface)]">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-4 text-sm font-semibold">
+                <span>{t.how}</span>
+                <span className="text-lg text-[var(--muted)] transition-transform group-open:rotate-45">+</span>
+              </summary>
+              <div className="border-t border-[var(--border)] px-4 pb-4 pt-4">
+                <p className="text-sm leading-6 text-[var(--muted)]">{t.formulaIntroWithValues}</p>
+                <div className="mt-3 rounded-xl bg-[var(--surface-soft)] p-4">
+                  <p className="font-mono text-sm leading-6 text-[var(--foreground)]">{getFormula()}</p>
+                </div>
+              </div>
+            </details>
+          )}
+
+          {mode === "difference" && result !== null && !error && (
+            <p className="mt-4 text-xs leading-5 text-[var(--muted)]">{t.differenceNote}</p>
+          )}
+        </div>
+      </div>
+    </section>
   );
 }
