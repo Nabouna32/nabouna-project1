@@ -15,24 +15,18 @@ export default function Header() {
   const suffix = pathname.startsWith("/" + locale) ? pathname.slice(locale.length + 1) : "";
 
   return (
-    <header className="sticky top-0 z-50 border-b border-[var(--border)] bg-[var(--background)]/90 backdrop-blur-xl">
-      <div className="mx-auto flex h-18 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Link href={"/" + locale} className="group flex items-center gap-2.5" aria-label={"Utiluna - " + t.nav.home}>
-          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--accent)] text-sm font-bold text-white shadow-sm transition-transform group-hover:scale-105">U</span>
-          <span className="text-xl font-bold tracking-tight text-[var(--foreground)]">Utiluna</span>
+    <header className="sticky top-0 z-50 border-b border-[var(--border)]/80 bg-[var(--background)]/80 backdrop-blur-2xl">
+      <div className="mx-auto flex h-[4.5rem] max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+        <Link href={"/" + locale} className="group flex min-w-0 items-center gap-3" aria-label={"Utiluna - " + t.nav.home}>
+          <span className="relative flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-[1.1rem] bg-[var(--accent)] text-sm font-black text-white shadow-[var(--shadow-sm)]">
+            <span className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,white/35,transparent_45%)]" />
+            <span className="relative">U</span>
+          </span>
+          <span className="truncate text-xl font-bold tracking-[-0.03em]">Utiluna</span>
         </Link>
-        <nav className="flex items-center gap-2 text-sm font-medium">
-          <Link href={"/" + locale + "/outils"} className="rounded-xl px-4 py-2.5 text-[var(--muted)] transition-colors hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)]">
-            {t.nav.tools}
-          </Link>
-          <Link
-            href={"/" + switchLocale + (suffix || "")}
-            hrefLang={switchLocale}
-            className="rounded-xl px-3 py-2.5 text-[var(--muted)] transition-colors hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)]"
-            aria-label={t.nav.language + ": " + switchLocale}
-          >
-            {switchLocale.toUpperCase()}
-          </Link>
+        <nav className="flex items-center gap-1 text-sm font-semibold" aria-label="Primary">
+          <Link href={"/" + locale + "/outils"} className="hidden rounded-xl px-4 py-2.5 text-[var(--muted)] transition-colors hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)] sm:inline-flex">{t.nav.tools}</Link>
+          <Link href={"/" + switchLocale + (suffix || "")} hrefLang={switchLocale} className="rounded-xl px-3 py-2.5 text-xs font-bold tracking-wide text-[var(--muted)] transition-colors hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)]" aria-label={t.nav.language + ": " + switchLocale}>{switchLocale.toUpperCase()}</Link>
           <ThemeToggle />
         </nav>
       </div>
