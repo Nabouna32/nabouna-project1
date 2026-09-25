@@ -19,7 +19,6 @@ export default async function DownloadTimeCalculatorPage({ params }: { params: P
     <ToolPage
       locale={locale}
       toolId="temps-telechargement"
-      <DownloadTimeCalculator />
       content={
         <>
           <div className="space-y-12">{getToolEditorial("temps-telechargement", locale)}</div>
@@ -27,6 +26,8 @@ export default async function DownloadTimeCalculatorPage({ params }: { params: P
           <RelatedTools toolId="temps-telechargement" />
         </>
       }
-    />
+    >
+      <DownloadTimeCalculator />
+    </ToolPage>
   );
 }
