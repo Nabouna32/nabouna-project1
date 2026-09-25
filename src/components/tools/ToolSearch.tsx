@@ -40,10 +40,7 @@ export default function ToolSearch({ className = "", placeholder, locale: locale
   }, []);
 
   function hrefFor(slug: string, categoryId: string) { return "/" + locale + "/outils/" + categoryId + "/" + slug; }
-  function openResult(index: number) {
-    const result = results[index];
-    if (result) window.location.href = hrefFor(result.tool.slug, result.tool.categoryId);
-  }
+  function openResult(index: number) { const result = results[index]; if (result) window.location.href = hrefFor(result.tool.slug, result.tool.categoryId); }
   function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
     if (event.key === "Escape") { setIsFocused(false); setActiveIndex(-1); return; }
     if (!showResults || results.length === 0) return;
@@ -55,52 +52,30 @@ export default function ToolSearch({ className = "", placeholder, locale: locale
   return (
     <div id="tool-search-container" className={"relative " + className}>
       <label htmlFor="tool-search" className="sr-only">{t.tools.searchLabel}</label>
-      <div className={"flex items-center rounded-2xl border bg-[var(--surface)] p-2 shadow-lg shadow-black/5 transition-all duration-200 " + (isFocused ? "border-[var(--accent)] ring-2 ring-[var(--accent)]/15" : "border-[var(--border)]")}>
-        <span className="px-3 text-xl text-[var(--muted)]" aria-hidden="true">🔍</span>
-        <input id="tool-search" type="search" value={query} placeholder={placeholder ?? t.tools.searchPlaceholder} autoComplete="off" role="combobox" aria-autocomplete="list" aria-expanded={showResults} aria-controls="tool-search-results" aria-activedescendant={activeIndex >= 0 ? "tool-result-" + activeIndex : undefined} onChange={(event) => { setQuery(event.target.value); setActiveIndex(-1); }} onFocus={() => setIsFocused(true)} onKeyDown={handleKeyDown} className="min-w-0 flex-1 bg-transparent px-2 py-3 text-base text-[var(--foreground)] outline-none placeholder:text-[var(--muted)]" />
-        {query && (
-          <Button
-            variant="ghost"
-            type="button"
-            onMouseDown={(event) => event.preventDefault()}
-            onClick={() => { setQuery(""); setActiveIndex(-1); setIsFocused(true); }}
-            className="min-h-9 w-9 rounded-[var(--radius-md)] p-0 text-lg"
-            aria-label={t.tools.clearSearch}
-          >
-            ×
-          </Button>
-        )}
-        <Button
-          type="button"
-          onMouseDown={(event) => event.preventDefault()}
-          onClick={() => openResult(0)}
-          disabled={results.length === 0}
-          className="hidden sm:inline-flex"
-        >
-          {t.tools.searchButton}
-        </Button>
+      <div className={"flex items-center rounded-[1.35rem] border bg-[var(--surface)] p-2 shadow-[var(--shadow-md)] transition-all duration-200 " + (isFocused ? "border-[var(--accent)] ring-4 ring-[var(--accent)]/10" : "border-[var(--border)]")}>
+        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[var(--surface-soft)] text-lg text-[var(--muted)]" aria-hidden="true">⌕</span>
+        <input id="tool-search" type="search" value={query} placeholder={placeholder ?? t.tools.searchPlaceholder} autoComplete="off" role="combobox" aria-autocomplete="list" aria-expanded={showResults} aria-controls="tool-search-results" aria-activedescendant={activeIndex >= 0 ? "tool-result-" + activeIndex : undefined} onChange={(event) => { setQuery(event.target.value); setActiveIndex(-1); }} onFocus={() => setIsFocused(true)} onKeyDown={handleKeyDown} className="min-w-0 flex-1 bg-transparent px-3 py-3 text-base text-[var(--foreground)] outline-none placeholder:text-[var(--muted)] sm:text-lg" />
+        {query && <Button variant="ghost" type="button" onMouseDown={(event) => event.preventDefault()} onClick={() => { setQuery(""); setActiveIndex(-1); setIsFocused(true); }} className="min-h-10 w-10 rounded-xl p-0 text-lg" aria-label={t.tools.clearSearch}>×</Button>}
+        <Button type="button" onMouseDown={(event) => event.preventDefault()} onClick={() => openResult(0)} disabled={results.length === 0} className="hidden min-h-11 rounded-xl px-5 sm:inline-flex">{t.tools.searchButton}</Button>
       </div>
-      {showResults && <div id="tool-search-results" role="listbox" className="absolute left-0 right-0 top-full z-30 mt-2 overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-2 shadow-2xl shadow-black/10">
+      {showResults && <div id="tool-search-results" role="listbox" className="absolute left-0 right-0 top-full z-50 mt-3 overflow-hidden rounded-[1.35rem] border border-[var(--border)] bg-[var(--surface-elevated)] p-2 shadow-[var(--shadow-lg)]">
         {results.length > 0 ? <>
-          <div className="flex items-center justify-between px-3 pb-2 pt-1">
-            <p className="text-xs font-semibold uppercase tracking-wider text-[var(--muted)]">{t.tools.suggestions}</p>
+          <div className="flex items-center justify-between px-3 pb-2 pt-2">
+            <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[var(--muted)]">{t.tools.suggestions}</p>
             <p className="text-xs text-[var(--muted)]">{results.length} {results.length === 1 ? t.tools.resultCountOne : t.tools.resultCountMany}</p>
           </div>
           {results.map(({ tool }, index) => {
             const content = tool.content[locale] ?? tool.content.fr;
-            return <a key={tool.id} id={"tool-result-" + index} href={hrefFor(tool.slug, tool.categoryId)} role="option" aria-selected={activeIndex === index} onMouseEnter={() => setActiveIndex(index)} className={"flex items-center gap-3 rounded-xl px-3 py-3 text-left transition-colors " + (activeIndex === index ? "bg-[var(--accent-soft)]" : "hover:bg-[var(--accent-soft)]")}>
+            return <a key={tool.id} id={"tool-result-" + index} href={hrefFor(tool.slug, tool.categoryId)} role="option" aria-selected={activeIndex === index} onMouseEnter={() => setActiveIndex(index)} className={"flex items-center gap-3 rounded-xl px-3 py-3 text-left transition-colors " + (activeIndex === index ? "bg-[var(--accent-soft)]" : "hover:bg-[var(--surface-soft)]")}>
               <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--accent-soft)] text-xl">{tool.icon}</span>
               <span className="min-w-0 flex-1">
                 <span className="block truncate text-sm font-semibold text-[var(--foreground)]"><HighlightMatch text={content.name} query={query} /></span>
                 <span className="mt-0.5 block truncate text-xs text-[var(--muted)]">{getCategoryName(locale, tool.categoryId)} · {content.description}</span>
               </span>
-              <span className="text-[var(--muted)]">→</span>
+              <span className="text-[var(--muted)]">↗</span>
             </a>;
           })}
-        </> : <div className="px-4 py-5 text-center">
-          <p className="text-sm font-medium text-[var(--foreground)]">{t.tools.noResults} « {query.trim()} »</p>
-          <p className="mt-1 text-xs text-[var(--muted)]">{t.tools.noResultsHelp}</p>
-        </div>}
+        </> : <div className="px-4 py-7 text-center"><p className="text-sm font-medium text-[var(--foreground)]">{t.tools.noResults} « {query.trim()} »</p><p className="mt-1 text-xs text-[var(--muted)]">{t.tools.noResultsHelp}</p></div>}
       </div>}
     </div>
   );
