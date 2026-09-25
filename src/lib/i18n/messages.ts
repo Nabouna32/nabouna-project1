@@ -42,7 +42,7 @@ export const messages: Record<Locale, Messages> = {
     processing: {
       ariaLabel: "Informations sur le traitement des données", more: "En savoir plus sur le traitement",
       storage: "Stockage", retention: "Conservation", externalProviders: "Service(s) externe(s)", dataCategories: "Données concernées",
-      localLabel: "100 % local", localSummary: "Vos données restent sur votre appareil.",
+      localLabel: "Traitement local", localSummary: "Vos données restent sur votre appareil.",
       externalLabel: "Service externe", externalSummary: "Certaines données sont transmises à un service externe.",
       serverLabel: "Serveur Utiluna", serverSummary: "Ce traitement nécessite l’infrastructure Utiluna.",
       hybridLabel: "Traitement hybride", hybridSummary: "Le traitement local est complété par un service externe.",
@@ -73,7 +73,7 @@ export const messages: Record<Locale, Messages> = {
     processing: {
       ariaLabel: "Data processing information", more: "Learn more about processing",
       storage: "Storage", retention: "Retention", externalProviders: "External service(s)", dataCategories: "Data involved",
-      localLabel: "100% local", localSummary: "Your data stays on your device.",
+      localLabel: "Local processing", localSummary: "Your data stays on your device.",
       externalLabel: "External service", externalSummary: "Some data is sent to an external service.",
       serverLabel: "Utiluna server", serverSummary: "This processing requires Utiluna infrastructure.",
       hybridLabel: "Hybrid processing", hybridSummary: "Local processing is complemented by an external service.",
