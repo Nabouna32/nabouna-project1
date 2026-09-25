@@ -7,15 +7,20 @@ export default function Categories({ locale }: { locale: Locale }) {
   const t = getMessages(locale);
   const visibleCategories = categories.filter((category) => getToolCount(category.id) > 0);
   return (
-    <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-      <div className="mb-8">
-        <p className="text-sm font-semibold uppercase tracking-wider text-[var(--accent)]">{t.home.explore}</p>
-        <h2 className="mt-2 text-2xl font-bold tracking-tight text-[var(--foreground)] sm:text-3xl">{t.home.categoriesTitle}</h2>
-        <p className="mt-3 max-w-2xl text-[var(--muted)]">{t.home.categoriesDescription}</p>
+    <section className="mx-auto max-w-7xl px-4 pb-20 pt-4 sm:px-6 lg:px-8">
+      <div className="mb-8 flex items-end justify-between gap-6">
+        <div>
+          <p className="text-xs font-bold uppercase tracking-[0.18em] text-[var(--accent)]">{t.home.explore}</p>
+          <h2 className="mt-2 text-2xl font-bold tracking-[-0.03em] sm:text-3xl">{t.home.categoriesTitle}</h2>
+          <p className="mt-3 max-w-2xl text-sm leading-6 text-[var(--muted)] sm:text-base">{t.home.categoriesDescription}</p>
+        </div>
+        <span className="hidden rounded-full bg-[var(--surface-soft)] px-3 py-1.5 text-xs font-semibold text-[var(--muted)] sm:inline-flex">
+          {visibleCategories.length} {locale === "fr" ? "catégories" : "categories"}
+        </span>
       </div>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {visibleCategories.map((category) => (
-          <CategoryCard key={category.id} category={category} name={getCategoryName(locale, category.id)} toolLabel={t.tools.many} toolCount={getToolCount(category.id)} locale={locale} />
+        {visibleCategories.map((category, index) => (
+          <CategoryCard key={category.id} category={category} name={getCategoryName(locale, category.id)} toolLabel={t.tools.many} toolCount={getToolCount(category.id)} locale={locale} index={index} />
         ))}
       </div>
     </section>
