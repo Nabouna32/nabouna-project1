@@ -19,10 +19,9 @@ export default async function FileSizeConverterPage({ params }: { params: Promis
     <ToolPage
       locale={locale}
       toolId="convertisseur-taille"
+      children={<FileSizeConverter />}
       content={
         <>
-          <FileSizeConverter />
-
           <div className="space-y-12">{getToolEditorial("convertisseur-taille", locale)}</div>
 
           <RelatedTools toolId="convertisseur-taille" />
