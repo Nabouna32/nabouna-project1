@@ -23,9 +23,9 @@ export default async function AgeCalculatorPage({ params }: { params: Promise<{ 
         <>
           <AgeCalculator />
 
-          <RelatedTools toolId="age" />
-
           <div className="space-y-12">{getToolEditorial("age", locale)}</div>
+
+          <RelatedTools toolId="age" />
         </>
       }
     />
