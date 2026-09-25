@@ -19,9 +19,9 @@ export default async function FileSizeCalculatorPage({ params }: { params: Promi
     <ToolPage
       locale={locale}
       toolId="taille-fichier"
+      children={<FileSizeCalculator />}
       content={
         <>
-          <FileSizeCalculator />
           <div className="space-y-12">{getToolEditorial("taille-fichier", locale)}</div>
           <RelatedTools toolId="taille-fichier" />
         </>
