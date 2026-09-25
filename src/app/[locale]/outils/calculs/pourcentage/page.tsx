@@ -19,7 +19,6 @@ export default async function PercentagePage({ params }: { params: Promise<{ loc
     <ToolPage
       locale={locale}
       toolId="pourcentage"
-      <PercentageCalculator />
       content={
         <>
           <div className="space-y-12">{getToolEditorial("pourcentage", locale)}</div>
@@ -27,6 +26,8 @@ export default async function PercentagePage({ params }: { params: Promise<{ loc
           <RelatedTools toolId="pourcentage" />
         </>
       }
-    />
+    >
+      <PercentageCalculator />
+    </ToolPage>
   );
 }
