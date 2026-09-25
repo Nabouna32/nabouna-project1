@@ -6,6 +6,7 @@ import { test } from "node:test";
 
 const toolsRouteRoot = fileURLToPath(new URL("../../app/[locale]/outils", import.meta.url));
 const toolsCatalogFile = fileURLToPath(new URL("./tools.ts", import.meta.url));
+const editorialFile = fileURLToPath(new URL("./editorial.tsx", import.meta.url));
 
 async function collectPageFiles(directory) {
   const entries = await readdir(directory, { withFileTypes: true });
@@ -58,6 +59,16 @@ test("published tools have exactly one canonical App Router page", async () => {
 
   const publishedIds = await readPublishedToolIds();
   assert.deepEqual([...routeIds].sort(), [...publishedIds].sort());
+});
+
+test("published tools have editorial documentation", async () => {
+  const publishedIds = await readPublishedToolIds();
+  const editorialSource = await readFile(editorialFile, "utf8");
+
+  for (const toolId of publishedIds) {
+    const matches = editorialSource.match(new RegExp(`case "${toolId}":`, "g")) ?? [];
+    assert.equal(matches.length, 1, `Published tool "${toolId}" must have exactly one editorial entry.`);
+  }
 });
 
 test("canonical tool pages reference known published tools", async () => {
