@@ -24,7 +24,7 @@ export default async function TextCounterPage({
     <ToolPage
       locale={locale}
       toolId="mots-caracteres"
-      children={<TextCounter />}
+      <TextCounter />
       content={
         <>
           <div className="space-y-12">{getToolEditorial("mots-caracteres", locale)}</div>
