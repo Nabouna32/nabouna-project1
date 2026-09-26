@@ -29,7 +29,7 @@
 - Supabase/database integration.
 - Admin panel.
 - Account/premium enforcement.
-- Runtime capability enforcement.
+- Broader runtime capability enforcement beyond clipboard.
 - Generic sharing runtime.
 - Database-backed catalog/editorial content.
 
