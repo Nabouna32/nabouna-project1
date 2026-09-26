@@ -1,4 +1,4 @@
-import type { Tool } from "@/lib/tools/types";
+import type { Tool, ToolCapability } from "@/lib/tools/types";
 import { validateToolCatalog } from "@/lib/tools/metadata";
 import { toolSeo } from "@/lib/tools/seo";
 
@@ -59,6 +59,7 @@ export const tools: Tool[] = [
     name: "Calculateur de pourcentage",
     description: "Calculez facilement un pourcentage, une évolution ou une différence.",
     keywords: ["%", "évolution", "différence", "variation", "taux"], available: true,
+    capabilities: ["clipboard"],
     content: {
       fr: { name: "Calculateur de pourcentage", description: "Calculez facilement un pourcentage, une évolution ou une différence." },
       en: { name: "Percentage Calculator", description: "Easily calculate a percentage, change, or difference." },
@@ -151,6 +152,7 @@ export const tools: Tool[] = [
     id: "mots-caracteres", slug: "mots-caracteres", categoryId: "fichiers", icon: "🔤",
     name: "Compteur de mots et caractères", description: "Comptez les mots, caractères, espaces et lignes d'un texte.",
     keywords: ["texte", "lettres", "compter", "ligne", "paragraphes"], available: true,
+    capabilities: ["clipboard"],
     content: {
       fr: { name: "Compteur de mots et caractères", description: "Comptez les mots, caractères, espaces et lignes d'un texte." },
       en: { name: "Word and Character Counter", description: "Count words, characters, spaces, and lines in a text." },
@@ -183,13 +185,14 @@ export const tools: Tool[] = [
     retention: "Aucune donnée n'est transmise ou stockée par Utiluna.",
     fallback: "Le traitement ne dépend pas d'un service distant.",
   },
-  capabilities: ["local-processing"],
+  capabilities: ["local-processing", ...(tool.capabilities ?? [])] as ToolCapability[],
   browserRequirements: { apis: [] },
   offline: true,
   sharing: { supported: false, mode: "none" },
   relatedToolIds: [],
   quality: { accessibility: "required", performance: "standard", tests: tool.available ? "required" : "not-yet" },
   lifecycle: tool.available ? "published" : "draft",
+  access: "anonymous",
   contributor: { type: "internal" },
 }));
 
