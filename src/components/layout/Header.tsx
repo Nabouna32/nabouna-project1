@@ -4,7 +4,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import ThemeToggle from "@/components/theme/ThemeToggle";
 import LanguageFlag from "@/components/layout/LanguageFlag";
-import { isLocale, type Locale, locales } from "@/lib/i18n/config";
 import { getLanguage, isLocale, type Locale, locales } from "@/lib/i18n/config";
 import { getMessages } from "@/lib/i18n/messages";
 
