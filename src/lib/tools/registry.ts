@@ -28,11 +28,11 @@ const moduleLoaders: Record<string, ToolModule> = {
 export const toolRegistry: readonly ToolRegistryEntry[] = tools
   .filter((tool) => tool.available)
   .map((tool) => {
-    const module = moduleLoaders[tool.id];
-    if (!module) {
+    const toolModule = moduleLoaders[tool.id];
+    if (!toolModule) {
       throw new Error(`Published tool "${tool.id}" has no registered module.`);
     }
-    return { tool, module };
+    return { tool, module: toolModule };
   });
 
 const registryById = new Map(toolRegistry.map((entry) => [entry.tool.id, entry]));
