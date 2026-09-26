@@ -3,6 +3,7 @@ import type { Locale } from "@/lib/i18n/config";
 export type ToolComplexity = "small" | "advanced" | "mini-application";
 export type ToolProcessingMode = "local" | "external" | "utiluna-server" | "hybrid";
 export type ToolLifecycle = "draft" | "review" | "published" | "hidden" | "archived";
+export type ToolAccess = "anonymous" | "account" | "premium";
 export type ToolSharingMode = "none" | "configuration" | "result" | "configuration-and-result";
 export type ToolCapability =
   | "local-processing"
@@ -64,6 +65,7 @@ export type Tool = {
   relatedToolIds: string[];
   quality: ToolQualityMetadata;
   lifecycle: ToolLifecycle;
+  access: ToolAccess;
   contributor: ToolContributor;
 };
 
