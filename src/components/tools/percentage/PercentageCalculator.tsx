@@ -162,7 +162,7 @@ export default function PercentageCalculator() {
         </div>
       </div>
 
-      <div className="grid lg:grid-cols-[minmax(0,1.35fr)_minmax(19rem,0.65fr)]">
+      <div className="grid items-start lg:grid-cols-[minmax(0,1.35fr)_minmax(19rem,0.65fr)]">
         <div className="p-5 sm:p-7 lg:p-8">
           <div className="hidden sm:block">
             <SegmentedControl
@@ -230,7 +230,7 @@ export default function PercentageCalculator() {
           <div
             aria-live="polite"
             className={[
-              "mt-3 flex min-h-36 flex-1 flex-col justify-center rounded-[1.5rem] border p-5 transition-all sm:p-6",
+              "mt-3 flex min-h-36 flex-col justify-center rounded-[1.5rem] border p-5 transition-all sm:p-6",
               resultToneClasses[resultTone].panel,
             ].join(" ")}
           >
