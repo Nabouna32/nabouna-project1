@@ -1,18 +1,10 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import ToolCard from "@/components/tools/ToolCard";
-import { categories } from "@/lib/tools/categories";
+import { categories, getCategoryName } from "@/lib/tools/categories";
 import { tools } from "@/lib/tools/tools";
-import { locales } from "@/lib/i18n/config";
-
-const categoryNames: Record<string, string> = {
-  calculs: "Calculs",
-  dates: "Dates & temps",
-  informatique: "Informatique",
-  images: "Images",
-  fichiers: "PDF & fichiers",
-  video: "Vidéo",
-};
+import { getMessages } from "@/lib/i18n/messages";
+import { locales, type Locale } from "@/lib/i18n/config";
 
 export function generateStaticParams() {
   return locales.flatMap((locale) =>
@@ -29,17 +21,19 @@ export default async function CategoryPage({
 }: {
   params: Promise<{ locale: string; category: string }>;
 }) {
-  const { locale, category: categoryId } = await params;
+  const { locale: localeParam, category: categoryId } = await params;
+  const locale = localeParam as Locale;
   const category = categories.find((item) => item.id === categoryId);
   const categoryTools = tools.filter(
     (tool) => tool.categoryId === categoryId && tool.available,
   );
 
-  if (!category || categoryTools.length === 0) {
+  if (!category || categoryTools.length === 0 || !locales.includes(locale)) {
     notFound();
   }
 
-  const categoryName = categoryNames[categoryId] ?? categoryId;
+  const t = getMessages(locale);
+  const categoryName = getCategoryName(locale, categoryId);
 
   return (
     <main className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
@@ -48,7 +42,7 @@ export default async function CategoryPage({
           href={`/${locale}/outils`}
           className="text-sm font-medium text-[var(--accent)] hover:underline"
         >
-          ← Tous les outils
+          ← {t.nav.tools}
         </Link>
 
         <p className="mt-8 text-3xl" aria-hidden="true">
@@ -60,7 +54,7 @@ export default async function CategoryPage({
         </h1>
 
         <p className="mt-4 text-base leading-7 text-[var(--muted)]">
-          Retrouvez les outils disponibles dans la catégorie {categoryName.toLowerCase()}.
+          {t.tools.categoryDescription} {categoryName.toLowerCase()}.
         </p>
       </div>
 
