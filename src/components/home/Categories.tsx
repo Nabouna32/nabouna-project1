@@ -7,10 +7,9 @@ export default function Categories({ locale }: { locale: Locale }) {
   const t = getMessages(locale);
   const visibleCategories = categories.filter((category) => getToolCount(category.id) > 0);
   return (
-    <section className="mx-auto max-w-7xl px-4 pb-20 pt-4 sm:px-6 lg:px-8">
+    <section id="categories" className="scroll-mt-24 mx-auto max-w-7xl px-4 pb-20 pt-4 sm:px-6 lg:px-8">
       <div className="mb-8 flex items-end justify-between gap-6">
         <div>
-          <p className="text-xs font-bold uppercase tracking-[0.18em] text-[var(--accent)]">{t.home.explore}</p>
           <h2 className="mt-2 text-2xl font-bold tracking-[-0.03em] sm:text-3xl">{t.home.categoriesTitle}</h2>
           <p className="mt-3 max-w-2xl text-sm leading-6 text-[var(--muted)] sm:text-base">{t.home.categoriesDescription}</p>
         </div>
