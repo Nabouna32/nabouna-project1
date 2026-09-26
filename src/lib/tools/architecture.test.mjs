@@ -1,32 +1,12 @@
 import assert from "node:assert/strict";
-import { readdir, readFile } from "node:fs/promises";
-import { join } from "node:path";
+import { readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { test } from "node:test";
 
-const toolsRouteRoot = fileURLToPath(new URL("../../app/[locale]/outils", import.meta.url));
+const routeFile = fileURLToPath(new URL("../../app/[locale]/outils/[category]/[slug]/page.tsx", import.meta.url));
+const registryFile = fileURLToPath(new URL("./registry.ts", import.meta.url));
 const toolsCatalogFile = fileURLToPath(new URL("./tools.ts", import.meta.url));
 const editorialFile = fileURLToPath(new URL("./editorial.tsx", import.meta.url));
-
-async function collectPageFiles(directory) {
-  const entries = await readdir(directory, { withFileTypes: true });
-  const files = [];
-  for (const entry of entries) {
-    const path = join(directory, entry.name);
-    if (entry.isDirectory()) files.push(...(await collectPageFiles(path)));
-    else if (entry.isFile() && entry.name === "page.tsx") files.push(path);
-  }
-  return files;
-}
-
-function extractToolId(source, file) {
-  const toolPageMatches = [...source.matchAll(/<ToolPage\b/g)];
-  assert.equal(toolPageMatches.length, 1, `Tool page ${file} must declare exactly one ToolPage shell.`);
-  const toolPageSource = source.slice(toolPageMatches[0].index);
-  const match = toolPageSource.match(/\btoolId="([^"]+)"/);
-  assert.ok(match, `Tool page ${file} must declare a ToolPage toolId.`);
-  return match[1];
-}
 
 async function readPublishedToolIds() {
   const source = await readFile(toolsCatalogFile, "utf8");
@@ -40,25 +20,20 @@ async function readPublishedToolIds() {
   return ids;
 }
 
-async function collectCanonicalToolPages() {
-  const pageFiles = await collectPageFiles(toolsRouteRoot);
-  const pageEntries = await Promise.all(
-    pageFiles.map(async (file) => ({
-      file,
-      source: await readFile(file, "utf8"),
-    })),
-  );
-  return pageEntries.filter(({ source }) => /<ToolPage\b/.test(source));
-}
+test("the tool platform exposes one dynamic route", async () => {
+  const source = await readFile(routeFile, "utf8");
+  assert.match(source, /getToolByRoute/);
+  assert.match(source, /generateStaticParams/);
+});
 
-test("published tools have exactly one canonical App Router page", async () => {
-  const pageEntries = await collectCanonicalToolPages();
-  const routeToolIds = pageEntries.map(({ file, source }) => extractToolId(source, file));
-  const routeIds = new Set(routeToolIds);
-  assert.equal(routeIds.size, routeToolIds.length, "A tool must not have multiple canonical tool pages.");
-
+test("published tools have exactly one registry module", async () => {
+  const registrySource = await readFile(registryFile, "utf8");
   const publishedIds = await readPublishedToolIds();
-  assert.deepEqual([...routeIds].sort(), [...publishedIds].sort());
+  const registeredIds = [...registrySource.matchAll(/^\s+(?:"([^"]+)"|([a-z0-9-]+)): \{ load:/gm)].map(
+    ([, quotedId, bareId]) => quotedId ?? bareId,
+  );
+
+  assert.deepEqual([...registeredIds].sort(), [...publishedIds].sort());
 });
 
 test("published tools have editorial documentation", async () => {
@@ -68,15 +43,5 @@ test("published tools have editorial documentation", async () => {
   for (const toolId of publishedIds) {
     const matches = editorialSource.match(new RegExp(`case "${toolId}":`, "g")) ?? [];
     assert.equal(matches.length, 1, `Published tool "${toolId}" must have exactly one editorial entry.`);
-  }
-});
-
-test("canonical tool pages reference known published tools", async () => {
-  const pageEntries = await collectCanonicalToolPages();
-  const knownPublishedIds = new Set(await readPublishedToolIds());
-
-  for (const { file, source } of pageEntries) {
-    const toolId = extractToolId(source, file);
-    assert.ok(knownPublishedIds.has(toolId), `Tool page ${file} references non-published tool "${toolId}".`);
   }
 });
