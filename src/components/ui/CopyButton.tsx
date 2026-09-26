@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useLocale } from "@/lib/i18n/use-locale";
 import { getMessages } from "@/lib/i18n/messages";
-import { copyTextToClipboard } from "@/lib/copy";
+import { useToolRuntime } from "@/components/tools/ToolPage/ToolRuntimeProvider";
 import { Button } from "@/components/ui/Button";
 
 type CopyButtonProps = {
@@ -16,6 +16,7 @@ export function CopyButton({ value, label, copiedLabel }: CopyButtonProps) {
   const locale = useLocale();
   const t = getMessages(locale).actions;
   const [copied, setCopied] = useState(false);
+  const { clipboard } = useToolRuntime();
 
   useEffect(() => {
     if (!copied) return;
@@ -24,7 +25,7 @@ export function CopyButton({ value, label, copiedLabel }: CopyButtonProps) {
   }, [copied]);
 
   async function handleCopy() {
-    const success = await copyTextToClipboard(value);
+    const success = await clipboard.writeText(value);
     if (success) setCopied(true);
   }
 
