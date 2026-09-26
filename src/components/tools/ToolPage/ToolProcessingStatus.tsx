@@ -31,9 +31,8 @@ export default function ToolProcessingStatus({
         <summary className="flex w-max max-w-full cursor-pointer list-none items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--surface)] px-3 py-1.5 text-xs font-semibold text-[var(--foreground)] shadow-[var(--shadow-sm)] outline-none transition-colors hover:border-[var(--accent)]/40 hover:bg-[var(--surface-soft)] focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] sm:text-sm">
           <span
             className={
-              isLocal
-                ? "flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[var(--success-soft)] text-[11px]"
-                : "flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[var(--accent-soft)] text-[11px]"
+              "flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[11px] " +
+              toneClasses[statusTone]
             }
             aria-hidden="true"
           >
