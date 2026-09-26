@@ -20,6 +20,15 @@ export default function Hero({ locale }: { locale: Locale }) {
           <p className="mt-4 text-xs font-medium text-[var(--muted)]">{t.home.examples}</p>
         </div>
       </div>
+
+      <a
+        href="#categories"
+        className="absolute bottom-0 left-1/2 z-20 inline-flex -translate-x-1/2 translate-y-1/2 items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--surface-elevated)] px-4 py-2 text-xs font-bold text-[var(--foreground)] shadow-[var(--shadow-md)] transition-[transform,box-shadow,border-color] duration-200 hover:-translate-x-1/2 hover:translate-y-[calc(50%-2px)] hover:border-[var(--accent)]/40 hover:shadow-[var(--shadow-lg)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]"
+        aria-label={t.home.explore}
+      >
+        <span>{t.home.explore}</span>
+        <span className="text-[var(--accent)]" aria-hidden="true">↓</span>
+      </a>
     </section>
   );
 }
