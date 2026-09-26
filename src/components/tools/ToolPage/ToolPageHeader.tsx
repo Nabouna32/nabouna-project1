@@ -19,7 +19,7 @@ export default function ToolPageHeader({
 }: ToolPageHeaderProps) {
   return (
     <header className="py-1 sm:py-2">
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-6">
+      <div className="grid items-start gap-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:gap-6">
         <div className="flex min-w-0 items-start gap-3 sm:gap-4">
           <div
             className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[var(--accent-soft)] text-2xl sm:h-12 sm:w-12 sm:text-3xl"
