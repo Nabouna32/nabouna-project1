@@ -12,7 +12,18 @@ export default function ToolProcessingStatus({
 }) {
   const t = getMessages(locale).processing;
   const presentation = getToolProcessingPresentation(processing, locale);
-  const isLocal = processing.mode === "local";
+  const statusTone =
+    processing.mode === "local"
+      ? "success"
+      : processing.mode === "hybrid"
+        ? "warning"
+        : "info";
+
+  const toneClasses = {
+    success: "bg-[var(--success-soft)] text-[var(--success)]",
+    info: "bg-[var(--info-soft)] text-[var(--info)]",
+    warning: "bg-[var(--warning-soft)] text-[var(--warning)]",
+  } as const;
 
   return (
     <section className="relative shrink-0" aria-label={t.ariaLabel}>
@@ -35,7 +46,7 @@ export default function ToolProcessingStatus({
         <div className="absolute right-0 top-full z-20 mt-2 w-[min(30rem,calc(100vw-2rem))] rounded-2xl border border-[var(--border)] bg-[var(--surface-elevated)] p-4 text-sm leading-6 text-[var(--muted)] shadow-[var(--shadow-lg)]">
           <p className="text-[var(--foreground)]">{processing.description[locale] ?? processing.description.fr}</p>
 
-          {isLocal ? (
+          {processing.mode === "local" ? (
             <p className="mt-3 border-t border-[var(--border)] pt-3">
               {locale === "fr"
                 ? "Aucune donnée n'est envoyée à un serveur ni stockée par Utiluna."
