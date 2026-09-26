@@ -38,7 +38,7 @@ export default function Header() {
             {t.nav.tools}
           </Link>
 
-          <details className="group/language relative">
+          <details className="language-selector relative">
             <summary
               className="flex cursor-pointer list-none items-center rounded-xl px-3 py-2.5 text-xs font-bold text-[var(--muted)] outline-none transition-colors hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)] focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]"
               aria-label={t.nav.language + ": " + currentLanguage.nativeLabel}
