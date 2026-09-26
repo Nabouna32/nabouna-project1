@@ -2,6 +2,57 @@ import type { Tool } from "@/lib/tools/types";
 import { validateToolCatalog } from "@/lib/tools/metadata";
 import { toolSeo } from "@/lib/tools/seo";
 
+const localProcessingDescriptions: Record<string, { fr: string; en: string }> = {
+  pourcentage: {
+    fr: "Les calculs de pourcentage sont effectués directement dans votre navigateur.",
+    en: "Percentage calculations are performed directly in your browser.",
+  },
+  reduction: {
+    fr: "Les calculs de réduction sont effectués directement dans votre navigateur.",
+    en: "Discount calculations are performed directly in your browser.",
+  },
+  tva: {
+    fr: "Les calculs de TVA sont effectués directement dans votre navigateur.",
+    en: "VAT calculations are performed directly in your browser.",
+  },
+  "regle-de-trois": {
+    fr: "Les calculs de proportionnalité sont effectués directement dans votre navigateur.",
+    en: "Proportionality calculations are performed directly in your browser.",
+  },
+  age: {
+    fr: "Le calcul de votre âge est effectué directement dans votre navigateur.",
+    en: "Your age calculation is performed directly in your browser.",
+  },
+  duree: {
+    fr: "Le calcul de durée est effectué directement dans votre navigateur.",
+    en: "Duration calculations are performed directly in your browser.",
+  },
+  "vitesse-telechargement": {
+    fr: "La conversion de débit est effectuée directement dans votre navigateur.",
+    en: "Speed conversion is performed directly in your browser.",
+  },
+  "temps-telechargement": {
+    fr: "L'estimation du temps de téléchargement est effectuée directement dans votre navigateur.",
+    en: "Download time estimation is performed directly in your browser.",
+  },
+  "taille-fichier": {
+    fr: "Le calcul de taille de fichier est effectué directement dans votre navigateur.",
+    en: "File size calculations are performed directly in your browser.",
+  },
+  "convertisseur-taille": {
+    fr: "La conversion de taille est effectuée directement dans votre navigateur.",
+    en: "File size conversion is performed directly in your browser.",
+  },
+  "mots-caracteres": {
+    fr: "Le texte saisi est analysé directement dans votre navigateur.",
+    en: "The text you enter is analyzed directly in your browser.",
+  },
+  "bitrate-video": {
+    fr: "Les calculs de bitrate vidéo sont effectués directement dans votre navigateur.",
+    en: "Video bitrate calculations are performed directly in your browser.",
+  },
+};
+
 export const tools: Tool[] = [
   {
     id: "pourcentage", slug: "pourcentage", categoryId: "calculs", icon: "📊",
@@ -125,6 +176,7 @@ export const tools: Tool[] = [
   examples: [],
   processing: {
     mode: "local",
+    description: localProcessingDescriptions[tool.id],
     dataCategories: [],
     externalProviders: [],
     storage: "none",
