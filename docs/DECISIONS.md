@@ -375,3 +375,30 @@ The validated brainstorming document is preserved as an immutable historical/con
 ### Consequences
 
 Canonical docs describe the current accepted direction; the brainstorming document preserves the richer original reasoning and ideas. Future agents must distinguish historical intent from currently committed scope.
+
+
+---
+
+## DEC-022 — First-class tool registry and dynamic execution route
+
+**Status:** Accepted
+
+### Decision
+
+Published tools are resolved through a central registry that maps stable tool identifiers to independently loadable implementation modules. Public tool URLs use a generic dynamic route rather than one handwritten App Router page per tool.
+
+The registry owns the connection between product catalog entries and executable modules, while the generic ToolPage shell owns shared platform UX.
+
+### Reason
+
+Utiluna is intended to grow to a large catalog. Maintaining one route, metadata wiring and page composition per tool would create unnecessary duplication and make cross-cutting platform changes expensive.
+
+A registry also provides a controlled boundary for progressive code loading and future capability enforcement without forcing every tool into a common UI renderer.
+
+### Consequences
+
+- New tools should normally add a catalog entry and a registry module rather than a new route.
+- Tool implementations remain custom and first-class.
+- Shared platform concerns remain outside individual tool implementations.
+- Registry coverage must be validated by automated architecture tests.
+- The catalog/database and executable module remain separate concerns.
