@@ -117,6 +117,38 @@ export default function PercentageCalculator() {
         ? t.waitingResult
         : `${formatNumber(result, locale)}${mode !== "percentage" ? " %" : ""}`;
 
+  const resultTone =
+    error
+      ? "danger"
+      : mode === "evolution" && result !== null
+        ? result > 0
+          ? "success"
+          : result < 0
+            ? "danger"
+            : "neutral"
+        : result !== null
+          ? "accent"
+          : "neutral";
+
+  const resultToneClasses = {
+    danger: {
+      panel: "border-[var(--danger)]/25 bg-[var(--danger-soft)]",
+      value: "text-[var(--danger)]",
+    },
+    success: {
+      panel: "border-[var(--success)]/25 bg-[var(--success-soft)]",
+      value: "text-[var(--success)]",
+    },
+    accent: {
+      panel: "border-[var(--accent)]/25 bg-[var(--accent-soft)]",
+      value: "text-[var(--foreground)]",
+    },
+    neutral: {
+      panel: "border-[var(--border)] bg-[var(--surface)]",
+      value: "text-[var(--foreground)]",
+    },
+  } as const;
+
   return (
     <section className="overflow-hidden rounded-[2rem] border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow-md)]">
       <div className="border-b border-[var(--border)] bg-[var(--surface-soft)] px-5 py-5 sm:px-7">
@@ -199,11 +231,7 @@ export default function PercentageCalculator() {
             aria-live="polite"
             className={[
               "mt-3 flex min-h-36 flex-1 flex-col justify-center rounded-[1.5rem] border p-5 transition-all sm:p-6",
-              error
-                ? "border-[var(--danger)]/25 bg-[var(--danger-soft)]"
-                : result !== null
-                  ? "border-[var(--accent)]/25 bg-[var(--accent-soft)]"
-                  : "border-[var(--border)] bg-[var(--surface)]",
+              resultToneClasses[resultTone].panel,
             ].join(" ")}
           >
             {result === null && !error && (
@@ -212,7 +240,7 @@ export default function PercentageCalculator() {
             {error && <p className="text-sm font-medium leading-6 text-[var(--danger)]">{error}</p>}
             {result !== null && !error && (
               <>
-                <p className="text-4xl font-black tracking-[-0.04em] sm:text-5xl">{resultText}</p>
+                <p className={"text-4xl font-black tracking-[-0.04em] sm:text-5xl " + resultToneClasses[resultTone].value}>{resultText}</p>
                 <p className="mt-3 text-sm leading-6 text-[var(--muted)]">{getResultExplanation()}</p>
               </>
             )}
