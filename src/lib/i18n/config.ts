@@ -10,7 +10,7 @@ export type LanguageDefinition = {
   direction: "ltr" | "rtl";
   enabled: boolean;
   translationStatus: "complete" | "partial";
-  flagCode: "fr" | "gb";
+  flagCode: string;
 };
 
 export const languages: Record<Locale, LanguageDefinition> = {
