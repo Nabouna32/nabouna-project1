@@ -39,6 +39,10 @@ const localProcessingDescriptions: Record<string, { fr: string; en: string }> = 
     fr: "Le calcul de taille de fichier est effectué directement dans votre navigateur.",
     en: "File size calculations are performed directly in your browser.",
   },
+  "convertisseur-taille": {
+    fr: "La conversion de taille est effectuée directement dans votre navigateur.",
+    en: "File size conversion is performed directly in your browser.",
+  },
   "mots-caracteres": {
     fr: "Le texte saisi est analysé directement dans votre navigateur.",
     en: "The text you enter is analyzed directly in your browser.",
