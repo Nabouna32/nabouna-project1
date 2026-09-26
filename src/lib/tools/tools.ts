@@ -125,6 +125,10 @@ export const tools: Tool[] = [
   examples: [],
   processing: {
     mode: "local",
+    description: {
+      fr: "Les calculs de cet outil sont effectués directement dans votre navigateur.",
+      en: "This tool's calculations are performed directly in your browser.",
+    },
     dataCategories: [],
     externalProviders: [],
     storage: "none",
