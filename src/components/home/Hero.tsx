@@ -5,7 +5,7 @@ import { getMessages } from "@/lib/i18n/messages";
 export default function Hero({ locale }: { locale: Locale }) {
   const t = getMessages(locale);
   return (
-    <section className="relative isolate">
+    <section className="relative z-10 isolate">
       <div className="pointer-events-none absolute -left-32 top-0 -z-10 h-80 w-80 rounded-full bg-[var(--accent)]/10 blur-3xl" />
       <div className="pointer-events-none absolute -right-24 top-16 -z-10 h-96 w-96 rounded-full bg-fuchsia-400/8 blur-3xl" />
       <div className="mx-auto max-w-6xl px-4 pb-12 pt-14 sm:px-6 sm:pb-16 sm:pt-20 lg:px-8 lg:pt-24">
