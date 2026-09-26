@@ -3,7 +3,9 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import ThemeToggle from "@/components/theme/ThemeToggle";
+import LanguageFlag from "@/components/layout/LanguageFlag";
 import { isLocale, type Locale, locales } from "@/lib/i18n/config";
+import { getLanguage, isLocale, type Locale, locales } from "@/lib/i18n/config";
 import { getMessages } from "@/lib/i18n/messages";
 
 export default function Header() {
@@ -26,7 +28,10 @@ export default function Header() {
         </Link>
         <nav className="flex items-center gap-1 text-sm font-semibold" aria-label="Primary">
           <Link href={"/" + locale + "/outils"} className="hidden rounded-xl px-4 py-2.5 text-[var(--muted)] transition-colors hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)] sm:inline-flex">{t.nav.tools}</Link>
-          <Link href={"/" + switchLocale + (suffix || "")} hrefLang={switchLocale} className="rounded-xl px-3 py-2.5 text-xs font-bold tracking-wide text-[var(--muted)] transition-colors hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)]" aria-label={t.nav.language + ": " + switchLocale}>{switchLocale.toUpperCase()}</Link>
+          <Link href={"/" + switchLocale + (suffix || "")} hrefLang={switchLocale} className="group/language rounded-xl px-3 py-2.5 text-xs font-bold tracking-wide text-[var(--muted)] transition-colors hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)]" aria-label={t.nav.language + ": " + getLanguage(switchLocale).nativeLabel}>
+            <LanguageFlag code={getLanguage(switchLocale).flagCode} />
+            <span className="sr-only">{getLanguage(switchLocale).nativeLabel}</span>
+          </Link>
           <ThemeToggle />
         </nav>
       </div>
