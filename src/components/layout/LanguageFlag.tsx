@@ -5,6 +5,17 @@ type LanguageFlagProps = {
 };
 
 export default function LanguageFlag({ code }: LanguageFlagProps) {
+  if (code === "world") {
+    return (
+      <span
+        className="language-flag flex h-4 w-6 shrink-0 items-center justify-center rounded-[3px] bg-[var(--surface-soft)] text-[13px] shadow-[var(--shadow-sm)] transition-transform duration-150"
+        aria-hidden="true"
+      >
+        🌐
+      </span>
+    );
+  }
+
   return (
     <span
       className={`language-flag fi fi-${code} block h-4 w-6 shrink-0 rounded-[3px] bg-[var(--surface-soft)] bg-contain bg-center bg-no-repeat shadow-[var(--shadow-sm)] transition-transform duration-150`}
