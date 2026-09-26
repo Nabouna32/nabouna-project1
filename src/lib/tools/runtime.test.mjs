@@ -3,7 +3,6 @@ import { readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { test } from "node:test";
 
-const root = fileURLToPath(new URL("../../", import.meta.url));
 const typesFile = fileURLToPath(new URL("./types.ts", import.meta.url));
 const toolsFile = fileURLToPath(new URL("./tools.ts", import.meta.url));
 const runtimeFile = fileURLToPath(new URL("../../components/tools/ToolPage/ToolRuntimeProvider.tsx", import.meta.url));
