@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { isLocale, locales, type Locale } from "@/lib/i18n/config";
 import { getToolPageMetadata } from "@/lib/tools/page-metadata";
-import { getToolRegistryEntry, toolRegistry } from "@/lib/tools/registry";
+import { getToolByRoute, toolRegistry } from "@/lib/tools/registry";
 import { getToolEditorial } from "@/lib/tools/editorial";
 import ToolPage from "@/components/tools/ToolPage/ToolPage";
 import RelatedTools from "@/components/tools/RelatedTools";
@@ -31,8 +31,7 @@ export async function generateMetadata({
 }
 
 function getToolRegistryEntryByRoute(category: string, slug: string) {
-  const entry = getToolRegistryEntry(category, slug);
-  return entry;
+  return getToolByRoute(category, slug);
 }
 
 export default async function ToolRoute({
