@@ -13,6 +13,8 @@
   --accent-strong: #5141df;
   --accent-soft: #eeebff;
   --accent-foreground: #ffffff;
+  --info: #2563b8;
+  --info-soft: #eaf2ff;
   --success: #16865a;
   --success-soft: #e8f7ef;
   --warning: #a86b00;
@@ -42,6 +44,8 @@
   --accent-strong: #b2a8ff;
   --accent-soft: #29254a;
   --accent-foreground: #ffffff;
+  --info: #7db3ff;
+  --info-soft: #172c48;
   --success: #55c795;
   --success-soft: #153a2a;
   --warning: #e5ae55;
