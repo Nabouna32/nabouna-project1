@@ -16,6 +16,20 @@ Tool pages prioritize inputs, result, actions, explanation, then documentation. 
 
 Capabilities can include local processing, file input, clipboard, camera, microphone, geolocation, external network, account data and server/database access. Access must be explicit and enforceable.
 
+Capabilities are runtime permissions, not only descriptive metadata. The ToolPage provides a tool-scoped runtime containing exactly the capabilities declared by the resolved tool. Platform APIs are exposed through this runtime rather than being called directly by tool implementations.
+
+The runtime currently enforces the clipboard capability. Additional browser, storage and network capabilities should follow the same pattern as their platform abstractions are introduced.
+
+### Access
+
+Access is a separate axis from processing:
+
+- `anonymous` — usable without an account;
+- `account` — requires an authenticated account;
+- `premium` — requires the relevant paid entitlement.
+
+A server-backed or external tool is not automatically premium. Processing location and access policy remain independent decisions.
+
 ## Processing
 
 Every tool identifies local, external-service, Utiluna-server or hybrid processing and explains what data is transmitted, where and why.

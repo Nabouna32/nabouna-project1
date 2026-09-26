@@ -51,7 +51,7 @@ export default async function ToolRoute({
   return (
     <ToolPage
       locale={locale}
-      toolId={entry.tool.id}
+      tool={entry.tool}
       content={
         <>
           <div className="space-y-12">{getToolEditorial(entry.tool.id, locale)}</div>

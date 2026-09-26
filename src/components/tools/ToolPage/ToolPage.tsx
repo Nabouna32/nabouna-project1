@@ -1,22 +1,20 @@
 import type { ReactNode } from "react";
 import { defaultLocale, type Locale } from "@/lib/i18n/config";
-import { getToolContent } from "@/lib/tools/types";
+import { getToolContent, type Tool } from "@/lib/tools/types";
 import ToolPageHeader from "./ToolPageHeader";
-import { tools } from "@/lib/tools/tools";
+import { ToolRuntimeProvider } from "./ToolRuntimeProvider";
 
 export default function ToolPage({
-  toolId,
+  tool,
   locale = defaultLocale,
   children,
   content,
 }: {
-  toolId: string;
+  tool: Tool;
   locale?: Locale;
   children?: ReactNode;
   content?: ReactNode;
 }) {
-  const tool = tools.find((item) => item.id === toolId);
-  if (!tool) throw new Error("Unknown tool id: " + toolId);
   const localizedContent = getToolContent(tool, locale);
 
   return (
@@ -28,8 +26,10 @@ export default function ToolPage({
         processing={tool.processing}
         locale={locale}
       />
-      {children && <div className="mt-3 sm:mt-4">{children}</div>}
-      {content && <div className="mt-8 space-y-10 sm:mt-12 sm:space-y-12">{content}</div>}
+      <ToolRuntimeProvider access={tool.access} capabilities={tool.capabilities}>
+        {children && <div className="mt-3 sm:mt-4">{children}</div>}
+        {content && <div className="mt-8 space-y-10 sm:mt-12 sm:space-y-12">{content}</div>}
+      </ToolRuntimeProvider>
     </main>
   );
 }

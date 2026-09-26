@@ -402,3 +402,35 @@ A registry also provides a controlled boundary for progressive code loading and 
 - Shared platform concerns remain outside individual tool implementations.
 - Registry coverage must be validated by automated architecture tests.
 - The catalog/database and executable module remain separate concerns.
+
+
+---
+
+## DEC-023 — Tool-scoped runtime capabilities
+
+**Status:** Accepted
+
+### Decision
+
+Tool capabilities are runtime permissions, not merely catalog metadata. A published tool receives a tool-scoped runtime containing only the capabilities declared by its contract.
+
+Platform/browser capabilities must be exposed through controlled runtime services rather than direct calls from individual tools whenever a reusable abstraction exists.
+
+The `access` policy is a separate axis from processing and uses:
+
+- `anonymous`;
+- `account`;
+- `premium`.
+
+### Reason
+
+The tool platform is expected to scale to many independently implemented tools. Declarative metadata alone cannot guarantee that an implementation actually respects its declared privacy and capability boundaries.
+
+Separating access from processing also prevents an accidental architectural coupling such as "server-backed means premium".
+
+### Consequences
+
+- Tool modules must use the platform runtime for capabilities that have a runtime abstraction.
+- The runtime currently enforces clipboard access.
+- Future browser, persistence, network and account capabilities should use the same controlled boundary.
+- Tool metadata remains authoritative for the declared requirement, while executable platform services enforce the actual permission at runtime.
