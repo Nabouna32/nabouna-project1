@@ -5,7 +5,7 @@ import ToolPageHeader from "./ToolPageHeader";
 import { ToolRuntimeProvider } from "./ToolRuntimeProvider";
 
 export default function ToolPage({
-  toolId,
+  tool,
   locale = defaultLocale,
   children,
   content,
@@ -28,8 +28,8 @@ export default function ToolPage({
       />
       <ToolRuntimeProvider access={tool.access} capabilities={tool.capabilities}>
         {children && <div className="mt-3 sm:mt-4">{children}</div>}
+        {content && <div className="mt-8 space-y-10 sm:mt-12 sm:space-y-12">{content}</div>}
       </ToolRuntimeProvider>
-      {content && <div className="mt-8 space-y-10 sm:mt-12 sm:space-y-12">{content}</div>}
     </main>
   );
 }
