@@ -1,18 +1,29 @@
 import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
+import { fileURLToPath } from "node:url";
 import { test } from "node:test";
 
-test("published tool modules are resolved by the registry contract", async () => {
-  const source = await import("./registry.ts");
+const registryFile = fileURLToPath(new URL("./registry.ts", import.meta.url));
+const toolsCatalogFile = fileURLToPath(new URL("./tools.ts", import.meta.url));
 
-  assert.ok(Array.isArray(source.toolRegistry));
-  assert.ok(source.toolRegistry.length > 0);
-
-  const ids = source.toolRegistry.map(({ tool }) => tool.id);
-  assert.equal(new Set(ids).size, ids.length);
-
-  for (const { tool, module } of source.toolRegistry) {
-    assert.equal(tool.available, true);
-    assert.equal(tool.slug.length > 0, true);
-    assert.equal(typeof module.load, "function");
+async function readPublishedToolIds() {
+  const source = await readFile(toolsCatalogFile, "utf8");
+  const ids = [];
+  for (const entry of source.split(/\n\s*\{\n/).slice(1)) {
+    const id = entry.match(/\bid:\s*"([^"]+)"/)?.[1];
+    const available = entry.match(/\bavailable:\s*(true|false)\b/)?.[1];
+    if (id && available === "true") ids.push(id);
   }
+  return ids;
+}
+
+test("every published tool has exactly one registry module", async () => {
+  const source = await readFile(registryFile, "utf8");
+  const publishedIds = await readPublishedToolIds();
+  const registeredIds = [...source.matchAll(/^\s{2}("?[a-z0-9-]+"?): \{ load:/gm)].map(
+    ([match]) => match[1].replace(/^"|"$/g, ""),
+  );
+
+  assert.equal(new Set(registeredIds).size, registeredIds.length);
+  assert.deepEqual([...registeredIds].sort(), [...publishedIds].sort());
 });
