@@ -27,7 +27,7 @@ export async function generateMetadata({
   const entry = getToolRegistryEntryByRoute(category, slug);
   if (!entry) return {};
 
-  return getToolPageMetadata(entry.tool.id, locale);
+  return getToolPageMetadata(entry.tool, locale);
 }
 
 function getToolRegistryEntryByRoute(category: string, slug: string) {
