@@ -1,6 +1,6 @@
 import type { LanguageDefinition } from "@/lib/i18n/config";
 
-type LanguageFlagProps = Pick<LanguageDefinition, "flagCode">;
+type LanguageFlagProps = { code: LanguageDefinition["flagCode"] };
 
 export default function LanguageFlag({ code }: LanguageFlagProps) {
   return (
