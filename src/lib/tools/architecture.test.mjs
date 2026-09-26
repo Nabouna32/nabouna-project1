@@ -22,7 +22,7 @@ async function readPublishedToolIds() {
 
 test("the tool platform exposes one dynamic route", async () => {
   const source = await readFile(routeFile, "utf8");
-  assert.match(source, /getToolRegistryEntry/);
+  assert.match(source, /getToolByRoute/);
   assert.match(source, /generateStaticParams/);
 });
 
